@@ -1,0 +1,73 @@
+project:
+  type: website
+  output-dir: docs
+  resources:
+    - apps/
+    - data/
+    - apps.zip
+
+website:
+  title: "stat-shiny"
+  description: "A short, hands-on course on Shiny: from the logic of the app to your own server"
+  page-navigation: true
+  reader-mode: true
+  search: true
+  navbar:
+    background: primary
+    left:
+      - text: "Home"
+        href: index.qmd
+      - text: "Day 1"
+        href: day1/00-shiny.qmd
+      - text: "Day 2"
+        href: day2/08-github.qmd
+      - text: "Going further"
+        href: extras/index.qmd
+    right:
+      - icon: github
+        href: https://github.com/ottaviae/stat-shiny
+  sidebar:
+    style: docked
+    contents:
+      - index.qmd
+      - section: "Day 1 · The logic of Shiny"
+        contents:
+          - day1/00-shiny.qmd
+          - day1/01-project.qmd
+          - day1/02-logic.qmd
+          - day1/03-inputs.qmd
+          - day1/04-outputs.qmd
+          - day1/05-reactive.qmd
+          - day1/06-eventreactive.qmd
+          - day1/07-explore.qmd
+      - section: "Day 2 · Spread the shine"
+        contents:
+          - day2/08-github.qmd
+          - day2/09-deploy.qmd
+      - section: "Going further"
+        contents:
+          - extras/index.qmd
+          - extras/layouts.qmd
+          - extras/update-inputs.qmd
+          - extras/interactive-plots.qmd
+          - extras/download.qmd
+          - extras/resources.qmd
+  page-footer:
+    center: "Ottavia M. Epifania · stat-shiny"
+
+filters:
+  - shinylive
+
+format:
+  html:
+    theme:
+      light: journal
+      dark: slate
+    css: styles.css
+    toc: true
+    toc-depth: 2
+    number-sections: false
+    code-copy: true
+    code-annotations: below
+    grid:
+      body-width: 1000px

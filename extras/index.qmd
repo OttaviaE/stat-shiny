@@ -1,0 +1,14 @@
+---
+title: "Going further"
+subtitle: "What we did not have time for"
+---
+
+These pages are for studying on your own after the course. Each one has a working app you can edit live, and the same app in the [`apps/`](https://github.com/ottaviae/stat-shiny/tree/main/apps) folder, ready for RStudio.
+
+| Page | What you learn |
+|---|---|
+| [Layouts](layouts.qmd) | Organise the page: sidebar, rows and columns, tabs |
+| [Updating inputs](update-inputs.qmd) | `observeEvent()` + `updateSelectInput()`, an alternative to `renderUI()`; `req()` |
+| [Interactive plots](interactive-plots.qmd) | Click and brush on a plot; `reactiveValues()`; `validate()` |
+| [Downloads](download.qmd) | Let the user download plots and results |
+| [Resources](resources.qmd) | Slides, books and galleries |

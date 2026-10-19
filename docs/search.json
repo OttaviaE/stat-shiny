@@ -1,0 +1,934 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "stat-shiny",
+    "section": "",
+    "text": "Shiny lets you turn R code into an interactive web application: the user clicks, chooses and uploads, and R does the computations behind the scenes.\nIn this course we start from an empty RStudio project and finish with your own app online, with a link you can send to anyone.",
+    "crumbs": [
+      "Home",
+      "stat-shiny"
+    ]
+  },
+  {
+    "objectID": "index.html#the-plan",
+    "href": "index.html#the-plan",
+    "title": "stat-shiny",
+    "section": "The plan",
+    "text": "The plan\n\nDay 1 · The logic of Shiny\n\n\n\nTopic\nWhat you take home\n\n\n\n\nShiny\nWhat Shiny is and the logic behind it: UI, server and their communication\n\n\nA Shiny project\nAn RStudio project with ui.R and server.R that runs\n\n\nHow Shiny thinks\nInside the UI and the server: IDs and reactivity\n\n\nInput widgets\nWhat each widget sends to the server\n\n\nOutputs and render functions\nHow results go back to the UI\n\n\nReactivity and reactive()\nWhen the server re-runs your code\n\n\nWait for it: eventReactive()\nDeciding when the app reacts\n\n\nYour app: explore a dataset\nA complete app, built step by step\n\n\n\n\n\nDay 2 · Spread the shine\n\n\n\nTopic\nWhat you take home\n\n\n\n\nYour app on GitHub\nThe project in a GitHub repository\n\n\nDeploy on Connect Cloud\nYour app online\n\n\n\nGoing further collects the topics we will not cover in class (layouts, updating inputs, interactive plots, downloads), with working apps you can study on your own.",
+    "crumbs": [
+      "Home",
+      "stat-shiny"
+    ]
+  },
+  {
+    "objectID": "index.html#before-the-course",
+    "href": "index.html#before-the-course",
+    "title": "stat-shiny",
+    "section": "Before the course",
+    "text": "Before the course\n\n\n\n\n\n\nPlease do this before Day 1\n\n\n\n\nInstall R and RStudio Desktop (recent versions)\nInstall the packages we need:\ninstall.packages(c(\"shiny\", \"rsconnect\"))\nCreate a free GitHub account and install GitHub Desktop\nCreate a free account on Posit Connect Cloud, signing in with your GitHub account",
+    "crumbs": [
+      "Home",
+      "stat-shiny"
+    ]
+  },
+  {
+    "objectID": "index.html#how-to-use-these-pages",
+    "href": "index.html#how-to-use-these-pages",
+    "title": "stat-shiny",
+    "section": "How to use these pages",
+    "text": "How to use these pages\nMost examples are live apps that run in your browser: on top you see the code (ui.R and server.R in two tabs), below the running app.\n\nYou can edit the code and re-run the app with the ▶ button (or Ctrl-Shift-EnterCtrl-Shift-Enter)\nNothing you do here can break anything: reload the page to start over\nThe first app on a page takes a few seconds to start (R is being loaded in your browser)\n\n\n\n\n\n\n\nAll the apps, ready to run\n\n\n\nAll the apps of the course are in the apps folder of the repository. Each app is a folder with a ui.R and a server.R file.\nDownload all the apps (.zip)",
+    "crumbs": [
+      "Home",
+      "stat-shiny"
+    ]
+  },
+  {
+    "objectID": "extras/resources.html",
+    "href": "extras/resources.html",
+    "title": "Resources",
+    "section": "",
+    "text": "Basics\nReactive events\nData upload\nDownload",
+    "crumbs": [
+      "Home",
+      "Going further",
+      "Resources"
+    ]
+  },
+  {
+    "objectID": "extras/resources.html#slides-of-the-course",
+    "href": "extras/resources.html#slides-of-the-course",
+    "title": "Resources",
+    "section": "",
+    "text": "Basics\nReactive events\nData upload\nDownload",
+    "crumbs": [
+      "Home",
+      "Going further",
+      "Resources"
+    ]
+  },
+  {
+    "objectID": "extras/resources.html#the-apps",
+    "href": "extras/resources.html#the-apps",
+    "title": "Resources",
+    "section": "The apps",
+    "text": "The apps\nAll the apps used in these pages, each as a folder with ui.R and server.R:\nDownload all the apps (.zip)\n\n\n\n\n\n\n\nFolder\nApp\n\n\n\n\n01-basic\nThe very first app\n\n\n02-datasets\nTwo outputs, duplicated code\n\n\n03-reactive\nThe same, with reactive()\n\n\n04-eventreactive\nThe same, with a button and eventReactive()\n\n\n05-explore-step1 … step4\nThe explore-a-dataset app, step by step\n\n\nextra-update-input\nobserveEvent() + updateSelectInput()\n\n\nextra-interactive-plots\nClick and brush on a plot\n\n\nextra-download\nDownload plots and results",
+    "crumbs": [
+      "Home",
+      "Going further",
+      "Resources"
+    ]
+  },
+  {
+    "objectID": "extras/resources.html#learn-more",
+    "href": "extras/resources.html#learn-more",
+    "title": "Resources",
+    "section": "Learn more",
+    "text": "Learn more\n\nShiny for R: the official tutorials\nShiny components gallery: all the inputs and outputs, with code\nMastering Shiny, by Hadley Wickham: the reference book, free online\nShine with quarto: R projects, GitHub and Quarto",
+    "crumbs": [
+      "Home",
+      "Going further",
+      "Resources"
+    ]
+  },
+  {
+    "objectID": "extras/interactive-plots.html",
+    "href": "extras/interactive-plots.html",
+    "title": "Interactive plots",
+    "section": "",
+    "text": "A plotOutput() can also be an input: if you give it the click and brush arguments, the coordinates of a click, or of the rectangle drawn with the mouse, arrive in the server as input$plot_click and input$plot_brush.\nTwo helpers turn the coordinates into rows of the data:\nLoad a dataset, click Select & Display, then click on a point or draw a rectangle on the plot.",
+    "crumbs": [
+      "Home",
+      "Going further",
+      "Interactive plots"
+    ]
+  },
+  {
+    "objectID": "extras/interactive-plots.html#what-else-is-in-this-app",
+    "href": "extras/interactive-plots.html#what-else-is-in-this-app",
+    "title": "Interactive plots",
+    "section": "What else is in this app",
+    "text": "What else is in this app\n\nreactiveValues(): a “shelf” (values$data, values$df) where observeEvent() puts objects, and the outputs take them. It is an alternative to eventReactive(): more flexible, but the flow is harder to follow\nconditionalPanel(condition = \"input.load &gt;= 1\", ...): the variable menus appear only after the first click on Load data\nvalidate(need(condition, \"message\")): like req(), but it shows a message to the user instead of an empty box",
+    "crumbs": [
+      "Home",
+      "Going further",
+      "Interactive plots"
+    ]
+  },
+  {
+    "objectID": "extras/download.html",
+    "href": "extras/download.html",
+    "title": "Downloads",
+    "section": "",
+    "text": "Downloads follow the usual pair:\n\nin ui.R, downloadButton(\"id\", \"Label\")\nin server.R, output$id &lt;- downloadHandler(...)\n\noutput$downloadSummary &lt;- downloadHandler(\n1  filename = function() {\n    paste0(\"descriptive-\", input$dataset, \".csv\")\n  },\n2  content = function(file) {\n    write.csv(ddata(), file, row.names = FALSE)\n  }\n)\n\n1\n\nA function that returns the name of the file the user will get\n\n2\n\nA function that writes the content into file (a temporary path chosen by Shiny)\n\n\nFor a plot, content opens a graphic device, draws the plot and closes the device:\ncontent = function(file) {\n  png(file, width = 800, height = 600)\n  plot(dataInput()[, 1:2])\n  dev.off()\n}\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 750\n## file: ui.R\nlibrary(shiny)\n\nui &lt;- fluidPage(\n  sidebarLayout(\n    sidebarPanel(\n      selectInput(\"dataset\", \"Choose a dataset:\",\n                  choices = c(\"rock\", \"pressure\", \"cars\")),\n      actionButton(\"load\", \"Select dataset\")\n    ),\n    mainPanel(\n      plotOutput(\"graph\"),\n      downloadButton(\"downloadPlot\", \"Download plot\"),\n      verbatimTextOutput(\"summary\"),\n      downloadButton(\"downloadSummary\", \"Download summary\")\n    )\n  )\n)\n\n## file: server.R\nlibrary(shiny)\n\nserver &lt;- function(input, output, session) {\n\n  dataInput &lt;- eventReactive(input$load, {\n    switch(input$dataset,\n           rock = rock,\n           pressure = pressure,\n           cars = cars)\n  })\n\n  # descriptive statistics of the first two columns\n  ddata &lt;- reactive({\n    df &lt;- dataInput()[, 1:2]\n    data.frame(variable = names(df),\n               mean = sapply(df, mean),\n               sd = sapply(df, sd),\n               row.names = NULL)\n  })\n\n  output$graph &lt;- renderPlot({\n    plot(dataInput()[, 1:2])\n  })\n\n  output$summary &lt;- renderPrint({\n    ddata()\n  })\n\n  # downloadHandler = the \"render\" function of downloadButton()\n  output$downloadSummary &lt;- downloadHandler(\n    filename = function() {\n      paste0(\"descriptive-\", input$dataset, \".csv\")\n    },\n    content = function(file) {\n      write.csv(ddata(), file, row.names = FALSE)\n    }\n  )\n\n  output$downloadPlot &lt;- downloadHandler(\n    filename = function() {\n      paste0(\"plot-\", input$dataset, \".png\")\n    },\n    content = function(file) {\n      png(file, width = 800, height = 600)\n      plot(dataInput()[, 1:2])\n      dev.off()\n    }\n  )\n}\n\n\n\n\n\n\n\nExercise\n\n\n\nAdd a download button to your explore-a-dataset app that saves newdata() as a CSV file.",
+    "crumbs": [
+      "Home",
+      "Going further",
+      "Downloads"
+    ]
+  },
+  {
+    "objectID": "day2/08-github.html",
+    "href": "day2/08-github.html",
+    "title": "Your app on GitHub",
+    "section": "",
+    "text": "The whole of Day 1 on one card\n\n\n\n\nA Shiny app is a folder with ui.R (what the user sees) and server.R (what R does)\nUI and server talk only through IDs: inputId → input$id, outputId → output$id\nEach *Output() in the UI has its render*() partner in the server\nrender*() and reactive() re-run automatically when the inputs they read change\neventReactive(input$button, { ... }) re-runs only when the button is clicked\nuiOutput() + renderUI() create inputs that depend on the data\n\n\n\nOpen your project my-shiny-app, run the app and check it works. If you did not finish yesterday, copy the files of apps/05-explore-step4 into the project.",
+    "crumbs": [
+      "Home",
+      "Day 2 · Spread the shine",
+      "Your app on GitHub"
+    ]
+  },
+  {
+    "objectID": "day2/08-github.html#recap-of-day-1",
+    "href": "day2/08-github.html#recap-of-day-1",
+    "title": "Your app on GitHub",
+    "section": "",
+    "text": "The whole of Day 1 on one card\n\n\n\n\nA Shiny app is a folder with ui.R (what the user sees) and server.R (what R does)\nUI and server talk only through IDs: inputId → input$id, outputId → output$id\nEach *Output() in the UI has its render*() partner in the server\nrender*() and reactive() re-run automatically when the inputs they read change\neventReactive(input$button, { ... }) re-runs only when the button is clicked\nuiOutput() + renderUI() create inputs that depend on the data\n\n\n\nOpen your project my-shiny-app, run the app and check it works. If you did not finish yesterday, copy the files of apps/05-explore-step4 into the project.",
+    "crumbs": [
+      "Home",
+      "Day 2 · Spread the shine",
+      "Your app on GitHub"
+    ]
+  },
+  {
+    "objectID": "day2/08-github.html#what-the-online-server-needs",
+    "href": "day2/08-github.html#what-the-online-server-needs",
+    "title": "Your app on GitHub",
+    "section": "What the online server needs",
+    "text": "What the online server needs\nTo publish the app, the online server (Posit Connect Cloud) takes it from a GitHub repository. So the plan for today is:\n\n\n\n\n\nflowchart LR\n    A[\"💻 Your project&lt;br/&gt;ui.R + server.R\"] --&gt; B[\"+ app.R&lt;br/&gt;+ manifest.json\"]\n    B --&gt;|\"commit + push\"| C[\"GitHub&lt;br/&gt;repository\"]\n    C --&gt;|\"publish\"| D[\"☁️ Connect Cloud&lt;br/&gt;your app online\"]\n    style C fill:#24292f,color:#fff\n    style D fill:#447099,color:#fff",
+    "crumbs": [
+      "Home",
+      "Day 2 · Spread the shine",
+      "Your app on GitHub"
+    ]
+  },
+  {
+    "objectID": "day2/08-github.html#step-1-add-app.r",
+    "href": "day2/08-github.html#step-1-add-app.r",
+    "title": "Your app on GitHub",
+    "section": "Step 1 · Add app.R",
+    "text": "Step 1 · Add app.R\nConnect Cloud looks for a primary file, and the standard name for it is app.R. We do not need to rewrite anything: a tiny app.R reads our two files and puts them together.\nFile → New File → R Script, paste this and save it as app.R in the project folder:\nlibrary(shiny)\n\nsource(\"ui.R\")        # creates the object ui\nsource(\"server.R\")    # creates the object server\n\nshinyApp(ui, server)\nRun it (Run App): it is the same app as before. Now you can also see why we always wrote ui &lt;- fluidPage(...) and server &lt;- function(...): source() runs the files and leaves those two objects ready for shinyApp().",
+    "crumbs": [
+      "Home",
+      "Day 2 · Spread the shine",
+      "Your app on GitHub"
+    ]
+  },
+  {
+    "objectID": "day2/08-github.html#step-2-write-the-manifest",
+    "href": "day2/08-github.html#step-2-write-the-manifest",
+    "title": "Your app on GitHub",
+    "section": "Step 2 · Write the manifest",
+    "text": "Step 2 · Write the manifest\nConnect Cloud is not your computer: it does not know which R packages your app uses. The file manifest.json lists them, with their versions. It is written for you by the rsconnect package.\nIn the console, with the project open:\n# install.packages(\"rsconnect\")   # if you do not have it yet\nrsconnect::writeManifest()\nA file manifest.json appears in the project. Your folder now looks like this:\nmy-shiny-app/\n├── .gitignore\n├── my-shiny-app.Rproj\n├── app.R\n├── ui.R\n├── server.R\n└── manifest.json\n\n\n\n\n\n\nRe-write the manifest when the packages change\n\n\n\nIf you later add a package to the app (e.g., library(ggplot2)), run rsconnect::writeManifest() again before pushing, otherwise the online app will not find it.",
+    "crumbs": [
+      "Home",
+      "Day 2 · Spread the shine",
+      "Your app on GitHub"
+    ]
+  },
+  {
+    "objectID": "day2/08-github.html#step-3-from-the-project-to-a-github-repository",
+    "href": "day2/08-github.html#step-3-from-the-project-to-a-github-repository",
+    "title": "Your app on GitHub",
+    "section": "Step 3 · From the project to a GitHub repository",
+    "text": "Step 3 · From the project to a GitHub repository\nWe use GitHub Desktop (detailed guide with screenshots: Deploy on GitHub).\n\nGitHub Desktop → File → Add local repository… → choose the folder my-shiny-app\nGitHub Desktop says that the folder is not a Git repository yet: click create a repository here, then Create repository\nClick Publish repository. Untick Keep this code private: Connect Cloud (free plan) publishes from public repositories\nCheck on github.com that the repository contains app.R, ui.R, server.R and manifest.json\n\nFrom now on, every change follows the usual cycle: edit → commit (with a message) → push.\n\n\n\n\n\n\nCheckpoint\n\n\n\n✅ app.R runs the app ✅ manifest.json is in the project ✅ The repository is on GitHub, public, with all the files",
+    "crumbs": [
+      "Home",
+      "Day 2 · Spread the shine",
+      "Your app on GitHub"
+    ]
+  },
+  {
+    "objectID": "day1/06-eventreactive.html",
+    "href": "day1/06-eventreactive.html",
+    "title": "Wait for it: eventReactive()",
+    "section": "",
+    "text": "With reactive(), the app reacts immediately to every change. That is not always what we want:\nWe want the app to wait until the user says “go”. The “go” is an actionButton(), and the waiting is done by eventReactive().",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "Wait for it: eventReactive()"
+    ]
+  },
+  {
+    "objectID": "day1/06-eventreactive.html#the-two-pieces",
+    "href": "day1/06-eventreactive.html#the-two-pieces",
+    "title": "Wait for it: eventReactive()",
+    "section": "The two pieces",
+    "text": "The two pieces\n# ui.R\n1actionButton(\"load\", \"Select dataset\")\n\n1\n\nA button with ID load. Remember: input$load is a counter that increases at every click\n\n\n# server.R\n1dataInput &lt;- eventReactive(input$load, {\n2  if (input$dataset == 1) {\n    rock\n  } else if (input$dataset == 2) {\n    pressure\n  } else {\n    cars\n  }\n})\n\n1\n\nThe first argument is the trigger: the code runs only when input$load changes, i.e., when the button is clicked\n\n2\n\nThe code to run. It reads input$dataset, but changing the dataset does not trigger it: its value is simply read at the moment of the click\n\n\ndataInput() is then used exactly as a reactive(): data &lt;- dataInput() inside the render*() functions.",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "Wait for it: eventReactive()"
+    ]
+  },
+  {
+    "objectID": "day1/06-eventreactive.html#the-app",
+    "href": "day1/06-eventreactive.html#the-app",
+    "title": "Wait for it: eventReactive()",
+    "section": "The app",
+    "text": "The app\nChange the dataset: nothing happens. Click the button: now it does.\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 650\n## file: ui.R\nlibrary(shiny)\n\nui &lt;- fluidPage(\n  sidebarLayout(\n    sidebarPanel(\n      selectInput(\n        inputId = \"dataset\",\n        label = \"Choose a dataset:\",\n        choices = list(\"rock\" = 1, \"pressure\" = 2, \"cars\" = 3)\n      ),\n      actionButton(\"load\", \"Select dataset\")\n    ),\n    mainPanel(\n      plotOutput(\"graph\"),\n      verbatimTextOutput(\"summary\")\n    )\n  )\n)\n\n## file: server.R\nlibrary(shiny)\n\nserver &lt;- function(input, output, session) {\n\n  # runs ONLY when the button is clicked\n  dataInput &lt;- eventReactive(input$load, {\n    if (input$dataset == 1) {\n      rock\n    } else if (input$dataset == 2) {\n      pressure\n    } else {\n      cars\n    }\n  })\n\n  output$graph &lt;- renderPlot({\n    data &lt;- dataInput()\n    plot(data[, 1:2])\n  })\n\n  output$summary &lt;- renderPrint({\n    data &lt;- dataInput()\n    summary(data[, 1:2])\n  })\n}\n\nNotice also that before the first click the outputs are empty: at the start the button has never been clicked, so eventReactive() has no value yet, and the outputs that need it wait silently.",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "Wait for it: eventReactive()"
+    ]
+  },
+  {
+    "objectID": "day1/06-eventreactive.html#reactive-vs-eventreactive",
+    "href": "day1/06-eventreactive.html#reactive-vs-eventreactive",
+    "title": "Wait for it: eventReactive()",
+    "section": "reactive() vs eventReactive()",
+    "text": "reactive() vs eventReactive()\n\n\n\n\n\n\n\n\n\nreactive()\neventReactive()\n\n\n\n\nRe-runs when…\nany input it reads changes\nonly the trigger changes (e.g., a button)\n\n\nInputs read inside\nare triggers\nare only read, at the moment of the trigger\n\n\nAt the start\nruns as soon as an output needs it\nwaits for the first trigger\n\n\nYou use it with\ndataInput()\ndataInput()\n\n\n\n\n\n\n\n\nflowchart LR\n    D0[\"input$dataset\"] -.-&gt;|\"read only\"| E[\"dataInput()&lt;br/&gt;eventReactive\"]\n    B[\"input$load&lt;br/&gt;(button)\"] ==&gt;|\"trigger\"| E\n    E --&gt; G[\"output$graph\"]\n    E --&gt; S[\"output$summary\"]\n    style D0 fill:#2b6c8e,color:#fff\n    style B fill:#d9534f,color:#fff\n    style E fill:#f0ad4e,color:#fff\n    style G fill:#8fd36f,color:#fff\n    style S fill:#8fd36f,color:#fff\n\n\n\n\n\n\n\n\n\n\n\n\nAnd observeEvent()?\n\n\n\nYou will also find observeEvent(input$button, { ... }). It looks the same, but it returns nothing: it is used to do something (update a menu, show a message, save a file), not to compute a value to use in the outputs. To compute data for the outputs, use eventReactive(). There is an example in Going further.",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "Wait for it: eventReactive()"
+    ]
+  },
+  {
+    "objectID": "day1/06-eventreactive.html#your-turn",
+    "href": "day1/06-eventreactive.html#your-turn",
+    "title": "Wait for it: eventReactive()",
+    "section": "Your turn",
+    "text": "Your turn\n\n\n\n\n\n\nExercise 1 · In your project\n\n\n\nStarting from your reactive() version of the app:\n\nadd an actionButton(\"load\", \"Select dataset\") in the sidebarPanel()\nturn reactive({ ... }) into eventReactive(input$load, { ... })\n\nRun the app and check that nothing happens until you click.\n\n\n\n\n\n\n\n\nSolution 1\n\n\n\n\n\nSee apps/04-eventreactive. Only two lines change compared to the reactive() version:\n# ui.R\nactionButton(\"load\", \"Select dataset\")\n# server.R\ndataInput &lt;- eventReactive(input$load, {\n  ...\n})\n(In that app the choices are named, \"rock\" = 1, so the server compares input$dataset == 1. With choices = c(\"rock\", \"pressure\", \"cars\") you can keep your switch().)\n\n\n\n\n\n\n\n\n\nExercise 2 · Two buttons, two moments\n\n\n\nIn the live app above, add a second button actionButton(\"draw\", \"Draw plot\") and make only the plot wait for it, while the summary updates as soon as the data are loaded.\nHint: you need a second eventReactive() that is triggered by input$draw and returns dataInput().\n\n\n\n\n\n\n\n\nSolution 2\n\n\n\n\n\n# ui.R, in the sidebarPanel()\nactionButton(\"draw\", \"Draw plot\")\n# server.R\nplotData &lt;- eventReactive(input$draw, {\n  dataInput()\n})\n\noutput$graph &lt;- renderPlot({\n  data &lt;- plotData()\n  plot(data[, 1:2])\n})\nThis is the idea of the next page: one button to load the data, one to run the analysis.",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "Wait for it: eventReactive()"
+    ]
+  },
+  {
+    "objectID": "day1/04-outputs.html",
+    "href": "day1/04-outputs.html",
+    "title": "Outputs and render functions",
+    "section": "",
+    "text": "An output always comes in pairs:",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "Outputs and render functions"
+    ]
+  },
+  {
+    "objectID": "day1/04-outputs.html#the-pairs",
+    "href": "day1/04-outputs.html#the-pairs",
+    "title": "Outputs and render functions",
+    "section": "The pairs",
+    "text": "The pairs\n\n\n\nIn ui.R\nIn server.R\nShows\n\n\n\n\ntextOutput()\nrenderText()\nplain text, inline\n\n\nverbatimTextOutput()\nrenderPrint()\nwhat R prints in the console\n\n\nplotOutput()\nrenderPlot()\na plot\n\n\ntableOutput()\nrenderTable()\na (small) table\n\n\nuiOutput()\nrenderUI()\nnew UI elements, created by the server (Your app: explore a dataset)\n\n\ndownloadButton()\ndownloadHandler()\na file to download (Going further)",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "Outputs and render functions"
+    ]
+  },
+  {
+    "objectID": "day1/04-outputs.html#all-of-them-in-one-app",
+    "href": "day1/04-outputs.html#all-of-them-in-one-app",
+    "title": "Outputs and render functions",
+    "section": "All of them in one app",
+    "text": "All of them in one app\nThe same dataset, shown four ways. Change the dataset and the number of rows.\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 900\n## file: ui.R\nlibrary(shiny)\n\nui &lt;- fluidPage(\n  sidebarLayout(\n    sidebarPanel(\n      selectInput(\"dataset\", \"Choose a dataset:\",\n                  choices = c(\"rock\", \"pressure\", \"cars\")),\n      sliderInput(\"n\", \"Rows in the table:\", min = 1, max = 10, value = 5)\n    ),\n    mainPanel(\n      h4(\"textOutput()\"),\n      textOutput(\"text\"),\n      h4(\"verbatimTextOutput()\"),\n      verbatimTextOutput(\"print\"),\n      h4(\"tableOutput()\"),\n      tableOutput(\"table\"),\n      h4(\"plotOutput()\"),\n      plotOutput(\"plot\", height = \"300px\")\n    )\n  )\n)\n## file: server.R\nlibrary(shiny)\n\nserver &lt;- function(input, output, session) {\n\n  output$text &lt;- renderText({\n    data &lt;- get(input$dataset)\n    paste(\"The dataset\", input$dataset, \"has\", nrow(data), \"rows and\",\n          ncol(data), \"columns.\")\n  })\n\n  output$print &lt;- renderPrint({\n    data &lt;- get(input$dataset)\n    summary(data)\n  })\n\n  output$table &lt;- renderTable({\n    data &lt;- get(input$dataset)\n    head(data, input$n)\n  })\n\n  output$plot &lt;- renderPlot({\n    data &lt;- get(input$dataset)\n    plot(data[, 1:2])\n  })\n}\nget(\"cars\") returns the object called cars: it is a quick way to go from the name of a dataset (a text, the value of the input) to the dataset itself.",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "Outputs and render functions"
+    ]
+  },
+  {
+    "objectID": "day1/04-outputs.html#rendertext-or-renderprint",
+    "href": "day1/04-outputs.html#rendertext-or-renderprint",
+    "title": "Outputs and render functions",
+    "section": "renderText() or renderPrint()?",
+    "text": "renderText() or renderPrint()?\nThey look similar but they are not the same:\n\nrenderText() turns the result into one plain string (it uses cat()): good for sentences\nrenderPrint() shows the result as the R console would print it: good for summary(), str(), models, data frames\n\nIn the app above, replace renderPrint with renderText for summary(data) (and verbatimTextOutput with textOutput in the UI): the numbers are all glued together. That is why we use renderPrint() for statistical output.",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "Outputs and render functions"
+    ]
+  },
+  {
+    "objectID": "day1/04-outputs.html#common-mistakes",
+    "href": "day1/04-outputs.html#common-mistakes",
+    "title": "Outputs and render functions",
+    "section": "Common mistakes",
+    "text": "Common mistakes\n\n\n\n\n\n\nWhen the box stays empty\n\n\n\n\nThe IDs do not match: plotOutput(\"graph\") in the UI, output$grahp in the server. No error, just an empty box\nThe pair is wrong: plotOutput() in the UI, renderPrint() in the server. The box cannot show that content\nYou forgot output$...: renderPlot({ ... }) alone computes the plot and throws it away\nThe box is not in the UI: the server fills output$summary, but ui.R has no ...Output(\"summary\")",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "Outputs and render functions"
+    ]
+  },
+  {
+    "objectID": "day1/04-outputs.html#your-turn",
+    "href": "day1/04-outputs.html#your-turn",
+    "title": "Outputs and render functions",
+    "section": "Your turn",
+    "text": "Your turn\n\n\n\n\n\n\nExercise 1 · From one output to two\n\n\n\nOpen the first datasets app in the editor and add a second plot: a histogram of the first column of the dataset (hist(data[, 1])).\nYou need two changes: one in ui.R and one in server.R.\n\n\n\n\n\n\n\n\nSolution 1\n\n\n\n\n\n# ui.R, inside mainPanel()\nplotOutput(\"hist\", height = \"300px\")\n# server.R, inside the server function\noutput$hist &lt;- renderPlot({\n  data &lt;- get(input$dataset)\n  hist(data[, 1], main = names(data)[1])\n})\n\n\n\n\n\n\n\n\n\nExercise 2 · Your project\n\n\n\nCopy the files of apps/02-datasets into your project (replacing your ui.R and server.R) and run it. We use it in the next page.",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "Outputs and render functions"
+    ]
+  },
+  {
+    "objectID": "day1/02-logic.html",
+    "href": "day1/02-logic.html",
+    "title": "How Shiny thinks",
+    "section": "",
+    "text": "The Shiny page showed the logic: the UI sets the options and displays the results, the server elaborates the options and sends back the results. Here we look inside the two pieces, and at how they talk to each other.",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "How Shiny thinks"
+    ]
+  },
+  {
+    "objectID": "day1/02-logic.html#the-ui-is-a-web-page",
+    "href": "day1/02-logic.html#the-ui-is-a-web-page",
+    "title": "How Shiny thinks",
+    "section": "The UI is a web page",
+    "text": "The UI is a web page\nfluidPage(), selectInput() & co. are R functions that write HTML for you. Try this in the console:\nlibrary(shiny)\nselectInput(inputId = \"mySelection\", label = \"Select box\",\n            choices = c(\"Choice 1\" = 1, \"Choice 2\" = 2))\nR prints (shortened):\n&lt;div class=\"form-group shiny-input-container\"&gt;\n  &lt;label class=\"control-label\" for=\"mySelection\"&gt;Select box&lt;/label&gt;\n  &lt;select id=\"mySelection\"&gt;\n    &lt;option value=\"1\" selected&gt;Choice 1&lt;/option&gt;\n    &lt;option value=\"2\"&gt;Choice 2&lt;/option&gt;\n  &lt;/select&gt;\n&lt;/div&gt;\nSo the UI contains two kinds of elements:\n\nInputs (*Input(), actionButton()…): the controls the user plays with\nOutputs (*Output()): empty boxes, each with a name, waiting for the server to fill them\n\nEach element is identified by its ID (id=\"mySelection\"). Remember this: the ID is the only thing the server knows about the UI.",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "How Shiny thinks"
+    ]
+  },
+  {
+    "objectID": "day1/02-logic.html#the-server-is-a-function",
+    "href": "day1/02-logic.html#the-server-is-a-function",
+    "title": "How Shiny thinks",
+    "section": "The server is a function",
+    "text": "The server is a function\nserver &lt;- function(input, output, session) {\n  ...\n}\nShiny calls this function once for each user that opens the app (each user has their own session). Inside it:\n\ninput is a list with the current value of every input, accessed by ID: input$mySelection. You can read it, you cannot change it\noutput is the list of the boxes to fill, accessed by ID: output$myOutput &lt;- render…({ … })",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "How Shiny thinks"
+    ]
+  },
+  {
+    "objectID": "day1/02-logic.html#the-contract-ids",
+    "href": "day1/02-logic.html#the-contract-ids",
+    "title": "How Shiny thinks",
+    "section": "The contract: IDs",
+    "text": "The contract: IDs\nLet’s go back to the first app and follow the IDs:\n# ui.R\nui &lt;- fluidPage(\n1  selectInput(inputId = \"mySelection\",\n2              label = h3(\"Select box\"),\n3              choices = list(\"Choice 1\" = 1, \"Choice 2\" = 2, \"Choice 3\" = 3),\n4              selected = 1),\n5  verbatimTextOutput(outputId = \"myOutput\")\n)\n\n1\n\nThe ID of the input: for internal use, the server will call it input$mySelection\n\n2\n\nThe label: for external use, it is what the user reads\n\n3\n\nThe options: the user sees \"Choice 1\", the server receives \"1\" (as text!)\n\n4\n\nThe option selected when the app starts\n\n5\n\nThe ID of an empty output box: the server will fill output$myOutput\n\n\n# server.R\nserver &lt;- function(input, output, session) {\n1  output$myOutput &lt;- renderPrint({\n2    paste(\"This is my choice:\", input$mySelection)\n  })\n}\n\n1\n\nFill the box myOutput. renderPrint() is the partner of verbatimTextOutput()\n\n2\n\nRead the current value of the input mySelection\n\n\n\n\n\n\n\nflowchart LR\n    A[\"UI&lt;br/&gt;selectInput(inputId = 'mySelection')\"] --&gt;|\"input$mySelection\"| B[\"SERVER&lt;br/&gt;renderPrint({ ... })\"]\n    B --&gt;|\"output$myOutput\"| C[\"UI&lt;br/&gt;verbatimTextOutput(outputId = 'myOutput')\"]\n    style A fill:#2b6c8e,color:#fff\n    style C fill:#2b6c8e,color:#fff\n    style B fill:#8fd36f,color:#fff\n\n\n\n\n\n\n\nThe rules of the contract\n\nDefined in the UI, not used in the server: nothing happens. The widget is there, you can play with it, but nobody is listening\nUsed in the server, not defined in the UI (often a typo!): Shiny does not warn you\n\ninput$myselection (lowercase s) simply is NULL, so the result is empty or the code fails\noutput$myOuptut is computed but never shown, because no box has that name\n\nIDs must be unique: two elements with the same ID make the app behave unpredictably (outputs may not show at all)\ninput is read-only: input$mySelection &lt;- 2 is an error\n\n\n\nSpot the bug\nThis app has a bug: the output never shows the choice. Find it and fix it in the editor, then press ▶.\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 220\n## file: ui.R\nlibrary(shiny)\n\nui &lt;- fluidPage(\n  selectInput(\n    inputId = \"mySelection\",\n    label = h3(\"Select box\"),\n    choices = list(\"Choice 1\" = 1, \"Choice 2\" = 2, \"Choice 3\" = 3),\n    selected = 1\n  ),\n  verbatimTextOutput(outputId = \"myOutput\")\n)\n## file: server.R\nlibrary(shiny)\n\nserver &lt;- function(input, output, session) {\n  output$myOutput &lt;- renderPrint({\n    paste(\"This is my choice:\", input$myselection)\n  })\n}\n\n\n\n\n\n\nSolution\n\n\n\n\n\ninput$myselection must be input$mySelection: IDs are case-sensitive. Since input$myselection does not exist, it is NULL, and paste() silently ignores it.",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "How Shiny thinks"
+    ]
+  },
+  {
+    "objectID": "day1/02-logic.html#reactivity-the-mental-model",
+    "href": "day1/02-logic.html#reactivity-the-mental-model",
+    "title": "How Shiny thinks",
+    "section": "Reactivity: the mental model",
+    "text": "Reactivity: the mental model\nLook at the server again: there is no loop, no “when the user clicks, do this”. How does the output know it has to change?\nThink of a spreadsheet. If cell B1 contains =A1 * 2, you never “run” B1: every time A1 changes, B1 updates by itself.\nrender*() functions work the same way:\n\nthe code inside render*({ ... }) is a recipe, not a command executed once\nShiny notes which inputs the recipe reads (here: input$mySelection)\nwhen one of those inputs changes, Shiny re-runs the recipe and sends the new result to the box\n\n\n\n\n\n\nflowchart LR\n    I[\"input$mySelection&lt;br/&gt;changes\"] --&gt; R[\"renderPrint({ ... })&lt;br/&gt;runs again\"] --&gt; O[\"output$myOutput&lt;br/&gt;is updated\"]\n    style I fill:#2b6c8e,color:#fff\n    style R fill:#8fd36f,color:#fff\n    style O fill:#2b6c8e,color:#fff\n\n\n\n\n\n\nThis is why the server is not read from top to bottom like a script: each recipe runs when it needs to.\n\n\n\n\n\n\nInputs live only inside reactive code\n\n\n\nReading an input outside a recipe does not work:\nserver &lt;- function(input, output, session) {\n  choice &lt;- input$mySelection        # ❌ outside render*()\n  output$myOutput &lt;- renderPrint({ choice })\n}\nError: Can't access reactive value 'mySelection' outside of reactive consumer.\nThe server function runs once, at the start: at that moment nobody has chosen anything yet. Inputs must be read inside render*() (or the other reactive functions we will meet: reactive(), eventReactive()).\n\n\n\n\n\n\n\n\nIn a nutshell\n\n\n\n\nUI = what the user sees: inputs (controls) and outputs (empty boxes)\nServer = a function of input and output that fills the boxes\nThey talk only through IDs: inputId → input$id, outputId → output$id\nrender*() are recipes that re-run automatically when the inputs they read change",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "How Shiny thinks"
+    ]
+  },
+  {
+    "objectID": "day1/00-shiny.html",
+    "href": "day1/00-shiny.html",
+    "title": "Shiny",
+    "section": "",
+    "text": "ui (User Interface)\nThe container, whatever sees the user\nUsed for setting the desired configurations of options that will be elaborated in the server\nUsed for displaying the results of the computations that took place in the server\n\n\nserver\nIt gets the work done, according to the configuration set in the UI\nReplaces the results into the allocated spaces\n\n\nUI and Server work in a flow, communicating to each other (Figure 1).\n\n\n\n\n\n\n\n\n\nflowchart LR\n\n    UI[\"**UI**&lt;br/&gt;&lt;br/&gt;Set the options&lt;br/&gt;Displays the results\"]\n    SERVER[\"**SERVER**&lt;br/&gt;&lt;br/&gt;Elaborates the options&lt;br/&gt;Sends back the results\"]\n\n    UI --&gt;|\"Input\"| SERVER\n    SERVER --&gt;|\"Output\"| UI\n\n    style UI fill:#2b6c8e,stroke:#1b4258,stroke-width:2px,color:#ffffff\n    style SERVER fill:#8fd36f,stroke:#4c8b3a,stroke-width:2px,color:#ffffff\n\n    linkStyle default stroke:#FFD700,stroke-width:5px\n\n\n\n\n\n\n\n\n\nFigure 1: Interaction between the user interface (UI) and the server.\n\n\n\n\nDefine something in the ui and not using it in the server: nothing happens, it just doesn’t exist\nCalling something in the server that has not been defined in the ui: it doesn’t exist either, so you get errors everywhere or, even worse, nothing at all, without any warning (Spot the bug)",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "Shiny"
+    ]
+  },
+  {
+    "objectID": "day1/00-shiny.html#input",
+    "href": "day1/00-shiny.html#input",
+    "title": "Shiny",
+    "section": "Input",
+    "text": "Input\nsliderInput()     # Slider input widget\nnumericInput()    # Numeric input control\nselectInput()     # Select list input control\ncheckboxInput()   # Checkbox input control\ncheckboxGroupInput()\ndateInput()       # Date input\nfileInput()       # File upload control\nradioButtons()    # Radio buttons\ntextInput()       # Text input control\npasswordInput()   # Password input control\nactionButton()    # Action button\ndateRangeInput()  # Input a data range\nComplete list (with code)",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "Shiny"
+    ]
+  },
+  {
+    "objectID": "day1/00-shiny.html#output",
+    "href": "day1/00-shiny.html#output",
+    "title": "Shiny",
+    "section": "Output",
+    "text": "Output\nplotOutput()          # Plot output element\ntextOutput()          # Text output element\nverbatimTextOutput()  # Verbatim text output element\ntableOutput()         # Table output element\ndataTableOutput()     # Data table output element\nhtmlOutput()          # HTML output element\nuiOutput()            # user interface element\ndownloadButton()      # Download button\nProgress()            # Reporting progress (object oriented)\nwithProgress()        # Reporting progress (functional)\noutputOptions()       # Set options for an output object",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "Shiny"
+    ]
+  },
+  {
+    "objectID": "day1/00-shiny.html#ui-1",
+    "href": "day1/00-shiny.html#ui-1",
+    "title": "Shiny",
+    "section": "UI",
+    "text": "UI\n\nInput definition\nui = fluidPage(\nselectInput(inputId = \"mySelection\",\n            label = h3(\"Select box\"),\n    choices = list(\"Choice 1\" = 1, \"Choice 2\" = 2, \"Choice 3\" = 3),\n    selected = 1)\n)\n\n\nOutput definition\nui = fluidPage(\nselectInput(inputId = \"mySelection\",\n            label = h3(\"Select box\"),\n    choices = list(\"Choice 1\" = 1, \"Choice 2\" = 2, \"Choice 3\" = 3),\n    selected = 1),\n\n  verbatimTextOutput(\n  outputId = \"myOutput\"\n)\n\n)",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "Shiny"
+    ]
+  },
+  {
+    "objectID": "day1/00-shiny.html#server-1",
+    "href": "day1/00-shiny.html#server-1",
+    "title": "Shiny",
+    "section": "Server",
+    "text": "Server\nui = fluidPage(\nselectInput(inputId = \"mySelection\",\n            label = h3(\"Select box\"),\n    choices = list(\"Choice 1\" = 1, \"Choice 2\" = 2, \"Choice 3\" = 3),\n    selected = 1),\n\n  verbatimTextOutput(\n  outputId = \"myOutput\"\n)\n\n)\n\nserver = function(input, output) {\n  output$myOutput = renderText({\n    paste(paste(\"This is my choice\"), input$mySelection)\n  })\n}",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "Shiny"
+    ]
+  },
+  {
+    "objectID": "day1/00-shiny.html#all-together",
+    "href": "day1/00-shiny.html#all-together",
+    "title": "Shiny",
+    "section": "All together",
+    "text": "All together\n1ui = fluidPage(selectInput(inputId = \"mySelection\",\n2                          label = h3(\"Select box\"),\n3                          choices = list(\"Choice 1\" = 1, \"Choice 2\" = 2, \"Choice 3\" = 3),\n4                          selected = 1),\n5         verbatimTextOutput( outputId = \"myOutput\")\n         )\nserver = function(input, output) {\n6           output$myOutput = renderPrint({\n7             paste(paste(\"This is my choice\"),  input$mySelection)\n           })\n}\nshinyApp(ui, server)\n\n1\n\nDefine the ID of the input in the UI (internal use)\n\n2\n\nDefine the label of the element (external use)\n\n3\n\nOptions (labels) and their internal labels\n\n4\n\nDefault selected option\n\n5\n\nDefine the label (internal use) of the output in the UI (where the results elaborated by the server will be stored)\n\n6\n\nFunction in the server to render the results (consistent with the UI definition)\n\n7\n\nCall for the label of the input in the UI",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "Shiny"
+    ]
+  },
+  {
+    "objectID": "day1/00-shiny.html#an-astonishing-result",
+    "href": "day1/00-shiny.html#an-astonishing-result",
+    "title": "Shiny",
+    "section": "An astonishing result",
+    "text": "An astonishing result\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 220\nlibrary(shiny)\n\nui = fluidPage(selectInput(inputId = \"mySelection\",\n                          label = h3(\"Select box\"),\n                          choices = list(\"Choice 1\" = 1, \"Choice 2\" = 2, \"Choice 3\" = 3),\n                          selected = 1),\n         verbatimTextOutput( outputId = \"myOutput\")\n         )\nserver = function(input, output) {\n           output$myOutput = renderPrint({\n             paste(paste(\"This is my choice\"),  input$mySelection)\n           })\n}\nshinyApp(ui, server)\nIn the next page we put this same app in an RStudio project, with the ui in a script called ui.R and the server in a script called server.R.",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "Shiny"
+    ]
+  },
+  {
+    "objectID": "day1/01-project.html",
+    "href": "day1/01-project.html",
+    "title": "A Shiny project",
+    "section": "",
+    "text": "A Shiny app is a folder. In the folder there are (at least) two R scripts:\nThe best way to keep that folder tidy is an RStudio project. It will also be the folder that we put on GitHub and online on Day 2, so we create it right away.",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "A Shiny project"
+    ]
+  },
+  {
+    "objectID": "day1/01-project.html#step-1-create-the-project",
+    "href": "day1/01-project.html#step-1-create-the-project",
+    "title": "A Shiny project",
+    "section": "Step 1 · Create the project",
+    "text": "Step 1 · Create the project\nIn RStudio:\n\nFile → New Project… → New Directory → New Project\nDirectory name: my-shiny-app (no spaces, no accents)\nChoose where to save it (e.g., Documents/GitHub) and click Create Project\n\nRStudio opens the project: the Files pane shows the folder, which now contains only my-shiny-app.Rproj.\n\n\n\n\n\n\nWhy a project?\n\n\n\n\nThe project folder is the app: everything the app needs lives there\nFile paths are relative to the project, so the app works on any computer\nOn Day 2 the very same folder becomes a GitHub repository and then goes online",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "A Shiny project"
+    ]
+  },
+  {
+    "objectID": "day1/01-project.html#step-2-create-ui.r-and-server.r",
+    "href": "day1/01-project.html#step-2-create-ui.r-and-server.r",
+    "title": "A Shiny project",
+    "section": "Step 2 · Create ui.R and server.R",
+    "text": "Step 2 · Create ui.R and server.R\n\nFile → New File → R Script, then save it (File → Save) as ui.R\nFile → New File → R Script, then save it as server.R\n\nThe names must be exactly ui.R and server.R (lowercase, capital R), and both files must be in the same folder.\nYour project now looks like this:\nmy-shiny-app/\n├── my-shiny-app.Rproj\n├── ui.R\n└── server.R\n\n\n\n\n\n\nAlternative: let RStudio write the two scripts\n\n\n\n\n\nFile → New File → Shiny Web App… → Application type: Multiple File (ui.R/server.R).\nRStudio creates a sub-folder with the name you give to the application, containing a ui.R and a server.R with a demo app (a histogram of the Old Faithful geyser). It works, but the app ends up one folder deeper than the project. In this course we keep ui.R and server.R directly in the project folder.",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "A Shiny project"
+    ]
+  },
+  {
+    "objectID": "day1/01-project.html#step-3-write-the-two-scripts",
+    "href": "day1/01-project.html#step-3-write-the-two-scripts",
+    "title": "A Shiny project",
+    "section": "Step 3 · Write the two scripts",
+    "text": "Step 3 · Write the two scripts\nCopy this into ui.R:\nlibrary(shiny)\n\nui &lt;- fluidPage(\n  selectInput(\n    inputId = \"mySelection\",            # name used by the server\n    label = h3(\"Select box\"),           # what the user reads\n    choices = list(\"Choice 1\" = 1, \"Choice 2\" = 2, \"Choice 3\" = 3),\n    selected = 1\n  ),\n  verbatimTextOutput(outputId = \"myOutput\")  # empty box, filled by the server\n)\nand this into server.R:\nlibrary(shiny)\n\nserver &lt;- function(input, output, session) {\n  output$myOutput &lt;- renderPrint({\n    paste(\"This is my choice:\", input$mySelection)\n  })\n}\nWe dissect every line in the next page. For now, notice two things:\n\nui.R creates one object, ui: the page\nserver.R creates one object, server: a function of input and output",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "A Shiny project"
+    ]
+  },
+  {
+    "objectID": "day1/01-project.html#step-4-run-the-app",
+    "href": "day1/01-project.html#step-4-run-the-app",
+    "title": "A Shiny project",
+    "section": "Step 4 · Run the app",
+    "text": "Step 4 · Run the app\nAs soon as a file called ui.R or server.R is open, RStudio replaces the usual Run button with ▶ Run App. Click it.\nWhat happens:\n\nIn the console you read something like Listening on http://127.0.0.1:4321: R has started a small web server on your computer\nA window (or a browser tab) opens with the app: that is the UI, turned into a web page\nThe console shows a red stop sign: R is busy serving the app, so you cannot use the console until you stop it\n\nChoose another option in the menu: the text changes. Every time you change the input, the browser tells R, R runs the code in the server and sends back the new result.\nTo stop the app, click the red stop sign in the console (or press EscEsc in the console). If you change the code while the app is running, click Reload app in the app window.\n\n\n\n\n\n\nThe most common problems at this stage\n\n\n\n\nNo Run App button → the file is not saved, or it is not called exactly ui.R/server.R\ncould not find function \"fluidPage\" → library(shiny) is missing, or shiny is not installed\nThe console does not respond → the app is still running: stop it first",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "A Shiny project"
+    ]
+  },
+  {
+    "objectID": "day1/01-project.html#the-same-app-live",
+    "href": "day1/01-project.html#the-same-app-live",
+    "title": "A Shiny project",
+    "section": "The same app, live",
+    "text": "The same app, live\nThis is the same project, running in your browser. The two tabs on top are your two files, the app is below. Try to change the text \"This is my choice:\" and press ▶.\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 220\n## file: ui.R\nlibrary(shiny)\n\nui &lt;- fluidPage(\n  selectInput(\n    inputId = \"mySelection\",            # name used by the server\n    label = h3(\"Select box\"),           # what the user reads\n    choices = list(\"Choice 1\" = 1, \"Choice 2\" = 2, \"Choice 3\" = 3),\n    selected = 1\n  ),\n  verbatimTextOutput(outputId = \"myOutput\")  # empty box, filled by the server\n)\n\n## file: server.R\nlibrary(shiny)\n\nserver &lt;- function(input, output, session) {\n  output$myOutput &lt;- renderPrint({\n    paste(\"This is my choice:\", input$mySelection)\n  })\n}",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "A Shiny project"
+    ]
+  },
+  {
+    "objectID": "day1/01-project.html#two-files-or-one-file",
+    "href": "day1/01-project.html#two-files-or-one-file",
+    "title": "A Shiny project",
+    "section": "Two files or one file?",
+    "text": "Two files or one file?\nShiny also accepts a single file called app.R that contains both pieces and ends with shinyApp():\nlibrary(shiny)\n\nui &lt;- fluidPage(...)                              # what was in ui.R\nserver &lt;- function(input, output, session) {...}  # what was in server.R\n\nshinyApp(ui, server)                              # put them together\nIt is the same app. We use two files because they make the logic visible: one script for what the user sees, one for what R does. On Day 2 we will add a tiny app.R that simply reads the two files, because that is what the online server looks for.\n\n\n\n\n\n\nCheckpoint\n\n\n\n✅ A project my-shiny-app with ui.R and server.R ✅ Run App opens the app ✅ You know how to stop it",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "A Shiny project"
+    ]
+  },
+  {
+    "objectID": "day1/03-inputs.html",
+    "href": "day1/03-inputs.html",
+    "title": "Input widgets",
+    "section": "",
+    "text": "Every input widget has the same first two arguments:\nWhat changes from widget to widget is what arrives in input$id: a number, a text, a vector, a date, a data frame… Knowing it is what saves you from most errors in the server.\nIn all the apps on this page, the server prints the class and the structure (str()) of each input, so you can see exactly what it receives. Play with the widgets and watch the boxes on the right.",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "Input widgets"
+    ]
+  },
+  {
+    "objectID": "day1/03-inputs.html#choosing-from-a-list",
+    "href": "day1/03-inputs.html#choosing-from-a-list",
+    "title": "Input widgets",
+    "section": "Choosing from a list",
+    "text": "Choosing from a list\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 560\n## file: ui.R\nlibrary(shiny)\n\nui &lt;- fluidPage(\n  fluidRow(\n    column(6, selectInput(\"sel\", \"selectInput()\",\n                          choices = c(\"rock\", \"pressure\", \"cars\"))),\n    column(6, verbatimTextOutput(\"sel_out\"))\n  ),\n  fluidRow(\n    column(6, selectInput(\"sel_named\", \"selectInput() with named choices\",\n                          choices = c(\"rock\" = 1, \"pressure\" = 2, \"cars\" = 3))),\n    column(6, verbatimTextOutput(\"sel_named_out\"))\n  ),\n  fluidRow(\n    column(6, selectInput(\"sel_multi\", \"selectInput(multiple = TRUE)\",\n                          choices = c(\"A\", \"B\", \"C\"), multiple = TRUE)),\n    column(6, verbatimTextOutput(\"sel_multi_out\"))\n  ),\n  fluidRow(\n    column(6, radioButtons(\"radio\", \"radioButtons()\",\n                           choices = c(\"Low\" = \"low\", \"High\" = \"high\"))),\n    column(6, verbatimTextOutput(\"radio_out\"))\n  ),\n  fluidRow(\n    column(6, checkboxGroupInput(\"group\", \"checkboxGroupInput()\",\n                                 choices = c(\"A\", \"B\", \"C\"))),\n    column(6, verbatimTextOutput(\"group_out\"))\n  )\n)\n## file: server.R\nlibrary(shiny)\n\n# helper: print the class and the structure of an object\ninspect &lt;- function(x) {\n  cat(\"class:\", class(x), \"\\n\")\n  str(x)\n}\n\nserver &lt;- function(input, output, session) {\n  output$sel_out       &lt;- renderPrint(inspect(input$sel))\n  output$sel_named_out &lt;- renderPrint(inspect(input$sel_named))\n  output$sel_multi_out &lt;- renderPrint(inspect(input$sel_multi))\n  output$radio_out     &lt;- renderPrint(inspect(input$radio))\n  output$group_out     &lt;- renderPrint(inspect(input$group))\n}\n\n\n\n\n\n\nThings to notice\n\n\n\n\nWith named choices (\"rock\" = 1) the user sees the name, the server receives the value, and the value is always text: \"1\", not 1\nmultiple = TRUE and checkboxGroupInput() return a vector, and NULL when nothing is selected",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "Input widgets"
+    ]
+  },
+  {
+    "objectID": "day1/03-inputs.html#numbers-and-text",
+    "href": "day1/03-inputs.html#numbers-and-text",
+    "title": "Input widgets",
+    "section": "Numbers and text",
+    "text": "Numbers and text\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 480\n## file: ui.R\nlibrary(shiny)\n\nui &lt;- fluidPage(\n  fluidRow(\n    column(6, sliderInput(\"slider\", \"sliderInput()\",\n                          min = 0, max = 100, value = 50)),\n    column(6, verbatimTextOutput(\"slider_out\"))\n  ),\n  fluidRow(\n    column(6, sliderInput(\"range\", \"sliderInput() with a range\",\n                          min = 0, max = 100, value = c(20, 80))),\n    column(6, verbatimTextOutput(\"range_out\"))\n  ),\n  fluidRow(\n    column(6, numericInput(\"num\", \"numericInput()\",\n                           value = 10, min = 0, max = 100, step = 0.5)),\n    column(6, verbatimTextOutput(\"num_out\"))\n  ),\n  fluidRow(\n    column(6, textInput(\"text\", \"textInput()\", value = \"hello\")),\n    column(6, verbatimTextOutput(\"text_out\"))\n  )\n)\n## file: server.R\nlibrary(shiny)\n\ninspect &lt;- function(x) {\n  cat(\"class:\", class(x), \"\\n\")\n  str(x)\n}\n\nserver &lt;- function(input, output, session) {\n  output$slider_out &lt;- renderPrint(inspect(input$slider))\n  output$range_out  &lt;- renderPrint(inspect(input$range))\n  output$num_out    &lt;- renderPrint(inspect(input$num))\n  output$text_out   &lt;- renderPrint(inspect(input$text))\n}\n\n\n\n\n\n\nThings to notice\n\n\n\n\nIf you give sliderInput() two starting values, you get a range: a vector of length 2\nDelete the number in numericInput(): the server receives NA\ntextInput() always returns text, also when the user types 42",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "Input widgets"
+    ]
+  },
+  {
+    "objectID": "day1/03-inputs.html#yesno-and-dates",
+    "href": "day1/03-inputs.html#yesno-and-dates",
+    "title": "Input widgets",
+    "section": "Yes/no and dates",
+    "text": "Yes/no and dates\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 380\n## file: ui.R\nlibrary(shiny)\n\nui &lt;- fluidPage(\n  fluidRow(\n    column(6, checkboxInput(\"check\", \"checkboxInput()\", value = FALSE)),\n    column(6, verbatimTextOutput(\"check_out\"))\n  ),\n  fluidRow(\n    column(6, dateInput(\"date\", \"dateInput()\")),\n    column(6, verbatimTextOutput(\"date_out\"))\n  ),\n  fluidRow(\n    column(6, dateRangeInput(\"dates\", \"dateRangeInput()\")),\n    column(6, verbatimTextOutput(\"dates_out\"))\n  )\n)\n## file: server.R\nlibrary(shiny)\n\ninspect &lt;- function(x) {\n  cat(\"class:\", class(x), \"\\n\")\n  str(x)\n}\n\nserver &lt;- function(input, output, session) {\n  output$check_out &lt;- renderPrint(inspect(input$check))\n  output$date_out  &lt;- renderPrint(inspect(input$date))\n  output$dates_out &lt;- renderPrint(inspect(input$dates))\n}",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "Input widgets"
+    ]
+  },
+  {
+    "objectID": "day1/03-inputs.html#buttons",
+    "href": "day1/03-inputs.html#buttons",
+    "title": "Input widgets",
+    "section": "Buttons",
+    "text": "Buttons\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 200\n## file: ui.R\nlibrary(shiny)\n\nui &lt;- fluidPage(\n  fluidRow(\n    column(6, actionButton(\"go\", \"actionButton(): click me!\")),\n    column(6, verbatimTextOutput(\"go_out\"))\n  )\n)\n## file: server.R\nlibrary(shiny)\n\ninspect &lt;- function(x) {\n  cat(\"class:\", class(x), \"\\n\")\n  str(x)\n}\n\nserver &lt;- function(input, output, session) {\n  output$go_out &lt;- renderPrint(inspect(input$go))\n}\nAn actionButton() is a counter: it starts at 0 and increases by 1 at every click. The value itself is rarely useful: what matters is that it changes. In Wait for it: eventReactive() we will use this to decide when the app does something.",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "Input widgets"
+    ]
+  },
+  {
+    "objectID": "day1/03-inputs.html#files",
+    "href": "day1/03-inputs.html#files",
+    "title": "Input widgets",
+    "section": "Files",
+    "text": "Files\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 330\n## file: ui.R\nlibrary(shiny)\n\nui &lt;- fluidPage(\n  fileInput(\"file\", \"fileInput(): upload any CSV file\", accept = \".csv\"),\n  verbatimTextOutput(\"file_out\")\n)\n## file: server.R\nlibrary(shiny)\n\ninspect &lt;- function(x) {\n  cat(\"class:\", class(x), \"\\n\")\n  str(x)\n}\n\nserver &lt;- function(input, output, session) {\n  output$file_out &lt;- renderPrint(inspect(input$file))\n}\nNo CSV at hand? Use example.csv.\ninput$file is not the data: it is a small data frame describing the file (name, size, type) and, most importantly, datapath, the place where Shiny saved a copy of it. To read the data you use it like any path:\nread.csv(input$file$datapath)\nBefore the upload, input$file is NULL.",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "Input widgets"
+    ]
+  },
+  {
+    "objectID": "day1/03-inputs.html#cheat-sheet",
+    "href": "day1/03-inputs.html#cheat-sheet",
+    "title": "Input widgets",
+    "section": "Cheat sheet",
+    "text": "Cheat sheet\n\n\n\n\n\n\n\n\nWidget\ninput$id contains\nClass\n\n\n\n\nselectInput(), radioButtons()\nthe value of the selected choice\ncharacter (always)\n\n\nselectInput(multiple = TRUE), checkboxGroupInput()\nthe selected values, NULL if none\ncharacter vector\n\n\nsliderInput()\na number (two numbers for a range)\nnumeric/integer\n\n\nnumericInput()\na number, NA if empty\nnumeric/integer\n\n\ntextInput()\nthe text, \"\" if empty\ncharacter\n\n\ncheckboxInput()\nTRUE/FALSE\nlogical\n\n\ndateInput(), dateRangeInput()\none / two dates\nDate\n\n\nactionButton()\nhow many times it was clicked\ncounter (integer)\n\n\nfileInput()\nNULL, then name, size and datapath of the file\ndata.frame\n\n\n\nThe complete list, with code, is in the Shiny widget gallery.",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "Input widgets"
+    ]
+  },
+  {
+    "objectID": "day1/03-inputs.html#your-turn",
+    "href": "day1/03-inputs.html#your-turn",
+    "title": "Input widgets",
+    "section": "Your turn",
+    "text": "Your turn\n\n\n\n\n\n\nExercise 1 · Predict, then check\n\n\n\nWithout running anything, what does the server receive in these cases?\n\nselectInput(\"n\", \"Rows\", choices = c(\"five\" = 5, \"ten\" = 10)), the user picks ten\ncheckboxGroupInput(\"v\", \"Variables\", choices = c(\"x\", \"y\")), the user picks nothing\nsliderInput(\"s\", \"Range\", min = 1, max = 10, value = c(2, 5))\n\nCheck your answers by pasting the widgets in one of the apps above.\n\n\n\n\n\n\n\n\nSolution 1\n\n\n\n\n\n\n\"10\": a text, not a number. To use it as a number: as.numeric(input$n)\nNULL\nc(2, 5): input$s[1] is the minimum, input$s[2] the maximum\n\n\n\n\n\n\n\n\n\n\nExercise 2 · In your project\n\n\n\nIn my-shiny-app, add a sliderInput() with ID \"n\" (from 1 to 10) to ui.R, and a second verbatimTextOutput() with ID \"n_out\". In server.R, print input$n * 2 in it. Run the app.\n\n\n\n\n\n\n\n\nSolution 2\n\n\n\n\n\n# ui.R\nui &lt;- fluidPage(\n  selectInput(inputId = \"mySelection\", label = h3(\"Select box\"),\n              choices = list(\"Choice 1\" = 1, \"Choice 2\" = 2, \"Choice 3\" = 3),\n              selected = 1),\n  verbatimTextOutput(outputId = \"myOutput\"),\n  sliderInput(inputId = \"n\", label = \"Pick a number\", min = 1, max = 10, value = 5),\n  verbatimTextOutput(outputId = \"n_out\")\n)\n# server.R\nserver &lt;- function(input, output, session) {\n  output$myOutput &lt;- renderPrint({\n    paste(\"This is my choice:\", input$mySelection)\n  })\n  output$n_out &lt;- renderPrint({\n    input$n * 2\n  })\n}",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "Input widgets"
+    ]
+  },
+  {
+    "objectID": "day1/05-reactive.html",
+    "href": "day1/05-reactive.html",
+    "title": "Reactivity and reactive()",
+    "section": "",
+    "text": "This is the app of apps/02-datasets: one input, two outputs.\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 650\n## file: ui.R\nlibrary(shiny)\n\nui &lt;- fluidPage(\n  sidebarLayout(\n    sidebarPanel(\n      selectInput(\n        inputId = \"dataset\",\n        label = \"Choose a dataset:\",\n        choices = c(\"rock\", \"pressure\", \"cars\")\n      )\n    ),\n    mainPanel(\n      plotOutput(\"graph\"),\n      verbatimTextOutput(\"summary\")\n    )\n  )\n)\n\n## file: server.R\nlibrary(shiny)\n\nserver &lt;- function(input, output, session) {\n\n  output$graph &lt;- renderPlot({\n    data &lt;- switch(input$dataset,       # the same code...\n                   rock = rock,\n                   pressure = pressure,\n                   cars = cars)\n    plot(data[, 1:2])\n  })\n\n  output$summary &lt;- renderPrint({\n    data &lt;- switch(input$dataset,       # ...written twice\n                   rock = rock,\n                   pressure = pressure,\n                   cars = cars)\n    summary(data[, 1:2])\n  })\n}\n\nIt works, but look at the server: the switch() that picks the dataset is written twice, once in each render*().\n\nIf you add a dataset, you must remember to change it in two places\nEvery time the input changes, the same data are prepared twice: with a big file or a slow computation, the app becomes slow",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "Reactivity and reactive()"
+    ]
+  },
+  {
+    "objectID": "day1/05-reactive.html#the-problem-the-same-code-twice",
+    "href": "day1/05-reactive.html#the-problem-the-same-code-twice",
+    "title": "Reactivity and reactive()",
+    "section": "",
+    "text": "This is the app of apps/02-datasets: one input, two outputs.\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 650\n## file: ui.R\nlibrary(shiny)\n\nui &lt;- fluidPage(\n  sidebarLayout(\n    sidebarPanel(\n      selectInput(\n        inputId = \"dataset\",\n        label = \"Choose a dataset:\",\n        choices = c(\"rock\", \"pressure\", \"cars\")\n      )\n    ),\n    mainPanel(\n      plotOutput(\"graph\"),\n      verbatimTextOutput(\"summary\")\n    )\n  )\n)\n\n## file: server.R\nlibrary(shiny)\n\nserver &lt;- function(input, output, session) {\n\n  output$graph &lt;- renderPlot({\n    data &lt;- switch(input$dataset,       # the same code...\n                   rock = rock,\n                   pressure = pressure,\n                   cars = cars)\n    plot(data[, 1:2])\n  })\n\n  output$summary &lt;- renderPrint({\n    data &lt;- switch(input$dataset,       # ...written twice\n                   rock = rock,\n                   pressure = pressure,\n                   cars = cars)\n    summary(data[, 1:2])\n  })\n}\n\nIt works, but look at the server: the switch() that picks the dataset is written twice, once in each render*().\n\nIf you add a dataset, you must remember to change it in two places\nEvery time the input changes, the same data are prepared twice: with a big file or a slow computation, the app becomes slow",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "Reactivity and reactive()"
+    ]
+  },
+  {
+    "objectID": "day1/05-reactive.html#the-solution-reactive",
+    "href": "day1/05-reactive.html#the-solution-reactive",
+    "title": "Reactivity and reactive()",
+    "section": "The solution: reactive()",
+    "text": "The solution: reactive()\nreactive() creates a reactive expression: a recipe that returns a value and that the outputs can share.\nserver &lt;- function(input, output, session) {\n\n1  dataInput &lt;- reactive({\n    switch(input$dataset,\n           rock = rock,\n           pressure = pressure,\n           cars = cars)\n  })\n\n  output$graph &lt;- renderPlot({\n2    data &lt;- dataInput()\n    plot(data[, 1:2])\n  })\n\n  output$summary &lt;- renderPrint({\n    data &lt;- dataInput()\n    summary(data[, 1:2])\n  })\n}\n\n1\n\nWrite the recipe once. It reads input$dataset, so it reacts to it\n\n2\n\nCall it, like a function: dataInput(), with the parentheses\n\n\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 650\n## file: ui.R\nlibrary(shiny)\n\nui &lt;- fluidPage(\n  sidebarLayout(\n    sidebarPanel(\n      selectInput(\n        inputId = \"dataset\",\n        label = \"Choose a dataset:\",\n        choices = c(\"rock\", \"pressure\", \"cars\")\n      )\n    ),\n    mainPanel(\n      plotOutput(\"graph\"),\n      verbatimTextOutput(\"summary\")\n    )\n  )\n)\n\n## file: server.R\nlibrary(shiny)\n\nserver &lt;- function(input, output, session) {\n\n  # written once, used everywhere\n  dataInput &lt;- reactive({\n    switch(input$dataset,\n           rock = rock,\n           pressure = pressure,\n           cars = cars)\n  })\n\n  output$graph &lt;- renderPlot({\n    data &lt;- dataInput()                 # note the ()\n    plot(data[, 1:2])\n  })\n\n  output$summary &lt;- renderPrint({\n    data &lt;- dataInput()\n    summary(data[, 1:2])\n  })\n}\n\nNow the chain of reactions is:\n\n\n\n\n\nflowchart LR\n    I[\"input$dataset\"] --&gt; D[\"dataInput()\"]\n    D --&gt; G[\"output$graph\"]\n    D --&gt; S[\"output$summary\"]\n    style I fill:#2b6c8e,color:#fff\n    style D fill:#f0ad4e,color:#fff\n    style G fill:#8fd36f,color:#fff\n    style S fill:#8fd36f,color:#fff\n\n\n\n\n\n\nWhen input$dataset changes, dataInput() is recomputed once, and both outputs use the new value. If nothing changed, calling dataInput() again just returns the value already computed (Shiny caches it).\n\n\n\n\n\n\nThree things to remember about reactive()\n\n\n\n\nParentheses: dataInput() is the value, dataInput (without parentheses) is the recipe itself. plot(dataInput[, 1:2]) is an error\nA reactive expression can only be called inside reactive code (render*(), another reactive()…), exactly like input$...\nIt is lazy: it runs only if some output needs it",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "Reactivity and reactive()"
+    ]
+  },
+  {
+    "objectID": "day1/05-reactive.html#only-what-depends-on-a-change-re-runs",
+    "href": "day1/05-reactive.html#only-what-depends-on-a-change-re-runs",
+    "title": "Reactivity and reactive()",
+    "section": "Only what depends on a change re-runs",
+    "text": "Only what depends on a change re-runs\nShiny knows exactly who reads what. In this app each output prints the time it was last computed. Move the slider: which outputs are recomputed? And when you change the dataset?\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 560\n## file: ui.R\nlibrary(shiny)\n\nui &lt;- fluidPage(\n  sidebarLayout(\n    sidebarPanel(\n      selectInput(\"dataset\", \"Choose a dataset:\",\n                  choices = c(\"rock\", \"pressure\", \"cars\")),\n      sliderInput(\"n\", \"Rows to show:\", min = 1, max = 10, value = 3)\n    ),\n    mainPanel(\n      h4(\"Summary (uses only the dataset)\"),\n      verbatimTextOutput(\"summary\"),\n      h4(\"First rows (uses the dataset AND the slider)\"),\n      verbatimTextOutput(\"rows\")\n    )\n  )\n)\n## file: server.R\nlibrary(shiny)\n\nnow &lt;- function() format(Sys.time(), \"%H:%M:%OS2\")\n\nserver &lt;- function(input, output, session) {\n\n  dataInput &lt;- reactive({\n    get(input$dataset)\n  })\n\n  output$summary &lt;- renderPrint({\n    cat(\"computed at\", now(), \"\\n\\n\")\n    summary(dataInput())\n  })\n\n  output$rows &lt;- renderPrint({\n    cat(\"computed at\", now(), \"\\n\\n\")\n    head(dataInput(), input$n)\n  })\n}\n\n\n\n\n\nflowchart LR\n    I[\"input$dataset\"] --&gt; D[\"dataInput()\"]\n    D --&gt; S[\"output$summary\"]\n    D --&gt; R[\"output$rows\"]\n    N[\"input$n\"] --&gt; R\n    style I fill:#2b6c8e,color:#fff\n    style N fill:#2b6c8e,color:#fff\n    style D fill:#f0ad4e,color:#fff\n    style S fill:#8fd36f,color:#fff\n    style R fill:#8fd36f,color:#fff\n\n\n\n\n\n\nThe slider only touches output$rows; the dataset touches everything that depends on dataInput().",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "Reactivity and reactive()"
+    ]
+  },
+  {
+    "objectID": "day1/05-reactive.html#your-turn",
+    "href": "day1/05-reactive.html#your-turn",
+    "title": "Reactivity and reactive()",
+    "section": "Your turn",
+    "text": "Your turn\n\n\n\n\n\n\nExercise 1 · In your project\n\n\n\nIn your project (the 02-datasets app), replace the two switch() with a single reactive() called dataInput, and use dataInput() in both outputs.\nThen add a third output: a tableOutput(\"head\") showing head(dataInput()).\n\n\n\n\n\n\n\n\nSolution 1\n\n\n\n\n\nThe server is the one of apps/03-reactive, plus:\noutput$head &lt;- renderTable({\n  head(dataInput())\n})\nand in ui.R, inside mainPanel(): tableOutput(\"head\") (remember the comma before it!).",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "Reactivity and reactive()"
+    ]
+  },
+  {
+    "objectID": "day1/07-explore.html",
+    "href": "day1/07-explore.html",
+    "title": "Your app: explore a dataset",
+    "section": "",
+    "text": "We build the app that will go online on Day 2. The user:\nWe build it in four steps. Each step is a working app: run it, check it, then move on. The files of each step are in apps/ (05-explore-step1 … 05-explore-step4).\nflowchart LR\n    DS[\"input$dataset\"] -.-&gt; D\n    L[\"input$load\"] ==&gt;|\"trigger\"| D[\"dataInput()&lt;br/&gt;eventReactive\"]\n    D --&gt; V[\"vars()&lt;br/&gt;reactive\"]\n    V --&gt; XU[\"output$x_ui / y_ui&lt;br/&gt;renderUI\"]\n    XU --&gt; X[\"input$x / input$y\"]\n    X -.-&gt; N\n    A[\"input$analyze\"] ==&gt;|\"trigger\"| N[\"newdata()&lt;br/&gt;eventReactive\"]\n    D -.-&gt; N\n    N --&gt; G[\"output$graph\"]\n    N --&gt; S[\"output$summary\"]\n    style L fill:#d9534f,color:#fff\n    style A fill:#d9534f,color:#fff\n    style DS fill:#2b6c8e,color:#fff\n    style X fill:#2b6c8e,color:#fff\n    style D fill:#f0ad4e,color:#fff\n    style V fill:#f0ad4e,color:#fff\n    style N fill:#f0ad4e,color:#fff\n    style XU fill:#8fd36f,color:#fff\n    style G fill:#8fd36f,color:#fff\n    style S fill:#8fd36f,color:#fff\nThis is the map of the final app: by the end of the page you will know every arrow.",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "Your app: explore a dataset"
+    ]
+  },
+  {
+    "objectID": "day1/07-explore.html#step-1-load-a-dataset",
+    "href": "day1/07-explore.html#step-1-load-a-dataset",
+    "title": "Your app: explore a dataset",
+    "section": "Step 1 · Load a dataset",
+    "text": "Step 1 · Load a dataset\nNothing new here: a menu, a button, an eventReactive(). We print the first rows to check that the data arrive.\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 330\n## file: ui.R\nlibrary(shiny)\n\nui &lt;- fluidPage(\n  titlePanel(\"Explore a dataset\"),\n  sidebarLayout(\n    sidebarPanel(\n      selectInput(\n        \"dataset\",\n        \"Choose a dataset:\",\n        choices = c(\"rock\" = 1, \"pressure\" = 2, \"cars\" = 3)\n      ),\n      actionButton(\"load\", \"Load dataset\")\n    ),\n    mainPanel(\n      verbatimTextOutput(\"preview\")\n    )\n  )\n)\n\n## file: server.R\nlibrary(shiny)\n\nserver &lt;- function(input, output, session) {\n\n  # 1. LOAD THE DATASET (only when \"Load dataset\" is clicked)\n  dataInput &lt;- eventReactive(input$load, {\n    if (input$dataset == 1) {\n      rock\n    } else if (input$dataset == 2) {\n      pressure\n    } else {\n      cars\n    }\n  })\n\n  # check that the data arrived\n  output$preview &lt;- renderPrint({\n    head(dataInput())\n  })\n}",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "Your app: explore a dataset"
+    ]
+  },
+  {
+    "objectID": "day1/07-explore.html#step-2-menus-built-from-the-data",
+    "href": "day1/07-explore.html#step-2-menus-built-from-the-data",
+    "title": "Your app: explore a dataset",
+    "section": "Step 2 · Menus built from the data",
+    "text": "Step 2 · Menus built from the data\nThe X and Y menus cannot be written in ui.R: their choices are the column names, and we know them only after the data are loaded. So:\n\nin ui.R we reserve an empty slot with uiOutput()\nin server.R, renderUI() creates the selectInput() and puts it in that slot\n\n# ui.R\n1uiOutput(\"x_ui\")\n\n1\n\nAn empty slot for a piece of UI that the server will create\n\n\n# server.R\n1vars &lt;- reactive({\n  names(dataInput())\n})\n\n2output$x_ui &lt;- renderUI({\n3  selectInput(\"x\", \"X variable:\",\n              choices = vars(),\n              selected = vars()[1])\n})\n\n1\n\nThe column names, as a reactive expression: they change when new data are loaded\n\n2\n\nrenderUI() is the partner of uiOutput()\n\n3\n\nA normal selectInput(), with ID x: from now on the server can read input$x, like any other input\n\n\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 420\n## file: ui.R\nlibrary(shiny)\n\nui &lt;- fluidPage(\n  titlePanel(\"Explore a dataset\"),\n  sidebarLayout(\n    sidebarPanel(\n      selectInput(\n        \"dataset\",\n        \"Choose a dataset:\",\n        choices = c(\"rock\" = 1, \"pressure\" = 2, \"cars\" = 3)\n      ),\n      actionButton(\"load\", \"Load dataset\"),\n      hr(),\n      uiOutput(\"x_ui\"),   # NEW: empty slot, the server will put a selectInput here\n      uiOutput(\"y_ui\")    # NEW\n    ),\n    mainPanel(\n      verbatimTextOutput(\"preview\")\n    )\n  )\n)\n\n## file: server.R\nlibrary(shiny)\n\nserver &lt;- function(input, output, session) {\n\n  # 1. LOAD THE DATASET\n  dataInput &lt;- eventReactive(input$load, {\n    if (input$dataset == 1) {\n      rock\n    } else if (input$dataset == 2) {\n      pressure\n    } else {\n      cars\n    }\n  })\n\n  # 2. VARIABLE NAMES (NEW)\n  vars &lt;- reactive({\n    names(dataInput())\n  })\n\n  # 3. DYNAMIC UI (NEW): the choices depend on the loaded data\n  output$x_ui &lt;- renderUI({\n    selectInput(\"x\", \"X variable:\",\n                choices = vars(),\n                selected = vars()[1])\n  })\n\n  output$y_ui &lt;- renderUI({\n    selectInput(\"y\", \"Y variable:\",\n                choices = vars(),\n                selected = vars()[min(2, length(vars()))])\n  })\n\n  output$preview &lt;- renderPrint({\n    cat(\"x =\", input$x, \" | y =\", input$y, \"\\n\\n\")\n    head(dataInput())\n  })\n}\n\nLoad rock, then cars: the menus change with the data. Before the first click the slots are empty, because vars() needs dataInput(), which waits for the button.",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "Your app: explore a dataset"
+    ]
+  },
+  {
+    "objectID": "day1/07-explore.html#step-3-the-analysis-on-demand",
+    "href": "day1/07-explore.html#step-3-the-analysis-on-demand",
+    "title": "Your app: explore a dataset",
+    "section": "Step 3 · The analysis, on demand",
+    "text": "Step 3 · The analysis, on demand\nA second button, analyze, and a second eventReactive() that freezes the selected columns when it is clicked. The plot and the summary use only these frozen data.\n1newdata &lt;- eventReactive(input$analyze, {\n  df &lt;- dataInput()\n2  df[, c(input$x, input$y), drop = FALSE]\n})\n\n1\n\nRuns only when Update analysis is clicked\n\n2\n\nKeep only the two chosen columns. input$x and input$y are text (the column names), so we can use them to select columns\n\n\nThe plot adapts to the type of X: a boxplot if X is categorical, a scatterplot if it is numeric.\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 720\n## file: ui.R\nlibrary(shiny)\n\nui &lt;- fluidPage(\n  titlePanel(\"Explore a dataset\"),\n  sidebarLayout(\n    sidebarPanel(\n      selectInput(\n        \"dataset\",\n        \"Choose a dataset:\",\n        choices = c(\"rock\" = 1, \"pressure\" = 2, \"cars\" = 3)\n      ),\n      actionButton(\"load\", \"Load dataset\"),\n      hr(),\n      uiOutput(\"x_ui\"),\n      uiOutput(\"y_ui\"),\n      actionButton(\"analyze\", \"Update analysis\")   # NEW: second button\n    ),\n    mainPanel(\n      plotOutput(\"graph\"),                         # NEW\n      verbatimTextOutput(\"summary\")                # NEW\n    )\n  )\n)\n\n## file: server.R\nlibrary(shiny)\n\nserver &lt;- function(input, output, session) {\n\n  # 1. LOAD THE DATASET\n  dataInput &lt;- eventReactive(input$load, {\n    if (input$dataset == 1) {\n      rock\n    } else if (input$dataset == 2) {\n      pressure\n    } else {\n      cars\n    }\n  })\n\n  # 2. VARIABLE NAMES\n  vars &lt;- reactive({\n    names(dataInput())\n  })\n\n  # 3. DYNAMIC UI\n  output$x_ui &lt;- renderUI({\n    selectInput(\"x\", \"X variable:\",\n                choices = vars(),\n                selected = vars()[1])\n  })\n\n  output$y_ui &lt;- renderUI({\n    selectInput(\"y\", \"Y variable:\",\n                choices = vars(),\n                selected = vars()[min(2, length(vars()))])\n  })\n\n  # 4. DATA FOR THE ANALYSIS (NEW): frozen until \"Update analysis\" is clicked\n  newdata &lt;- eventReactive(input$analyze, {\n    df &lt;- dataInput()\n    df[, c(input$x, input$y), drop = FALSE]\n  })\n\n  # 5. OUTPUTS (NEW)\n  output$graph &lt;- renderPlot({\n    df &lt;- newdata()\n    x &lt;- df[[1]]\n    y &lt;- df[[2]]\n    if (is.factor(x) || is.character(x)) {\n      boxplot(y ~ x, xlab = names(df)[1], ylab = names(df)[2])\n    } else {\n      plot(x, y, xlab = names(df)[1], ylab = names(df)[2], pch = 19)\n    }\n  })\n\n  output$summary &lt;- renderPrint({\n    summary(newdata())\n  })\n}\n\nTry it: load cars, choose the variables, click Update analysis. Now change the variables without clicking: the plot does not move until you click again.",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "Your app: explore a dataset"
+    ]
+  },
+  {
+    "objectID": "day1/07-explore.html#step-4-upload-your-own-data",
+    "href": "day1/07-explore.html#step-4-upload-your-own-data",
+    "title": "Your app: explore a dataset",
+    "section": "Step 4 · Upload your own data",
+    "text": "Step 4 · Upload your own data\nLast step: a fourth option, Upload data. When it is selected, a file input and the choice of the column separator appear.\n1conditionalPanel(\n2  condition = \"input.dataset == '4'\",\n  fileInput(\"file\", \"Select a CSV file\", accept = \".csv\"),\n  radioButtons(\"sep\", \"Column separator\",\n               choices = c(\";\" = \";\", \",\" = \",\"))\n)\n\n1\n\nShows its content only when the condition is true\n\n2\n\nThe condition is written in JavaScript, not in R: input.dataset with a dot, and '4' in quotes (remember: the value of a selectInput() is text)\n\n\nAnd in the server, a fourth case in dataInput():\n} else {\n1  req(input$file)\n2  read.csv(input$file$datapath, sep = input$sep)\n}\n\n1\n\nreq() = required: if no file has been uploaded yet, stop here silently, without an error\n\n2\n\nRead the file from the place where Shiny saved it, with the separator chosen by the user\n\n\nTest files: example.csv (separator ,) and example-semicolon.csv (separator ;).\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 800\n## file: ui.R\nlibrary(shiny)\n\nui &lt;- fluidPage(\n  titlePanel(\"Explore a dataset\"),\n  sidebarLayout(\n    sidebarPanel(\n      selectInput(\n        \"dataset\",\n        \"Choose a dataset:\",\n        choices = c(\"rock\" = 1, \"pressure\" = 2, \"cars\" = 3,\n                    \"Upload data\" = 4)                     # NEW option\n      ),\n      # NEW: shown only when \"Upload data\" is selected\n      conditionalPanel(\n        condition = \"input.dataset == '4'\",\n        fileInput(\"file\", \"Select a CSV file\", accept = \".csv\"),\n        radioButtons(\"sep\", \"Column separator\",\n                     choices = c(\";\" = \";\", \",\" = \",\"))\n      ),\n      actionButton(\"load\", \"Load dataset\"),\n      hr(),\n      uiOutput(\"x_ui\"),\n      uiOutput(\"y_ui\"),\n      actionButton(\"analyze\", \"Update analysis\")\n    ),\n    mainPanel(\n      plotOutput(\"graph\"),\n      verbatimTextOutput(\"summary\")\n    )\n  )\n)\n\n## file: server.R\nlibrary(shiny)\n\nserver &lt;- function(input, output, session) {\n\n  # 1. LOAD THE DATASET\n  dataInput &lt;- eventReactive(input$load, {\n    if (input$dataset == 1) {\n      rock\n    } else if (input$dataset == 2) {\n      pressure\n    } else if (input$dataset == 3) {\n      cars\n    } else {\n      req(input$file)                                   # NEW: wait for a file\n      read.csv(input$file$datapath, sep = input$sep)    # NEW\n    }\n  })\n\n  # 2. VARIABLE NAMES\n  vars &lt;- reactive({\n    names(dataInput())\n  })\n\n  # 3. DYNAMIC UI\n  output$x_ui &lt;- renderUI({\n    selectInput(\"x\", \"X variable:\",\n                choices = vars(),\n                selected = vars()[1])\n  })\n\n  output$y_ui &lt;- renderUI({\n    selectInput(\"y\", \"Y variable:\",\n                choices = vars(),\n                selected = vars()[min(2, length(vars()))])\n  })\n\n  # 4. DATA FOR THE ANALYSIS\n  newdata &lt;- eventReactive(input$analyze, {\n    df &lt;- dataInput()\n    df[, c(input$x, input$y), drop = FALSE]\n  })\n\n  # 5. OUTPUTS\n  output$graph &lt;- renderPlot({\n    df &lt;- newdata()\n    x &lt;- df[[1]]\n    y &lt;- df[[2]]\n    if (is.factor(x) || is.character(x)) {\n      boxplot(y ~ x, xlab = names(df)[1], ylab = names(df)[2])\n    } else {\n      plot(x, y, xlab = names(df)[1], ylab = names(df)[2], pch = 19)\n    }\n  })\n\n  output$summary &lt;- renderPrint({\n    summary(newdata())\n  })\n}\n\nWith example.csv, choose condition as X and tr as Y: you get a boxplot.",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "Your app: explore a dataset"
+    ]
+  },
+  {
+    "objectID": "day1/07-explore.html#put-it-in-your-project",
+    "href": "day1/07-explore.html#put-it-in-your-project",
+    "title": "Your app: explore a dataset",
+    "section": "Put it in your project",
+    "text": "Put it in your project\nCopy ui.R and server.R of apps/05-explore-step4 into your project my-shiny-app, replacing the old ones, and run it with Run App.\nThis is the app that goes online on Day 2. Keep the project folder safe.\n\n\n\n\n\n\nExercise 1 · Make it yours (if you have time)\n\n\n\nPick one or more:\n\nAdd \"iris\" = 5 to the datasets (remember to add the case in dataInput())\nUse the wrong separator on purpose with example.csv: what happens to the menus? Why?\nAdd a tableOutput() that shows the first 6 rows of newdata()\nShow the title of the plot with the names of the two variables (main = paste(...))\n\n\n\n\n\n\n\n\n\nHints 1\n\n\n\n\n\n\nselectInput(): choices = c(..., \"Upload data\" = 4, \"iris\" = 5); dataInput(): add else if (input$dataset == 5) { iris } before the final else\nWith the wrong separator read.csv() reads a single column with a long name: the menus offer only one variable\nui.R: tableOutput(\"rows\"); server.R: output$rows &lt;- renderTable({ head(newdata()) })\nplot(x, y, ..., main = paste(names(df)[2], \"by\", names(df)[1]))",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "Your app: explore a dataset"
+    ]
+  },
+  {
+    "objectID": "day2/09-deploy.html",
+    "href": "day2/09-deploy.html",
+    "title": "Deploy on Connect Cloud",
+    "section": "",
+    "text": "Several servers can host a Shiny app (overview by Posit). You can also build your own server from scratch, for instance following Dean Attali’s guide, but that requires some system administration.\nWe use Posit Connect Cloud: it is free for public apps and publishes directly from GitHub. (You may also find shinyapps.io, the older Posit service: the logic is the same, but here we use Connect Cloud.)",
+    "crumbs": [
+      "Home",
+      "Day 2 · Spread the shine",
+      "Deploy on Connect Cloud"
+    ]
+  },
+  {
+    "objectID": "day2/09-deploy.html#where-to-publish",
+    "href": "day2/09-deploy.html#where-to-publish",
+    "title": "Deploy on Connect Cloud",
+    "section": "",
+    "text": "Several servers can host a Shiny app (overview by Posit). You can also build your own server from scratch, for instance following Dean Attali’s guide, but that requires some system administration.\nWe use Posit Connect Cloud: it is free for public apps and publishes directly from GitHub. (You may also find shinyapps.io, the older Posit service: the logic is the same, but here we use Connect Cloud.)",
+    "crumbs": [
+      "Home",
+      "Day 2 · Spread the shine",
+      "Deploy on Connect Cloud"
+    ]
+  },
+  {
+    "objectID": "day2/09-deploy.html#step-1-the-account",
+    "href": "day2/09-deploy.html#step-1-the-account",
+    "title": "Deploy on Connect Cloud",
+    "section": "Step 1 · The account",
+    "text": "Step 1 · The account\nSign up on Connect Cloud and choose to sign in with GitHub, so that Connect Cloud can see your repositories.\n\n\n\nConnect Cloud landing page and account creation\n\n\n\n\n\nLink Connect Cloud to your GitHub account\n\n\nFollow the instructions and choose an account name.",
+    "crumbs": [
+      "Home",
+      "Day 2 · Spread the shine",
+      "Deploy on Connect Cloud"
+    ]
+  },
+  {
+    "objectID": "day2/09-deploy.html#step-2-publish",
+    "href": "day2/09-deploy.html#step-2-publish",
+    "title": "Deploy on Connect Cloud",
+    "section": "Step 2 · Publish",
+    "text": "Step 2 · Publish\n\nFrom the Home of your profile, click Publish\nChoose Shiny\nSelect the repository (my-shiny-app), the branch (main) and the primary file: app.R\nClick Publish and wait: Connect Cloud installs R and the packages listed in manifest.json, then starts the app\n\n\n\n\nDeploy the app and publish it\n\n\nWhen it is done, you get a link: that is your app, online. Open it from your phone, send it to a friend.",
+    "crumbs": [
+      "Home",
+      "Day 2 · Spread the shine",
+      "Deploy on Connect Cloud"
+    ]
+  },
+  {
+    "objectID": "day2/09-deploy.html#step-3-update-the-app",
+    "href": "day2/09-deploy.html#step-3-update-the-app",
+    "title": "Deploy on Connect Cloud",
+    "section": "Step 3 · Update the app",
+    "text": "Step 3 · Update the app\nThe online app is a copy of what is on GitHub. To change it:\n\nedit the app in RStudio and check it with Run App\nif you added packages: rsconnect::writeManifest()\ncommit + push with GitHub Desktop\non Connect Cloud, republish the content",
+    "crumbs": [
+      "Home",
+      "Day 2 · Spread the shine",
+      "Deploy on Connect Cloud"
+    ]
+  },
+  {
+    "objectID": "day2/09-deploy.html#when-something-goes-wrong",
+    "href": "day2/09-deploy.html#when-something-goes-wrong",
+    "title": "Deploy on Connect Cloud",
+    "section": "When something goes wrong",
+    "text": "When something goes wrong\n\n\n\n\n\n\nTroubleshooting\n\n\n\n\nThe repository is not in the list → it is private, or Connect Cloud does not have access to it: check the GitHub permissions of Connect Cloud\n“No manifest” / missing dependencies → manifest.json is not in the repository: write it and push it\nThe app works on your computer but not online → open the logs of the content on Connect Cloud: they show the R error. Common causes:\n\na package used in the app but not in the manifest (re-run writeManifest())\na file read with an absolute path (C:/Users/...): use paths relative to the project\na file (data, images) that is on your computer but was not committed\n\nThe app starts but an output is empty → it is a Shiny problem, not a deploy problem: go back to the rules of the contract\n\n\n\n\n\n\n\n\n\n🎉 Done\n\n\n\nYour app is online. From here, Going further shows how to improve it: better layouts, interactive plots, downloads.",
+    "crumbs": [
+      "Home",
+      "Day 2 · Spread the shine",
+      "Deploy on Connect Cloud"
+    ]
+  },
+  {
+    "objectID": "extras/index.html",
+    "href": "extras/index.html",
+    "title": "Going further",
+    "section": "",
+    "text": "These pages are for studying on your own after the course. Each one has a working app you can edit live, and the same app in the apps/ folder, ready for RStudio.\n\n\n\nPage\nWhat you learn\n\n\n\n\nLayouts\nOrganise the page: sidebar, rows and columns, tabs\n\n\nUpdating inputs\nobserveEvent() + updateSelectInput(), an alternative to renderUI(); req()\n\n\nInteractive plots\nClick and brush on a plot; reactiveValues(); validate()\n\n\nDownloads\nLet the user download plots and results\n\n\nResources\nSlides, books and galleries",
+    "crumbs": [
+      "Home",
+      "Going further",
+      "Going further"
+    ]
+  },
+  {
+    "objectID": "extras/layouts.html",
+    "href": "extras/layouts.html",
+    "title": "Layouts",
+    "section": "",
+    "text": "fluidPage() is a page based on a grid 12 units wide. On top of it, Shiny offers a few ready-made structures.",
+    "crumbs": [
+      "Home",
+      "Going further",
+      "Layouts"
+    ]
+  },
+  {
+    "objectID": "extras/layouts.html#try-them",
+    "href": "extras/layouts.html#try-them",
+    "title": "Layouts",
+    "section": "Try them",
+    "text": "Try them\n#| '!! shinylive warning !!': |\n#|   shinylive does not work in self-contained HTML documents.\n#|   Please set `embed-resources: false` in your metadata.\n#| standalone: true\n#| components: [editor, viewer]\n#| layout: vertical\n#| viewerHeight: 650\n## file: ui.R\nlibrary(shiny)\n\nui &lt;- fluidPage(\n  titlePanel(\"Layouts\"),\n  sidebarLayout(\n    sidebarPanel(\n      selectInput(\"dataset\", \"Choose a dataset:\",\n                  choices = c(\"rock\", \"pressure\", \"cars\")),\n      width = 3                       # the sidebar takes 3 of 12 units\n    ),\n    mainPanel(\n      tabsetPanel(\n        tabPanel(\"Plot\", plotOutput(\"plot\")),\n        tabPanel(\"Summary\", verbatimTextOutput(\"summary\")),\n        tabPanel(\"Two columns\",\n                 fluidRow(\n                   column(6, h4(\"First column\"), tableOutput(\"head\")),\n                   column(6, h4(\"Second column\"), plotOutput(\"hist\", height = \"250px\"))\n                 ))\n      ),\n      width = 9\n    )\n  )\n)\n## file: server.R\nlibrary(shiny)\n\nserver &lt;- function(input, output, session) {\n  dataInput &lt;- reactive(get(input$dataset))\n\n  output$plot    &lt;- renderPlot(plot(dataInput()[, 1:2]))\n  output$summary &lt;- renderPrint(summary(dataInput()))\n  output$head    &lt;- renderTable(head(dataInput()))\n  output$hist    &lt;- renderPlot(hist(dataInput()[, 1], main = names(dataInput())[1]))\n}\n\n\n\n\n\n\nExercise\n\n\n\nMove the dataset menu out of the sidebar and put it in a fluidRow() on top of the tabs. Change the widths of the two columns to 4 and 8.\n\n\nMore layouts (navbar pages, cards, dashboards with bslib) in the Shiny layout gallery.",
+    "crumbs": [
+      "Home",
+      "Going further",
+      "Layouts"
+    ]
+  },
+  {
+    "objectID": "extras/update-inputs.html",
+    "href": "extras/update-inputs.html",
+    "title": "Updating inputs",
+    "section": "",
+    "text": "In Your app: explore a dataset the X and Y menus were created by the server with renderUI(). There is another way: the menus exist in ui.R from the start, empty, and the server updates their choices when the data are loaded.\nEvery input has its update*() function: updateSliderInput(), updateTextInput(), updateNumericInput()…",
+    "crumbs": [
+      "Home",
+      "Going further",
+      "Updating inputs"
+    ]
+  },
+  {
+    "objectID": "extras/update-inputs.html#req-wait-for-what-you-need",
+    "href": "extras/update-inputs.html#req-wait-for-what-you-need",
+    "title": "Updating inputs",
+    "section": "req(): wait for what you need",
+    "text": "req(): wait for what you need\nIn this app analysisInput() starts with req(input$x, input$y). req() checks that its arguments are “available” (not NULL, not empty, not FALSE…). If they are not, it stops the computation silently: no red error, the output simply waits.\nUse it whenever an output needs something that may not be there yet: an uploaded file, a selection, a click.",
+    "crumbs": [
+      "Home",
+      "Going further",
+      "Updating inputs"
+    ]
+  },
+  {
+    "objectID": "extras/update-inputs.html#eventreactive-vs-observeevent",
+    "href": "extras/update-inputs.html#eventreactive-vs-observeevent",
+    "title": "Updating inputs",
+    "section": "eventReactive() vs observeEvent()",
+    "text": "eventReactive() vs observeEvent()\n\n\n\n\n\n\n\n\n\neventReactive()\nobserveEvent()\n\n\n\n\nReturns\na value, used as x()\nnothing\n\n\nUsed for\ncomputing data for the outputs\ndoing things: updating inputs, showing messages, saving\n\n\nRuns\nwhen an output needs it (lazy)\nalways, at every trigger (eager)",
+    "crumbs": [
+      "Home",
+      "Going further",
+      "Updating inputs"
+    ]
+  }
+]

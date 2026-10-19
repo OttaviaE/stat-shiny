@@ -1,0 +1,97 @@
+---
+title: "Your app on GitHub"
+subtitle: "Getting the project ready to leave your computer"
+---
+
+## Recap of Day 1
+
+::: {.callout-tip}
+## The whole of Day 1 on one card
+
+- A Shiny app is a **folder** with `ui.R` (what the user sees) and `server.R` (what R does)
+- UI and server talk **only through IDs**: `inputId` → `input$id`, `outputId` → `output$id`
+- Each `*Output()` in the UI has its `render*()` partner in the server
+- `render*()` and `reactive()` re-run **automatically** when the inputs they read change
+- `eventReactive(input$button, { ... })` re-runs **only** when the button is clicked
+- `uiOutput()` + `renderUI()` create inputs that depend on the data
+:::
+
+Open your project `my-shiny-app`, run the app and check it works. If you did not finish yesterday, copy the files of [`apps/05-explore-step4`](https://github.com/ottaviae/stat-shiny/tree/main/apps/05-explore-step4) into the project.
+
+## What the online server needs
+
+To publish the app, the online server (Posit Connect Cloud) takes it **from a GitHub repository**. So the plan for today is:
+
+```{mermaid}
+flowchart LR
+    A["💻 Your project<br/>ui.R + server.R"] --> B["+ app.R<br/>+ manifest.json"]
+    B -->|"commit + push"| C["GitHub<br/>repository"]
+    C -->|"publish"| D["☁️ Connect Cloud<br/>your app online"]
+    style C fill:#24292f,color:#fff
+    style D fill:#447099,color:#fff
+```
+
+## Step 1 · Add `app.R`
+
+Connect Cloud looks for a **primary file**, and the standard name for it is `app.R`. We do not need to rewrite anything: a tiny `app.R` reads our two files and puts them together.
+
+*File* → *New File* → *R Script*, paste this and save it as **`app.R`** in the project folder:
+
+```r
+library(shiny)
+
+source("ui.R")        # creates the object ui
+source("server.R")    # creates the object server
+
+shinyApp(ui, server)
+```
+
+Run it (*Run App*): it is the same app as before. Now you can also see why we always wrote `ui <- fluidPage(...)` and `server <- function(...)`: `source()` runs the files and leaves those two objects ready for `shinyApp()`.
+
+## Step 2 · Write the manifest
+
+Connect Cloud is not your computer: it does not know which R packages your app uses. The file `manifest.json` lists them, with their versions. It is written for you by the `rsconnect` package.
+
+In the **console**, with the project open:
+
+```r
+# install.packages("rsconnect")   # if you do not have it yet
+rsconnect::writeManifest()
+```
+
+A file `manifest.json` appears in the project. Your folder now looks like this:
+
+```text
+my-shiny-app/
+├── .gitignore
+├── my-shiny-app.Rproj
+├── app.R
+├── ui.R
+├── server.R
+└── manifest.json
+```
+
+::: {.callout-warning}
+## Re-write the manifest when the packages change
+
+If you later add a package to the app (e.g., `library(ggplot2)`), run `rsconnect::writeManifest()` again before pushing, otherwise the online app will not find it.
+:::
+
+## Step 3 · From the project to a GitHub repository
+
+We use GitHub Desktop (detailed guide with screenshots: [Deploy on GitHub](https://arca-dpss.github.io/shine-with-quarto/git-hub.html)).
+
+1. GitHub Desktop → *File* → *Add local repository…* → choose the folder `my-shiny-app`
+2. GitHub Desktop says that the folder is not a Git repository yet: click **create a repository** here, then *Create repository*
+3. Click **Publish repository**. **Untick** *Keep this code private*: Connect Cloud (free plan) publishes from public repositories
+4. Check on github.com that the repository contains `app.R`, `ui.R`, `server.R` and `manifest.json`
+
+From now on, every change follows the usual cycle: **edit → commit (with a message) → push**.
+
+::: {.callout-tip}
+## Checkpoint
+
+✅ `app.R` runs the app<br>
+✅ `manifest.json` is in the project<br>
+✅ The repository is on GitHub, public, with all the files
+:::

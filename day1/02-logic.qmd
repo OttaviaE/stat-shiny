@@ -1,0 +1,184 @@
+---
+title: "How Shiny thinks"
+subtitle: "Inside the UI and the server"
+---
+
+The [Shiny](00-shiny.qmd) page showed the logic: the UI sets the options and displays the results, the server elaborates the options and sends back the results. Here we look inside the two pieces, and at how they talk to each other.
+
+## The UI is a web page
+
+`fluidPage()`, `selectInput()` & co. are R functions that **write HTML** for you. Try this in the console:
+
+```r
+library(shiny)
+selectInput(inputId = "mySelection", label = "Select box",
+            choices = c("Choice 1" = 1, "Choice 2" = 2))
+```
+
+R prints (shortened):
+
+```html
+<div class="form-group shiny-input-container">
+  <label class="control-label" for="mySelection">Select box</label>
+  <select id="mySelection">
+    <option value="1" selected>Choice 1</option>
+    <option value="2">Choice 2</option>
+  </select>
+</div>
+```
+
+So the UI contains two kinds of elements:
+
+- **Inputs** (`*Input()`, `actionButton()`…): the controls the user plays with
+- **Outputs** (`*Output()`): **empty boxes**, each with a name, waiting for the server to fill them
+
+Each element is identified by its **ID** (`id="mySelection"`). Remember this: the ID is the only thing the server knows about the UI.
+
+## The server is a function
+
+```r
+server <- function(input, output, session) {
+  ...
+}
+```
+
+Shiny calls this function **once for each user** that opens the app (each user has their own `session`). Inside it:
+
+- **`input`** is a list with the **current value of every input**, accessed by ID: `input$mySelection`. You can read it, you cannot change it
+- **`output`** is the list of the boxes to fill, accessed by ID: `output$myOutput <- render…({ … })`
+
+## The contract: IDs
+
+Let's go back to the first app and follow the IDs:
+
+```r
+# ui.R
+ui <- fluidPage(
+  selectInput(inputId = "mySelection",            # <1>
+              label = h3("Select box"),           # <2>
+              choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3), # <3>
+              selected = 1),                      # <4>
+  verbatimTextOutput(outputId = "myOutput")       # <5>
+)
+```
+1. The ID of the input: for **internal use**, the server will call it `input$mySelection`
+2. The label: for **external use**, it is what the user reads
+3. The options: the user sees `"Choice 1"`, the server receives `"1"` (as text!)
+4. The option selected when the app starts
+5. The ID of an empty output box: the server will fill `output$myOutput`
+
+```r
+# server.R
+server <- function(input, output, session) {
+  output$myOutput <- renderPrint({                       # <1>
+    paste("This is my choice:", input$mySelection)       # <2>
+  })
+}
+```
+1. Fill the box `myOutput`. `renderPrint()` is the partner of `verbatimTextOutput()`
+2. Read the current value of the input `mySelection`
+
+```{mermaid}
+flowchart LR
+    A["UI<br/>selectInput(inputId = 'mySelection')"] -->|"input$mySelection"| B["SERVER<br/>renderPrint({ ... })"]
+    B -->|"output$myOutput"| C["UI<br/>verbatimTextOutput(outputId = 'myOutput')"]
+    style A fill:#2b6c8e,color:#fff
+    style C fill:#2b6c8e,color:#fff
+    style B fill:#8fd36f,color:#fff
+```
+
+### The rules of the contract
+
+1. **Defined in the UI, not used in the server**: nothing happens. The widget is there, you can play with it, but nobody is listening
+2. **Used in the server, not defined in the UI** (often a typo!): Shiny does **not** warn you
+    - `input$myselection` (lowercase *s*) simply is `NULL`, so the result is empty or the code fails
+    - `output$myOuptut` is computed but never shown, because no box has that name
+3. **IDs must be unique**: two elements with the same ID make the app behave unpredictably (outputs may not show at all)
+4. **`input` is read-only**: `input$mySelection <- 2` is an error
+
+### Spot the bug
+
+This app has a bug: the output never shows the choice. Find it and fix it in the editor, then press ▶.
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+#| layout: vertical
+#| viewerHeight: 220
+## file: ui.R
+library(shiny)
+
+ui <- fluidPage(
+  selectInput(
+    inputId = "mySelection",
+    label = h3("Select box"),
+    choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3),
+    selected = 1
+  ),
+  verbatimTextOutput(outputId = "myOutput")
+)
+## file: server.R
+library(shiny)
+
+server <- function(input, output, session) {
+  output$myOutput <- renderPrint({
+    paste("This is my choice:", input$myselection)
+  })
+}
+```
+
+::: {.callout-tip collapse="true"}
+## Solution
+
+`input$myselection` must be `input$mySelection`: IDs are case-sensitive. Since `input$myselection` does not exist, it is `NULL`, and `paste()` silently ignores it.
+:::
+
+## Reactivity: the mental model
+
+Look at the server again: there is no loop, no "when the user clicks, do this". How does the output know it has to change?
+
+**Think of a spreadsheet.** If cell `B1` contains `=A1 * 2`, you never "run" `B1`: every time `A1` changes, `B1` updates by itself.
+
+`render*()` functions work the same way:
+
+- the code inside `render*({ ... })` is a **recipe**, not a command executed once
+- Shiny notes **which inputs the recipe reads** (here: `input$mySelection`)
+- when one of those inputs changes, Shiny **re-runs the recipe** and sends the new result to the box
+
+```{mermaid}
+flowchart LR
+    I["input$mySelection<br/>changes"] --> R["renderPrint({ ... })<br/>runs again"] --> O["output$myOutput<br/>is updated"]
+    style I fill:#2b6c8e,color:#fff
+    style R fill:#8fd36f,color:#fff
+    style O fill:#2b6c8e,color:#fff
+```
+
+This is why the server is not read from top to bottom like a script: each recipe runs **when it needs to**.
+
+::: {.callout-warning}
+## Inputs live only inside reactive code
+
+Reading an input outside a recipe does not work:
+
+```r
+server <- function(input, output, session) {
+  choice <- input$mySelection        # ❌ outside render*()
+  output$myOutput <- renderPrint({ choice })
+}
+```
+
+```
+Error: Can't access reactive value 'mySelection' outside of reactive consumer.
+```
+
+The server function runs once, at the start: at that moment nobody has chosen anything yet. Inputs must be read **inside** `render*()` (or the other reactive functions we will meet: `reactive()`, `eventReactive()`).
+:::
+
+::: {.callout-tip}
+## In a nutshell
+
+- **UI** = what the user sees: inputs (controls) and outputs (empty boxes)
+- **Server** = a function of `input` and `output` that fills the boxes
+- They talk **only through IDs**: `inputId` → `input$id`, `outputId` → `output$id`
+- `render*()` are recipes that re-run **automatically** when the inputs they read change
+:::

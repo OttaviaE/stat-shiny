@@ -1,0 +1,147 @@
+---
+title: "Outputs and render functions"
+subtitle: "Filling the empty boxes"
+---
+
+An output always comes **in pairs**:
+
+- in `ui.R`, a `*Output()` function reserves an **empty box** and says *what kind* of content it will contain
+- in `server.R`, the matching `render*()` function **produces the content** and puts it in the box with the same ID
+
+```r
+# ui.R
+plotOutput("graph")                  # <1>
+
+# server.R
+output$graph <- renderPlot({         # <2>
+  plot(cars)                         # <3>
+})
+```
+1. "Here there will be a plot, called `graph`"
+2. Fill the box `graph`, with a function that makes plots
+3. Any R code that draws a plot
+
+## The pairs
+
+| In `ui.R` | In `server.R` | Shows |
+|---|---|---|
+| `textOutput()` | `renderText()` | plain text, inline |
+| `verbatimTextOutput()` | `renderPrint()` | what R prints in the console |
+| `plotOutput()` | `renderPlot()` | a plot |
+| `tableOutput()` | `renderTable()` | a (small) table |
+| `uiOutput()` | `renderUI()` | **new UI elements**, created by the server ([Your app: explore a dataset](07-explore.qmd)) |
+| `downloadButton()` | `downloadHandler()` | a file to download ([Going further](../extras/download.qmd)) |
+
+## All of them in one app
+
+The same dataset, shown four ways. Change the dataset and the number of rows.
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+#| layout: vertical
+#| viewerHeight: 900
+## file: ui.R
+library(shiny)
+
+ui <- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("dataset", "Choose a dataset:",
+                  choices = c("rock", "pressure", "cars")),
+      sliderInput("n", "Rows in the table:", min = 1, max = 10, value = 5)
+    ),
+    mainPanel(
+      h4("textOutput()"),
+      textOutput("text"),
+      h4("verbatimTextOutput()"),
+      verbatimTextOutput("print"),
+      h4("tableOutput()"),
+      tableOutput("table"),
+      h4("plotOutput()"),
+      plotOutput("plot", height = "300px")
+    )
+  )
+)
+## file: server.R
+library(shiny)
+
+server <- function(input, output, session) {
+
+  output$text <- renderText({
+    data <- get(input$dataset)
+    paste("The dataset", input$dataset, "has", nrow(data), "rows and",
+          ncol(data), "columns.")
+  })
+
+  output$print <- renderPrint({
+    data <- get(input$dataset)
+    summary(data)
+  })
+
+  output$table <- renderTable({
+    data <- get(input$dataset)
+    head(data, input$n)
+  })
+
+  output$plot <- renderPlot({
+    data <- get(input$dataset)
+    plot(data[, 1:2])
+  })
+}
+```
+
+`get("cars")` returns the object called `cars`: it is a quick way to go from the *name* of a dataset (a text, the value of the input) to the dataset itself.
+
+## `renderText()` or `renderPrint()`?
+
+They look similar but they are not the same:
+
+- `renderText()` turns the result into **one plain string** (it uses `cat()`): good for sentences
+- `renderPrint()` shows the result **as the R console would print it**: good for `summary()`, `str()`, models, data frames
+
+In the app above, replace `renderPrint` with `renderText` for `summary(data)` (and `verbatimTextOutput` with `textOutput` in the UI): the numbers are all glued together. That is why we use `renderPrint()` for statistical output.
+
+## Common mistakes
+
+::: {.callout-warning}
+## When the box stays empty
+
+- **The IDs do not match**: `plotOutput("graph")` in the UI, `output$grahp` in the server. No error, just an empty box
+- **The pair is wrong**: `plotOutput()` in the UI, `renderPrint()` in the server. The box cannot show that content
+- **You forgot `output$...`**: `renderPlot({ ... })` alone computes the plot and throws it away
+- **The box is not in the UI**: the server fills `output$summary`, but `ui.R` has no `...Output("summary")`
+:::
+
+## Your turn
+
+::: {.callout-note}
+## Exercise 1 · From one output to two
+
+Open the [first datasets app](#all-of-them-in-one-app) in the editor and add a **second plot**: a histogram of the first column of the dataset (`hist(data[, 1])`).
+
+You need **two** changes: one in `ui.R` and one in `server.R`.
+:::
+
+::: {.callout-tip collapse="true"}
+## Solution 1
+
+```r
+# ui.R, inside mainPanel()
+plotOutput("hist", height = "300px")
+```
+
+```r
+# server.R, inside the server function
+output$hist <- renderPlot({
+  data <- get(input$dataset)
+  hist(data[, 1], main = names(data)[1])
+})
+```
+:::
+
+::: {.callout-note}
+## Exercise 2 · Your project
+
+Copy the files of [`apps/02-datasets`](https://github.com/ottaviae/stat-shiny/tree/main/apps/02-datasets) into your project (replacing your `ui.R` and `server.R`) and run it. We use it in the next page.
+:::

@@ -1,0 +1,145 @@
+---
+title: "Wait for it: eventReactive()"
+subtitle: "Deciding when the app reacts"
+---
+
+With `reactive()`, the app reacts **immediately** to every change. That is not always what we want:
+
+- the user must set **several options** before the result makes sense (choose a file, *then* the separator, *then* the variables…)
+- the computation is **slow**, and we do not want it to start at every click on a menu
+
+We want the app to wait until the user says **"go"**. The "go" is an `actionButton()`, and the waiting is done by `eventReactive()`.
+
+## The two pieces
+
+```r
+# ui.R
+actionButton("load", "Select dataset")                # <1>
+```
+1. A button with ID `load`. Remember: `input$load` is a counter that increases at every click
+
+```r
+# server.R
+dataInput <- eventReactive(input$load, {              # <1>
+  if (input$dataset == 1) {                           # <2>
+    rock
+  } else if (input$dataset == 2) {
+    pressure
+  } else {
+    cars
+  }
+})
+```
+1. The **first argument is the trigger**: the code runs only when `input$load` changes, i.e., when the button is clicked
+2. The code to run. It reads `input$dataset`, but changing the dataset **does not** trigger it: its value is simply read at the moment of the click
+
+`dataInput()` is then used exactly as a `reactive()`: `data <- dataInput()` inside the `render*()` functions.
+
+## The app
+
+Change the dataset: nothing happens. Click the button: now it does.
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+#| layout: vertical
+#| viewerHeight: 650
+## file: ui.R
+{{< include ../apps/04-eventreactive/ui.R >}}
+## file: server.R
+{{< include ../apps/04-eventreactive/server.R >}}
+```
+
+Notice also that **before the first click the outputs are empty**: at the start the button has never been clicked, so `eventReactive()` has no value yet, and the outputs that need it wait silently.
+
+## `reactive()` vs `eventReactive()`
+
+| | `reactive()` | `eventReactive()` |
+|---|---|---|
+| Re-runs when… | **any** input it reads changes | **only** the trigger changes (e.g., a button) |
+| Inputs read inside | are triggers | are only read, at the moment of the trigger |
+| At the start | runs as soon as an output needs it | waits for the first trigger |
+| You use it with | `dataInput()` | `dataInput()` |
+
+```{mermaid}
+flowchart LR
+    D0["input$dataset"] -.->|"read only"| E["dataInput()<br/>eventReactive"]
+    B["input$load<br/>(button)"] ==>|"trigger"| E
+    E --> G["output$graph"]
+    E --> S["output$summary"]
+    style D0 fill:#2b6c8e,color:#fff
+    style B fill:#d9534f,color:#fff
+    style E fill:#f0ad4e,color:#fff
+    style G fill:#8fd36f,color:#fff
+    style S fill:#8fd36f,color:#fff
+```
+
+::: {.callout-note}
+## And `observeEvent()`?
+
+You will also find `observeEvent(input$button, { ... })`. It looks the same, but it **returns nothing**: it is used to *do* something (update a menu, show a message, save a file), not to *compute a value* to use in the outputs. To compute data for the outputs, use `eventReactive()`. There is an example in [Going further](../extras/update-inputs.qmd).
+:::
+
+## Your turn
+
+::: {.callout-note}
+## Exercise 1 · In your project
+
+Starting from your `reactive()` version of the app:
+
+1. add an `actionButton("load", "Select dataset")` in the `sidebarPanel()`
+2. turn `reactive({ ... })` into `eventReactive(input$load, { ... })`
+
+Run the app and check that nothing happens until you click.
+:::
+
+::: {.callout-tip collapse="true"}
+## Solution 1
+
+See [`apps/04-eventreactive`](https://github.com/ottaviae/stat-shiny/tree/main/apps/04-eventreactive). Only two lines change compared to the `reactive()` version:
+
+```r
+# ui.R
+actionButton("load", "Select dataset")
+```
+
+```r
+# server.R
+dataInput <- eventReactive(input$load, {
+  ...
+})
+```
+
+(In that app the choices are named, `"rock" = 1`, so the server compares `input$dataset == 1`. With `choices = c("rock", "pressure", "cars")` you can keep your `switch()`.)
+:::
+
+::: {.callout-note}
+## Exercise 2 · Two buttons, two moments
+
+In the live app above, add a second button `actionButton("draw", "Draw plot")` and make **only the plot** wait for it, while the summary updates as soon as the data are loaded.
+
+*Hint*: you need a second `eventReactive()` that is triggered by `input$draw` and returns `dataInput()`.
+:::
+
+::: {.callout-tip collapse="true"}
+## Solution 2
+
+```r
+# ui.R, in the sidebarPanel()
+actionButton("draw", "Draw plot")
+```
+
+```r
+# server.R
+plotData <- eventReactive(input$draw, {
+  dataInput()
+})
+
+output$graph <- renderPlot({
+  data <- plotData()
+  plot(data[, 1:2])
+})
+```
+
+This is the idea of the next page: **one button to load the data, one to run the analysis**.
+:::

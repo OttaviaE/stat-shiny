@@ -1,0 +1,40 @@
+---
+title: "Interactive plots"
+subtitle: "Click, brush, and reactiveValues()"
+---
+
+A `plotOutput()` can also be an **input**: if you give it the `click` and `brush` arguments, the coordinates of a click, or of the rectangle drawn with the mouse, arrive in the server as `input$plot_click` and `input$plot_brush`.
+
+```r
+plotOutput("graph",
+           click = clickOpts(id = "plot_click"),     # <1>
+           brush = brushOpts(id = "plot_brush"))     # <2>
+```
+1. A click on the plot → `input$plot_click`
+2. A rectangle drawn on the plot → `input$plot_brush`
+
+Two helpers turn the coordinates into **rows of the data**:
+
+```r
+nearPoints(df, input$plot_click, xvar = "speed", yvar = "dist")      # rows close to the click
+brushedPoints(df, input$plot_brush, xvar = "speed", yvar = "dist")   # rows inside the rectangle
+```
+
+Load a dataset, click *Select & Display*, then click on a point or draw a rectangle on the plot.
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+#| layout: vertical
+#| viewerHeight: 750
+## file: ui.R
+{{< include ../apps/extra-interactive-plots/ui.R >}}
+## file: server.R
+{{< include ../apps/extra-interactive-plots/server.R >}}
+```
+
+## What else is in this app
+
+- **`reactiveValues()`**: a "shelf" (`values$data`, `values$df`) where `observeEvent()` puts objects, and the outputs take them. It is an alternative to `eventReactive()`: more flexible, but the flow is harder to follow
+- **`conditionalPanel(condition = "input.load >= 1", ...)`**: the variable menus appear only after the first click on *Load data*
+- **`validate(need(condition, "message"))`**: like `req()`, but it shows a **message** to the user instead of an empty box

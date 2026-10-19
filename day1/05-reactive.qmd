@@ -1,0 +1,175 @@
+---
+title: "Reactivity and reactive()"
+subtitle: "Don't repeat yourself"
+---
+
+## The problem: the same code, twice
+
+This is the app of [`apps/02-datasets`](https://github.com/ottaviae/stat-shiny/tree/main/apps/02-datasets): one input, two outputs.
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+#| layout: vertical
+#| viewerHeight: 650
+## file: ui.R
+{{< include ../apps/02-datasets/ui.R >}}
+## file: server.R
+{{< include ../apps/02-datasets/server.R >}}
+```
+
+It works, but look at the server: the `switch()` that picks the dataset is written **twice**, once in each `render*()`.
+
+- If you add a dataset, you must remember to change it in **two places**
+- Every time the input changes, the same data are prepared **twice**: with a big file or a slow computation, the app becomes slow
+
+## The solution: `reactive()`
+
+`reactive()` creates a **reactive expression**: a recipe that *returns a value* and that the outputs can share.
+
+```r
+server <- function(input, output, session) {
+
+  dataInput <- reactive({            # <1>
+    switch(input$dataset,
+           rock = rock,
+           pressure = pressure,
+           cars = cars)
+  })
+
+  output$graph <- renderPlot({
+    data <- dataInput()              # <2>
+    plot(data[, 1:2])
+  })
+
+  output$summary <- renderPrint({
+    data <- dataInput()              # <2>
+    summary(data[, 1:2])
+  })
+}
+```
+1. Write the recipe **once**. It reads `input$dataset`, so it reacts to it
+2. **Call** it, like a function: `dataInput()`, with the parentheses
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+#| layout: vertical
+#| viewerHeight: 650
+## file: ui.R
+{{< include ../apps/03-reactive/ui.R >}}
+## file: server.R
+{{< include ../apps/03-reactive/server.R >}}
+```
+
+Now the chain of reactions is:
+
+```{mermaid}
+flowchart LR
+    I["input$dataset"] --> D["dataInput()"]
+    D --> G["output$graph"]
+    D --> S["output$summary"]
+    style I fill:#2b6c8e,color:#fff
+    style D fill:#f0ad4e,color:#fff
+    style G fill:#8fd36f,color:#fff
+    style S fill:#8fd36f,color:#fff
+```
+
+When `input$dataset` changes, `dataInput()` is recomputed **once**, and both outputs use the new value. If nothing changed, calling `dataInput()` again just returns the value already computed (Shiny *caches* it).
+
+::: {.callout-warning}
+## Three things to remember about `reactive()`
+
+1. **Parentheses**: `dataInput()` is the value, `dataInput` (without parentheses) is the recipe itself. `plot(dataInput[, 1:2])` is an error
+2. A reactive expression can only be **called inside reactive code** (`render*()`, another `reactive()`…), exactly like `input$...`
+3. It is **lazy**: it runs only if some output needs it
+:::
+
+## Only what depends on a change re-runs
+
+Shiny knows exactly who reads what. In this app each output prints the time it was last computed. Move the slider: which outputs are recomputed? And when you change the dataset?
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+#| layout: vertical
+#| viewerHeight: 560
+## file: ui.R
+library(shiny)
+
+ui <- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("dataset", "Choose a dataset:",
+                  choices = c("rock", "pressure", "cars")),
+      sliderInput("n", "Rows to show:", min = 1, max = 10, value = 3)
+    ),
+    mainPanel(
+      h4("Summary (uses only the dataset)"),
+      verbatimTextOutput("summary"),
+      h4("First rows (uses the dataset AND the slider)"),
+      verbatimTextOutput("rows")
+    )
+  )
+)
+## file: server.R
+library(shiny)
+
+now <- function() format(Sys.time(), "%H:%M:%OS2")
+
+server <- function(input, output, session) {
+
+  dataInput <- reactive({
+    get(input$dataset)
+  })
+
+  output$summary <- renderPrint({
+    cat("computed at", now(), "\n\n")
+    summary(dataInput())
+  })
+
+  output$rows <- renderPrint({
+    cat("computed at", now(), "\n\n")
+    head(dataInput(), input$n)
+  })
+}
+```
+
+```{mermaid}
+flowchart LR
+    I["input$dataset"] --> D["dataInput()"]
+    D --> S["output$summary"]
+    D --> R["output$rows"]
+    N["input$n"] --> R
+    style I fill:#2b6c8e,color:#fff
+    style N fill:#2b6c8e,color:#fff
+    style D fill:#f0ad4e,color:#fff
+    style S fill:#8fd36f,color:#fff
+    style R fill:#8fd36f,color:#fff
+```
+
+The slider only touches `output$rows`; the dataset touches everything that depends on `dataInput()`.
+
+## Your turn
+
+::: {.callout-note}
+## Exercise 1 · In your project
+
+In your project (the `02-datasets` app), replace the two `switch()` with a single `reactive()` called `dataInput`, and use `dataInput()` in both outputs.
+
+Then add a third output: a `tableOutput("head")` showing `head(dataInput())`.
+:::
+
+::: {.callout-tip collapse="true"}
+## Solution 1
+
+The server is the one of [`apps/03-reactive`](https://github.com/ottaviae/stat-shiny/tree/main/apps/03-reactive), plus:
+
+```r
+output$head <- renderTable({
+  head(dataInput())
+})
+```
+
+and in `ui.R`, inside `mainPanel()`: `tableOutput("head")` (remember the comma before it!).
+:::

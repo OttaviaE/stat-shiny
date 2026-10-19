@@ -1,0 +1,229 @@
+---
+title: "Shiny"
+subtitle: "What it is and the logic behind it"
+---
+
+# Logic
+
+::: {.grid}
+
+::: {.g-col-6}
+`ui` (**U**ser **I**nterface)
+
+The container, whatever sees the user
+
+Used for setting the desired configurations of options that will be elaborated in the server
+
+Used for displaying the results of the computations that took place in the server
+:::
+
+::: {.g-col-6}
+`server`
+
+It gets the work done, according to the configuration set in the UI
+
+Replaces the results into the allocated spaces
+:::
+
+:::
+
+UI and Server work in a flow, communicating to each other (@fig-uiServer).
+
+::: {#fig-uiServer layout-ncol=1}
+
+```{mermaid}
+flowchart LR
+
+    UI["**UI**<br/><br/>Set the options<br/>Displays the results"]
+    SERVER["**SERVER**<br/><br/>Elaborates the options<br/>Sends back the results"]
+
+    UI -->|"Input"| SERVER
+    SERVER -->|"Output"| UI
+
+    style UI fill:#2b6c8e,stroke:#1b4258,stroke-width:2px,color:#ffffff
+    style SERVER fill:#8fd36f,stroke:#4c8b3a,stroke-width:2px,color:#ffffff
+
+    linkStyle default stroke:#FFD700,stroke-width:5px
+```
+
+Interaction between the user interface (UI) and the server.
+
+:::
+
+- Define something in the `ui` and not using it in the server: nothing happens, it just doesn't exist
+
+- Calling something in the server that has not been defined in the `ui`: it doesn't exist either, so you get errors everywhere or, even worse, nothing at all, without any warning ([Spot the bug](02-logic.qmd#spot-the-bug))
+
+# Basics
+
+```r
+install.packages("shiny") # install
+library(shiny) # use it
+```
+
+```r
+ui = fluidPage(          # <1>
+   [...]                 # <1>
+  )                      # <1>
+server = function(input, output){ # <2>
+  [...]                           # <2>
+}                                 # <2>
+shinyApp(ui, server)  # <3>
+```
+
+1. Define the ui
+2. Define the server
+3. Shine
+
+# UI
+
+## Input
+
+```r
+sliderInput()     # Slider input widget
+numericInput()    # Numeric input control
+selectInput()     # Select list input control
+checkboxInput()   # Checkbox input control
+checkboxGroupInput()
+dateInput()       # Date input
+fileInput()       # File upload control
+radioButtons()    # Radio buttons
+textInput()       # Text input control
+passwordInput()   # Password input control
+actionButton()    # Action button
+dateRangeInput()  # Input a data range
+```
+
+[Complete list](https://shiny.posit.co/r/components/) (with code)
+
+## Output
+
+```r
+plotOutput()          # Plot output element
+textOutput()          # Text output element
+verbatimTextOutput()  # Verbatim text output element
+tableOutput()         # Table output element
+dataTableOutput()     # Data table output element
+htmlOutput()          # HTML output element
+uiOutput()            # user interface element
+downloadButton()      # Download button
+Progress()            # Reporting progress (object oriented)
+withProgress()        # Reporting progress (functional)
+outputOptions()       # Set options for an output object
+```
+
+# Server
+
+```r
+renderPlot()        # Plot output
+renderText()        # Text output
+renderPrint()       # Printable output
+renderTable()       # Table output
+renderDataTable()   # Data table output
+renderImage()       # Image file output
+renderUI()          # UI output
+downloadHandler()   # File downloads
+```
+
+# Complete flow
+
+## UI
+
+### Input definition
+
+```r
+ui = fluidPage(
+selectInput(inputId = "mySelection",
+            label = h3("Select box"),
+    choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3),
+    selected = 1)
+)
+```
+
+### Output definition
+
+```r
+ui = fluidPage(
+selectInput(inputId = "mySelection",
+            label = h3("Select box"),
+    choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3),
+    selected = 1),
+
+  verbatimTextOutput(
+  outputId = "myOutput"
+)
+
+)
+```
+
+## Server
+
+```r
+ui = fluidPage(
+selectInput(inputId = "mySelection",
+            label = h3("Select box"),
+    choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3),
+    selected = 1),
+
+  verbatimTextOutput(
+  outputId = "myOutput"
+)
+
+)
+
+server = function(input, output) {
+  output$myOutput = renderText({
+    paste(paste("This is my choice"), input$mySelection)
+  })
+}
+```
+
+## All together
+
+```r
+ui = fluidPage(selectInput(inputId = "mySelection",  # <1>
+                          label = h3("Select box"),  # <2>
+                          choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3), # <3>
+                          selected = 1), # <4>
+         verbatimTextOutput( outputId = "myOutput") # <5>
+         )
+server = function(input, output) {
+           output$myOutput = renderPrint({ # <6>
+             paste(paste("This is my choice"),  input$mySelection) # <7>
+           })
+}
+shinyApp(ui, server)
+```
+
+1. Define the ID of the input in the UI (internal use)
+2. Define the label of the element (external use)
+3. Options (labels) and their internal labels
+4. Default selected option
+5. Define the label (internal use) of the output in the UI (where the results elaborated by the server will be stored)
+6. Function in the server to render the results (consistent with the UI definition)
+7. Call for the label of the input in the UI
+
+## An astonishing result
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+#| layout: vertical
+#| viewerHeight: 220
+library(shiny)
+
+ui = fluidPage(selectInput(inputId = "mySelection",
+                          label = h3("Select box"),
+                          choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3),
+                          selected = 1),
+         verbatimTextOutput( outputId = "myOutput")
+         )
+server = function(input, output) {
+           output$myOutput = renderPrint({
+             paste(paste("This is my choice"),  input$mySelection)
+           })
+}
+shinyApp(ui, server)
+```
+
+In the next page we put this same app in an RStudio project, with the `ui` in a script called `ui.R` and the `server` in a script called `server.R`.
