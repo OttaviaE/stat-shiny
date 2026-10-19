@@ -1,5 +1,5 @@
 ---
-title: "stat-shiny"
+title: "Introduction to Shiny"
 subtitle: "From the logic of Shiny to your app online"
 author: "Ottavia M. Epifania"
 toc: true

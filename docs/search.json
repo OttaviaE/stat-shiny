@@ -2,45 +2,45 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "stat-shiny",
+    "title": "Introduction to Shiny",
     "section": "",
     "text": "Shiny lets you turn R code into an interactive web application: the user clicks, chooses and uploads, and R does the computations behind the scenes.\nIn this course we start from an empty RStudio project and finish with your own app online, with a link you can send to anyone.",
     "crumbs": [
       "Home",
-      "stat-shiny"
+      "Introduction to Shiny"
     ]
   },
   {
     "objectID": "index.html#the-plan",
     "href": "index.html#the-plan",
-    "title": "stat-shiny",
+    "title": "Introduction to Shiny",
     "section": "The plan",
     "text": "The plan\n\nDay 1 · The logic of Shiny\n\n\n\nTopic\nWhat you take home\n\n\n\n\nShiny\nWhat Shiny is and the logic behind it: UI, server and their communication\n\n\nA Shiny project\nAn RStudio project with ui.R and server.R that runs\n\n\nHow Shiny thinks\nInside the UI and the server: IDs and reactivity\n\n\nInput widgets\nWhat each widget sends to the server\n\n\nOutputs and render functions\nHow results go back to the UI\n\n\nReactivity and reactive()\nWhen the server re-runs your code\n\n\nWait for it: eventReactive()\nDeciding when the app reacts\n\n\nYour app: explore a dataset\nA complete app, built step by step\n\n\n\n\n\nDay 2 · Spread the shine\n\n\n\nTopic\nWhat you take home\n\n\n\n\nYour app on GitHub\nThe project in a GitHub repository\n\n\nDeploy on Connect Cloud\nYour app online\n\n\n\nGoing further collects the topics we will not cover in class (layouts, updating inputs, interactive plots, downloads), with working apps you can study on your own.",
     "crumbs": [
       "Home",
-      "stat-shiny"
+      "Introduction to Shiny"
     ]
   },
   {
     "objectID": "index.html#before-the-course",
     "href": "index.html#before-the-course",
-    "title": "stat-shiny",
+    "title": "Introduction to Shiny",
     "section": "Before the course",
     "text": "Before the course\n\n\n\n\n\n\nPlease do this before Day 1\n\n\n\n\nInstall R and RStudio Desktop (recent versions)\nInstall the packages we need:\ninstall.packages(c(\"shiny\", \"rsconnect\"))\nCreate a free GitHub account and install GitHub Desktop\nCreate a free account on Posit Connect Cloud, signing in with your GitHub account",
     "crumbs": [
       "Home",
-      "stat-shiny"
+      "Introduction to Shiny"
     ]
   },
   {
     "objectID": "index.html#how-to-use-these-pages",
     "href": "index.html#how-to-use-these-pages",
-    "title": "stat-shiny",
+    "title": "Introduction to Shiny",
     "section": "How to use these pages",
     "text": "How to use these pages\nMost examples are live apps that run in your browser: on top you see the code (ui.R and server.R in two tabs), below the running app.\n\nYou can edit the code and re-run the app with the ▶ button (or Ctrl-Shift-EnterCtrl-Shift-Enter)\nNothing you do here can break anything: reload the page to start over\nThe first app on a page takes a few seconds to start (R is being loaded in your browser)\n\n\n\n\n\n\n\nAll the apps, ready to run\n\n\n\nAll the apps of the course are in the apps folder of the repository. Each app is a folder with a ui.R and a server.R file.\nDownload all the apps (.zip)",
     "crumbs": [
       "Home",
-      "stat-shiny"
+      "Introduction to Shiny"
     ]
   },
   {
