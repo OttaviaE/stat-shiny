@@ -480,7 +480,7 @@
     "href": "day1/01-project.html",
     "title": "A Shiny project",
     "section": "",
-    "text": "A Shiny app is a folder. In the folder there are (at least) two R scripts:\nThe best way to keep that folder tidy is an RStudio project. It will also be the folder that we put on GitHub and online on Day 2, so we create it right away.",
+    "text": "A Shiny app is a folder. In the folder there are (at least) two R scripts:\nThe best way to keep that folder tidy is an RStudio project. RStudio has a specific type of project for Shiny apps, which comes with a ready-made (and pretty basic) app.\nThis project will also become the GitHub repository that, on Day 2, is uploaded to the server to make the app shareable and online.",
     "crumbs": [
       "Home",
       "Day 1 · The logic of Shiny",
@@ -516,7 +516,7 @@
     "href": "day1/01-project.html#step-3-write-the-two-scripts",
     "title": "A Shiny project",
     "section": "Step 3 · Write the two scripts",
-    "text": "Step 3 · Write the two scripts\nCopy this into ui.R:\nlibrary(shiny)\n\nui &lt;- fluidPage(\n  selectInput(\n    inputId = \"mySelection\",            # name used by the server\n    label = h3(\"Select box\"),           # what the user reads\n    choices = list(\"Choice 1\" = 1, \"Choice 2\" = 2, \"Choice 3\" = 3),\n    selected = 1\n  ),\n  verbatimTextOutput(outputId = \"myOutput\")  # empty box, filled by the server\n)\nand this into server.R:\nlibrary(shiny)\n\nserver &lt;- function(input, output, session) {\n  output$myOutput &lt;- renderPrint({\n    paste(\"This is my choice:\", input$mySelection)\n  })\n}\nWe dissect every line in the next page. For now, notice two things:\n\nui.R creates one object, ui: the page\nserver.R creates one object, server: a function of input and output",
+    "text": "Step 3 · Write the two scripts\nReplace whatever is in the two files with our first app. Copy this into ui.R:\nlibrary(shiny)\n\nui &lt;- fluidPage(\n  selectInput(\n    inputId = \"mySelection\",            # name used by the server\n    label = h3(\"Select box\"),           # what the user reads\n    choices = list(\"Choice 1\" = 1, \"Choice 2\" = 2, \"Choice 3\" = 3),\n    selected = 1\n  ),\n  verbatimTextOutput(outputId = \"myOutput\")  # empty box, filled by the server\n)\nand this into server.R:\nlibrary(shiny)\n\nserver &lt;- function(input, output, session) {\n  output$myOutput &lt;- renderPrint({\n    paste(\"This is my choice:\", input$mySelection)\n  })\n}\nWe dissect every line in the next page. For now, notice two things:\n\nui.R creates one object, ui: the page\nserver.R creates one object, server: a function of input and output",
     "crumbs": [
       "Home",
       "Day 1 · The logic of Shiny",
@@ -929,6 +929,42 @@
       "Home",
       "Going further",
       "Updating inputs"
+    ]
+  },
+  {
+    "objectID": "day1/01-project.html#step-1-create-a-shiny-project",
+    "href": "day1/01-project.html#step-1-create-a-shiny-project",
+    "title": "A Shiny project",
+    "section": "Step 1 · Create a Shiny project",
+    "text": "Step 1 · Create a Shiny project\nIn RStudio:\n\nFile → New Project… → New Directory → Shiny Application\nDirectory name: my-shiny-app (no spaces, no accents)\nChoose where to save it (e.g., Documents/GitHub) and click Create Project\n\nRStudio opens the project and the example app that comes with it.\n\n\n\n\n\n\nWhy a project?\n\n\n\n\nThe project folder is the app: everything the app needs lives there\nFile paths are relative to the project, so the app works on any computer\nOn Day 2 the very same folder becomes a GitHub repository and then goes online",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "A Shiny project"
+    ]
+  },
+  {
+    "objectID": "day1/01-project.html#step-2-check-that-you-have-ui.r-and-server.r",
+    "href": "day1/01-project.html#step-2-check-that-you-have-ui.r-and-server.r",
+    "title": "A Shiny project",
+    "section": "Step 2 · Check that you have ui.R and server.R",
+    "text": "Step 2 · Check that you have ui.R and server.R\nLook at the Files pane. Depending on the version of RStudio, the example app is either split into ui.R and server.R, or written in a single file called app.R.\n\nIf you see ui.R and server.R: you are ready, go to Step 3\nIf you see app.R: delete it, then create the two scripts yourself: File → New File → R Script, save it (File → Save) as ui.R; do the same for server.R\n\nThe names must be exactly ui.R and server.R (lowercase, capital R), and both files must be in the same folder.\nYour project now looks like this:\nmy-shiny-app/\n├── my-shiny-app.Rproj\n├── ui.R\n└── server.R\n\n\n\n\n\n\nAlternative: start from a regular project\n\n\n\n\n\nYou can obtain exactly the same result from a regular RStudio project:\n\nFile → New Project… → New Directory → New Project, call it my-shiny-app and click Create Project\nFile → New File → R Script, then save it as ui.R\nFile → New File → R Script, then save it as server.R\n\nThe folder is the same as above: what makes it a Shiny app are the two scripts, not the type of project.",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "A Shiny project"
+    ]
+  },
+  {
+    "objectID": "day1/01-project.html#sec-step3",
+    "href": "day1/01-project.html#sec-step3",
+    "title": "A Shiny project",
+    "section": "Step 3 · Write the two scripts",
+    "text": "Step 3 · Write the two scripts\nReplace whatever is in the two files with our first app. Copy this into ui.R:\nlibrary(shiny)\n\nui &lt;- fluidPage(\n  selectInput(\n    inputId = \"mySelection\",            # name used by the server\n    label = h3(\"Select box\"),           # what the user reads\n    choices = list(\"Choice 1\" = 1, \"Choice 2\" = 2, \"Choice 3\" = 3),\n    selected = 1\n  ),\n  verbatimTextOutput(outputId = \"myOutput\")  # empty box, filled by the server\n)\nand this into server.R:\nlibrary(shiny)\n\nserver &lt;- function(input, output, session) {\n  output$myOutput &lt;- renderPrint({\n    paste(\"This is my choice:\", input$mySelection)\n  })\n}\nWe dissect every line in the next page. For now, notice two things:\n\nui.R creates one object, ui: the page\nserver.R creates one object, server: a function of input and output",
+    "crumbs": [
+      "Home",
+      "Day 1 · The logic of Shiny",
+      "A Shiny project"
     ]
   }
 ]

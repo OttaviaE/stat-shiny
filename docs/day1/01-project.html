@@ -496,8 +496,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul class="collapse">
-  <li><a href="#step-1-create-the-project" id="toc-step-1-create-the-project" class="nav-link active" data-scroll-target="#step-1-create-the-project">Step 1 · Create the project</a></li>
-  <li><a href="#step-2-create-ui.r-and-server.r" id="toc-step-2-create-ui.r-and-server.r" class="nav-link" data-scroll-target="#step-2-create-ui.r-and-server.r">Step 2 · Create <code>ui.R</code> and <code>server.R</code></a></li>
+  <li><a href="#step-1-create-a-shiny-project" id="toc-step-1-create-a-shiny-project" class="nav-link active" data-scroll-target="#step-1-create-a-shiny-project">Step 1 · Create a Shiny project</a></li>
+  <li><a href="#step-2-check-that-you-have-ui.r-and-server.r" id="toc-step-2-check-that-you-have-ui.r-and-server.r" class="nav-link" data-scroll-target="#step-2-check-that-you-have-ui.r-and-server.r">Step 2 · Check that you have <code>ui.R</code> and <code>server.R</code></a></li>
   <li><a href="#step-3-write-the-two-scripts" id="toc-step-3-write-the-two-scripts" class="nav-link" data-scroll-target="#step-3-write-the-two-scripts">Step 3 · Write the two scripts</a></li>
   <li><a href="#step-4-run-the-app" id="toc-step-4-run-the-app" class="nav-link" data-scroll-target="#step-4-run-the-app">Step 4 · Run the app</a></li>
   <li><a href="#the-same-app-live" id="toc-the-same-app-live" class="nav-link" data-scroll-target="#the-same-app-live">The same app, live</a></li>
@@ -534,16 +534,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><code>ui.R</code>: what the user <strong>sees</strong> (the <em>User Interface</em>)</li>
 <li><code>server.R</code>: what R <strong>does</strong> (the computations)</li>
 </ul>
-<p>The best way to keep that folder tidy is an <strong>RStudio project</strong>. It will also be the folder that we put on GitHub and online on Day 2, so we create it right away.</p>
-<section id="step-1-create-the-project" class="level2">
-<h2 class="anchored" data-anchor-id="step-1-create-the-project">Step 1 · Create the project</h2>
+<p>The best way to keep that folder tidy is an <strong>RStudio project</strong>. RStudio has a specific type of project for Shiny apps, which comes with a ready-made (and pretty basic) app.</p>
+<p>This project will also become the GitHub repository that, on Day 2, is uploaded to the server to make the app shareable and online.</p>
+<section id="step-1-create-a-shiny-project" class="level2">
+<h2 class="anchored" data-anchor-id="step-1-create-a-shiny-project">Step 1 · Create a Shiny project</h2>
 <p>In RStudio:</p>
 <ol type="1">
-<li><em>File</em> → <em>New Project…</em> → <em>New Directory</em> → <em>New Project</em></li>
+<li><em>File</em> → <em>New Project…</em> → <em>New Directory</em> → <strong>Shiny Application</strong></li>
 <li><strong>Directory name</strong>: <code>my-shiny-app</code> (no spaces, no accents)</li>
 <li>Choose where to save it (e.g., <code>Documents/GitHub</code>) and click <em>Create Project</em></li>
 </ol>
-<p>RStudio opens the project: the <em>Files</em> pane shows the folder, which now contains only <code>my-shiny-app.Rproj</code>.</p>
+<p>RStudio opens the project and the example app that comes with it.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -562,12 +563,13 @@ Why a project?
 </div>
 </div>
 </section>
-<section id="step-2-create-ui.r-and-server.r" class="level2">
-<h2 class="anchored" data-anchor-id="step-2-create-ui.r-and-server.r">Step 2 · Create <code>ui.R</code> and <code>server.R</code></h2>
-<ol type="1">
-<li><em>File</em> → <em>New File</em> → <em>R Script</em>, then save it (<em>File</em> → <em>Save</em>) as <strong><code>ui.R</code></strong></li>
-<li><em>File</em> → <em>New File</em> → <em>R Script</em>, then save it as <strong><code>server.R</code></strong></li>
-</ol>
+<section id="step-2-check-that-you-have-ui.r-and-server.r" class="level2">
+<h2 class="anchored" data-anchor-id="step-2-check-that-you-have-ui.r-and-server.r">Step 2 · Check that you have <code>ui.R</code> and <code>server.R</code></h2>
+<p>Look at the <em>Files</em> pane. Depending on the version of RStudio, the example app is either split into <strong><code>ui.R</code></strong> and <strong><code>server.R</code></strong>, or written in a single file called <strong><code>app.R</code></strong>.</p>
+<ul>
+<li>If you see <code>ui.R</code> and <code>server.R</code>: you are ready, go to Step 3</li>
+<li>If you see <code>app.R</code>: delete it, then create the two scripts yourself: <em>File</em> → <em>New File</em> → <em>R Script</em>, save it (<em>File</em> → <em>Save</em>) as <strong><code>ui.R</code></strong>; do the same for <strong><code>server.R</code></strong></li>
+</ul>
 <p>The names must be <strong>exactly</strong> <code>ui.R</code> and <code>server.R</code> (lowercase, capital <code>R</code>), and both files must be in the same folder.</p>
 <p>Your project now looks like this:</p>
 <pre class="text"><code>my-shiny-app/
@@ -580,21 +582,26 @@ Why a project?
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Alternative: let RStudio write the two scripts
+Alternative: start from a regular project
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p><em>File</em> → <em>New File</em> → <em>Shiny Web App…</em> → <em>Application type</em>: <strong>Multiple File (ui.R/server.R)</strong>.</p>
-<p>RStudio creates a <strong>sub-folder</strong> with the name you give to the application, containing a <code>ui.R</code> and a <code>server.R</code> with a demo app (a histogram of the Old Faithful geyser). It works, but the app ends up one folder deeper than the project. In this course we keep <code>ui.R</code> and <code>server.R</code> directly in the project folder.</p>
+<p>You can obtain exactly the same result from a regular RStudio project:</p>
+<ol type="1">
+<li><em>File</em> → <em>New Project…</em> → <em>New Directory</em> → <em>New Project</em>, call it <code>my-shiny-app</code> and click <em>Create Project</em></li>
+<li><em>File</em> → <em>New File</em> → <em>R Script</em>, then save it as <strong><code>ui.R</code></strong></li>
+<li><em>File</em> → <em>New File</em> → <em>R Script</em>, then save it as <strong><code>server.R</code></strong></li>
+</ol>
+<p>The folder is the same as above: what makes it a Shiny app are the two scripts, not the type of project.</p>
 </div>
 </div>
 </div>
 </section>
 <section id="step-3-write-the-two-scripts" class="level2">
 <h2 class="anchored" data-anchor-id="step-3-write-the-two-scripts">Step 3 · Write the two scripts</h2>
-<p>Copy this into <strong><code>ui.R</code></strong>:</p>
+<p>Replace whatever is in the two files with our first app. Copy this into <strong><code>ui.R</code></strong>:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>

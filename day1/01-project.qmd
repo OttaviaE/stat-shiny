@@ -8,17 +8,20 @@ A Shiny app is **a folder**. In the folder there are (at least) two R scripts:
 - `ui.R`: what the user **sees** (the *User Interface*)
 - `server.R`: what R **does** (the computations)
 
-The best way to keep that folder tidy is an **RStudio project**. It will also be the folder that we put on GitHub and online on Day 2, so we create it right away.
+The best way to keep that folder tidy is an **RStudio project**.
+RStudio has a specific type of project for Shiny apps, which comes with a ready-made (and pretty basic) app.
 
-## Step 1 · Create the project
+This project will also become the GitHub repository that, on Day 2, is uploaded to the server to make the app shareable and online.
+
+## Step 1 · Create a Shiny project
 
 In RStudio:
 
-1. *File* → *New Project…* → *New Directory* → *New Project*
+1. *File* → *New Project…* → *New Directory* → **Shiny Application**
 2. **Directory name**: `my-shiny-app` (no spaces, no accents)
 3. Choose where to save it (e.g., `Documents/GitHub`) and click *Create Project*
 
-RStudio opens the project: the *Files* pane shows the folder, which now contains only `my-shiny-app.Rproj`.
+RStudio opens the project and the example app that comes with it.
 
 ::: {.callout-note}
 ## Why a project?
@@ -28,10 +31,12 @@ RStudio opens the project: the *Files* pane shows the folder, which now contains
 - On Day 2 the very same folder becomes a GitHub repository and then goes online
 :::
 
-## Step 2 · Create `ui.R` and `server.R`
+## Step 2 · Check that you have `ui.R` and `server.R`
 
-1. *File* → *New File* → *R Script*, then save it (*File* → *Save*) as **`ui.R`**
-2. *File* → *New File* → *R Script*, then save it as **`server.R`**
+Look at the *Files* pane. Depending on the version of RStudio, the example app is either split into **`ui.R`** and **`server.R`**, or written in a single file called **`app.R`**.
+
+- If you see `ui.R` and `server.R`: Go to Step 3 (@sec-step3)
+- If you see `app.R`: delete it, then create the two scripts yourself: *File* → *New File* → *R Script*, save it (*File* → *Save*) as **`ui.R`**; do the same for **`server.R`**
 
 The names must be **exactly** `ui.R` and `server.R` (lowercase, capital `R`), and both files must be in the same folder.
 
@@ -45,16 +50,20 @@ my-shiny-app/
 ```
 
 ::: {.callout-tip collapse="true"}
-## Alternative: let RStudio write the two scripts
+## Alternative: start from a regular project
 
-*File* → *New File* → *Shiny Web App…* → *Application type*: **Multiple File (ui.R/server.R)**.
+You can obtain exactly the same result from a regular RStudio project:
 
-RStudio creates a **sub-folder** with the name you give to the application, containing a `ui.R` and a `server.R` with a demo app (a histogram of the Old Faithful geyser). It works, but the app ends up one folder deeper than the project. In this course we keep `ui.R` and `server.R` directly in the project folder.
+1. *File* → *New Project…* → *New Directory* → *New Project*, call it `my-shiny-app` and click *Create Project*
+2. *File* → *New File* → *R Script*, then save it as **`ui.R`**
+3. *File* → *New File* → *R Script*, then save it as **`server.R`**
+
+The folder is the same as above: what makes it a Shiny app are the two scripts, not the type of project.
 :::
 
-## Step 3 · Write the two scripts
+## Step 3 · Write the two scripts {#sec-step3}
 
-Copy this into **`ui.R`**:
+Replace whatever is in the two files with our first app. Copy this into **`ui.R`**:
 
 ```r
 {{< include ../apps/01-basic/ui.R >}}
