@@ -7,7 +7,7 @@ ui <- fluidPage(
       selectInput(
         "dataset",
         "Choose a dataset:",
-        choices = c("rock" = 1, "pressure" = 2, "cars" = 3)
+        choices = c("rock", "pressure", "cars")
       ),
       actionButton("load", "Load dataset"),
       hr(),

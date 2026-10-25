@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>A Shiny project – stat-shiny</title>
+<title>A Shiny project – Shine bright like an open-source app</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -78,9 +78,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-2fb89454c27d8ca789ae8361eb8aa237.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-0bb70f10e24a92f3de91d4809b8cbce9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../site_libs/bootstrap/bootstrap-dark-e490b402e2cc1392fcfe70f1c043d6e0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-2fb89454c27d8ca789ae8361eb8aa237.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-0bb70f10e24a92f3de91d4809b8cbce9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <meta name="shinylive:serviceworker_dir" content="..">
 <script src="../site_libs/quarto-contrib/shinylive-0.10.12/shinylive/load-shinylive-sw.js" type="module"></script>
 <script src="../site_libs/quarto-contrib/shinylive-0.10.12/shinylive/run-python-blocks.js" type="module"></script>
@@ -290,7 +290,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">stat-shiny</span>
+    <span class="navbar-title">Shine bright like an open-source app</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -497,8 +497,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul class="collapse">
   <li><a href="#step-1-create-a-shiny-project" id="toc-step-1-create-a-shiny-project" class="nav-link active" data-scroll-target="#step-1-create-a-shiny-project">Step 1 · Create a Shiny project</a></li>
-  <li><a href="#step-2-check-that-you-have-ui.r-and-server.r" id="toc-step-2-check-that-you-have-ui.r-and-server.r" class="nav-link" data-scroll-target="#step-2-check-that-you-have-ui.r-and-server.r">Step 2 · Check that you have <code>ui.R</code> and <code>server.R</code></a></li>
-  <li><a href="#step-3-write-the-two-scripts" id="toc-step-3-write-the-two-scripts" class="nav-link" data-scroll-target="#step-3-write-the-two-scripts">Step 3 · Write the two scripts</a></li>
+  <li><a href="#step-2-create-ui.r-and-server.r" id="toc-step-2-create-ui.r-and-server.r" class="nav-link" data-scroll-target="#step-2-create-ui.r-and-server.r">Step 2 · Create <code>ui.R</code> and <code>server.R</code></a></li>
+  <li><a href="#sec-step3" id="toc-sec-step3" class="nav-link" data-scroll-target="#sec-step3">Step 3 · Write the two scripts</a></li>
   <li><a href="#step-4-run-the-app" id="toc-step-4-run-the-app" class="nav-link" data-scroll-target="#step-4-run-the-app">Step 4 · Run the app</a></li>
   <li><a href="#the-same-app-live" id="toc-the-same-app-live" class="nav-link" data-scroll-target="#the-same-app-live">The same app, live</a></li>
   <li><a href="#two-files-or-one-file" id="toc-two-files-or-one-file" class="nav-link" data-scroll-target="#two-files-or-one-file">Two files or one file?</a></li>
@@ -563,12 +563,12 @@ Why a project?
 </div>
 </div>
 </section>
-<section id="step-2-check-that-you-have-ui.r-and-server.r" class="level2">
-<h2 class="anchored" data-anchor-id="step-2-check-that-you-have-ui.r-and-server.r">Step 2 · Check that you have <code>ui.R</code> and <code>server.R</code></h2>
-<p>Look at the <em>Files</em> pane. Depending on the version of RStudio, the example app is either split into <strong><code>ui.R</code></strong> and <strong><code>server.R</code></strong>, or written in a single file called <strong><code>app.R</code></strong>.</p>
+<section id="step-2-create-ui.r-and-server.r" class="level2">
+<h2 class="anchored" data-anchor-id="step-2-create-ui.r-and-server.r">Step 2 · Create <code>ui.R</code> and <code>server.R</code></h2>
+<p>The default Shiny Project creates an extremely basic app using the Old Faithful Geyser data. The code is stored in a single file named called <strong><code>app.R</code></strong>:</p>
 <ul>
-<li>If you see <code>ui.R</code> and <code>server.R</code>: you are ready, go to Step 3</li>
 <li>If you see <code>app.R</code>: delete it, then create the two scripts yourself: <em>File</em> → <em>New File</em> → <em>R Script</em>, save it (<em>File</em> → <em>Save</em>) as <strong><code>ui.R</code></strong>; do the same for <strong><code>server.R</code></strong></li>
+<li>If for whatever unkwown reasons the project already contains <code>ui.R</code> and <code>server.R</code> files: Go to Step 3 (<a href="#sec-step3" class="quarto-xref">Section&nbsp;3</a>)</li>
 </ul>
 <p>The names must be <strong>exactly</strong> <code>ui.R</code> and <code>server.R</code> (lowercase, capital <code>R</code>), and both files must be in the same folder.</p>
 <p>Your project now looks like this:</p>
@@ -599,8 +599,8 @@ Alternative: start from a regular project
 </div>
 </div>
 </section>
-<section id="step-3-write-the-two-scripts" class="level2">
-<h2 class="anchored" data-anchor-id="step-3-write-the-two-scripts">Step 3 · Write the two scripts</h2>
+<section id="sec-step3" class="level2">
+<h2 class="anchored" data-anchor-id="sec-step3">Step 3 · Write the two scripts</h2>
 <p>Replace whatever is in the two files with our first app. Copy this into <strong><code>ui.R</code></strong>:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -709,7 +709,11 @@ Checkpoint
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>✅ A project <code>my-shiny-app</code> with <code>ui.R</code> and <code>server.R</code><br> ✅ <em>Run App</em> opens the app<br> ✅ You know how to stop it</p>
+<ul>
+<li>A project <code>my-shiny-app</code> with <code>ui.R</code> and <code>server.R</code></li>
+<li><em>Run App</em> opens the app</li>
+<li>You know how to stop it</li>
+</ul>
 </div>
 </div>
 
@@ -1148,7 +1152,7 @@ Checkpoint
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p>Ottavia M. Epifania · stat-shiny</p>
+<p>Ottavia M. Epifania · Introduction to Shiny</p>
 </div>
     <div class="nav-footer-right">
       &nbsp;

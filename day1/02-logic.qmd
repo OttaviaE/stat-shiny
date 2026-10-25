@@ -27,12 +27,12 @@ R prints (shortened):
 </div>
 ```
 
-So the UI contains two kinds of elements:
+The UI contains two kinds of elements:
 
 - **Inputs** (`*Input()`, `actionButton()`…): the controls the user plays with
 - **Outputs** (`*Output()`): **empty boxes**, each with a name, waiting for the server to fill them
 
-Each element is identified by its **ID** (`id="mySelection"`). Remember this: the ID is the only thing the server knows about the UI.
+Each element is identified by its **ID** (`id="mySelection"`):  This IS is **the only thing** the server knows about the UI.
 
 ## The server is a function
 
@@ -135,7 +135,7 @@ server <- function(input, output, session) {
 
 ## Reactivity: the mental model
 
-Look at the server again: there is no loop, no "when the user clicks, do this". How does the output know it has to change?
+The server contains no loop, no "when the user clicks, do this". How does the output change when the input changes?
 
 **Think of a spreadsheet.** If cell `B1` contains `=A1 * 2`, you never "run" `B1`: every time `A1` changes, `B1` updates by itself.
 

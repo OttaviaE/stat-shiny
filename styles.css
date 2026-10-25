@@ -1,3 +1,14 @@
 /* give live apps some air */
 .shinylive-wrapper { margin: 1.25rem 0 1.75rem 0; }
 table code { white-space: nowrap; }
+
+/* input / output highlighting (first app, 00-shiny) */
+:root { --io-in: rgba(52, 152, 219, 0.22); --io-out: rgba(230, 160, 0, 0.28); }
+.io-first-app pre code > span { display: inline-block; min-width: 100%; }
+.io-first-app pre code > span:nth-child(n+2):nth-child(-n+5),
+.io-first-app pre code > span:nth-child(11) { background-color: var(--io-in); }
+.io-first-app pre code > span:nth-child(6),
+.io-first-app pre code > span:nth-child(10) { background-color: var(--io-out); }
+.io-chip { padding: 0.05em 0.45em; border-radius: 0.3em; font-weight: 600; }
+.io-chip-in { background-color: var(--io-in); }
+.io-chip-out { background-color: var(--io-out); }

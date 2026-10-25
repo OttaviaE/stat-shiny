@@ -20,20 +20,17 @@ actionButton("load", "Select dataset")                # <1>
 
 ```r
 # server.R
-dataInput <- eventReactive(input$load, {              # <1>
-  if (input$dataset == 1) {                           # <2>
-    rock
-  } else if (input$dataset == 2) {
-    pressure
-  } else {
-    cars
-  }
+dataInput = eventReactive(input$load, {   # <1>
+    switch(input$dataset,                 # <2>
+           rock = rock,
+           pressure = pressure,
+           cars = cars)
 })
 ```
 1. The **first argument is the trigger**: the code runs only when `input$load` changes, i.e., when the button is clicked
 2. The code to run. It reads `input$dataset`, but changing the dataset **does not** trigger it: its value is simply read at the moment of the click
 
-`dataInput()` is then used exactly as a `reactive()`: `data <- dataInput()` inside the `render*()` functions.
+`dataInput()` is then used exactly as a `reactive()`: `data = dataInput()` inside the `render*()` functions.
 
 ## The app
 
@@ -109,8 +106,6 @@ dataInput <- eventReactive(input$load, {
   ...
 })
 ```
-
-(In that app the choices are named, `"rock" = 1`, so the server compares `input$dataset == 1`. With `choices = c("rock", "pressure", "cars")` you can keep your `switch()`.)
 :::
 
 ::: {.callout-note}

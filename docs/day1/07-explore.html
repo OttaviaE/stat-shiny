@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Your app: explore a dataset – stat-shiny</title>
+<title>Your app: explore a dataset – Shine bright like an open-source app</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -78,9 +78,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-2fb89454c27d8ca789ae8361eb8aa237.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-0bb70f10e24a92f3de91d4809b8cbce9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../site_libs/bootstrap/bootstrap-dark-e490b402e2cc1392fcfe70f1c043d6e0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-2fb89454c27d8ca789ae8361eb8aa237.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-0bb70f10e24a92f3de91d4809b8cbce9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <meta name="shinylive:serviceworker_dir" content="..">
 <script src="../site_libs/quarto-contrib/shinylive-0.10.12/shinylive/load-shinylive-sw.js" type="module"></script>
 <script src="../site_libs/quarto-contrib/shinylive-0.10.12/shinylive/run-python-blocks.js" type="module"></script>
@@ -291,7 +291,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">stat-shiny</span>
+    <span class="navbar-title">Shine bright like an open-source app</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -589,7 +589,7 @@ ui &lt;- fluidPage(
       selectInput(
         "dataset",
         "Choose a dataset:",
-        choices = c("rock" = 1, "pressure" = 2, "cars" = 3)
+        choices = c("rock", "pressure", "cars")
       ),
       actionButton("load", "Load dataset")
     ),
@@ -606,13 +606,10 @@ server &lt;- function(input, output, session) {
 
   # 1. LOAD THE DATASET (only when "Load dataset" is clicked)
   dataInput &lt;- eventReactive(input$load, {
-    if (input$dataset == 1) {
-      rock
-    } else if (input$dataset == 2) {
-      pressure
-    } else {
-      cars
-    }
+    switch(input$dataset,
+           rock = rock,
+           pressure = pressure,
+           cars = cars)
   })
 
   # check that the data arrived
@@ -678,7 +675,7 @@ ui &lt;- fluidPage(
       selectInput(
         "dataset",
         "Choose a dataset:",
-        choices = c("rock" = 1, "pressure" = 2, "cars" = 3)
+        choices = c("rock", "pressure", "cars")
       ),
       actionButton("load", "Load dataset"),
       hr(),
@@ -698,13 +695,10 @@ server &lt;- function(input, output, session) {
 
   # 1. LOAD THE DATASET
   dataInput &lt;- eventReactive(input$load, {
-    if (input$dataset == 1) {
-      rock
-    } else if (input$dataset == 2) {
-      pressure
-    } else {
-      cars
-    }
+    switch(input$dataset,
+           rock = rock,
+           pressure = pressure,
+           cars = cars)
   })
 
   # 2. VARIABLE NAMES (NEW)
@@ -768,7 +762,7 @@ ui &lt;- fluidPage(
       selectInput(
         "dataset",
         "Choose a dataset:",
-        choices = c("rock" = 1, "pressure" = 2, "cars" = 3)
+        choices = c("rock", "pressure", "cars")
       ),
       actionButton("load", "Load dataset"),
       hr(),
@@ -790,13 +784,10 @@ server &lt;- function(input, output, session) {
 
   # 1. LOAD THE DATASET
   dataInput &lt;- eventReactive(input$load, {
-    if (input$dataset == 1) {
-      rock
-    } else if (input$dataset == 2) {
-      pressure
-    } else {
-      cars
-    }
+    switch(input$dataset,
+           rock = rock,
+           pressure = pressure,
+           cars = cars)
   })
 
   # 2. VARIABLE NAMES
@@ -844,9 +835,9 @@ server &lt;- function(input, output, session) {
 </section>
 <section id="step-4-upload-your-own-data" class="level2">
 <h2 class="anchored" data-anchor-id="step-4-upload-your-own-data">Step 4 · Upload your own data</h2>
-<p>Last step: a fourth option, <em>Upload data</em>. When it is selected, a file input and the choice of the column separator appear.</p>
+<p>Last step: a fourth option, <em>Upload data</em>, with value <code>"upload"</code>: <code>choices = c("rock", "pressure", "cars", "Upload data" = "upload")</code>. When it is selected, a file input and the choice of the column separator appear.</p>
 <div class="sourceCode" id="annotated-cell-7"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-7-1" class="code-annotation-target"><a href="#annotated-cell-7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">conditionalPanel</span>(</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-7-2" class="code-annotation-target"><a href="#annotated-cell-7-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">condition =</span> <span class="st">"input.dataset == '4'"</span>,</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-7-2" class="code-annotation-target"><a href="#annotated-cell-7-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">condition =</span> <span class="st">"input.dataset == 'upload'"</span>,</span>
 <span id="annotated-cell-7-3"><a href="#annotated-cell-7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fileInput</span>(<span class="st">"file"</span>, <span class="st">"Select a CSV file"</span>, <span class="at">accept =</span> <span class="st">".csv"</span>),</span>
 <span id="annotated-cell-7-4"><a href="#annotated-cell-7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">radioButtons</span>(<span class="st">"sep"</span>, <span class="st">"Column separator"</span>,</span>
 <span id="annotated-cell-7-5"><a href="#annotated-cell-7-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">choices =</span> <span class="fu">c</span>(<span class="st">";"</span> <span class="ot">=</span> <span class="st">";"</span>, <span class="st">","</span> <span class="ot">=</span> <span class="st">","</span>))</span>
@@ -858,11 +849,11 @@ server &lt;- function(input, output, session) {
 </dd>
 <dt data-target-cell="annotated-cell-7" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-7" data-code-lines="2" data-code-annotation="2">The condition is written in <strong>JavaScript</strong>, not in R: <code>input.dataset</code> with a dot, and <code>'4'</code> in quotes (remember: the value of a <code>selectInput()</code> is text)</span>
+<span data-code-cell="annotated-cell-7" data-code-lines="2" data-code-annotation="2">The condition is written in <strong>JavaScript</strong>, not in R: <code>input.dataset</code> with a dot, and <code>'upload'</code> in quotes</span>
 </dd>
 </dl>
-<p>And in the server, a fourth case in <code>dataInput()</code>:</p>
-<div class="sourceCode" id="annotated-cell-8"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-8-1"><a href="#annotated-cell-8-1" aria-hidden="true" tabindex="-1"></a><span class="er">}</span> <span class="cf">else</span> {</span>
+<p>And in the server, a fourth case in the <code>switch()</code> of <code>dataInput()</code>. The curly brackets hold more than one line of code:</p>
+<div class="sourceCode" id="annotated-cell-8"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-8-1"><a href="#annotated-cell-8-1" aria-hidden="true" tabindex="-1"></a>upload <span class="ot">=</span> {</span>
 <a class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-8-2" class="code-annotation-target"><a href="#annotated-cell-8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">req</span>(input<span class="sc">$</span>file)</span>
 <a class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-8-3" class="code-annotation-target"><a href="#annotated-cell-8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read.csv</span>(input<span class="sc">$</span>file<span class="sc">$</span>datapath, <span class="at">sep =</span> input<span class="sc">$</span>sep)</span>
 <span id="annotated-cell-8-4"><a href="#annotated-cell-8-4" aria-hidden="true" tabindex="-1"></a>}</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -894,12 +885,12 @@ ui &lt;- fluidPage(
       selectInput(
         "dataset",
         "Choose a dataset:",
-        choices = c("rock" = 1, "pressure" = 2, "cars" = 3,
-                    "Upload data" = 4)                     # NEW option
+        choices = c("rock", "pressure", "cars",
+                    "Upload data" = "upload")              # NEW option
       ),
       # NEW: shown only when "Upload data" is selected
       conditionalPanel(
-        condition = "input.dataset == '4'",
+        condition = "input.dataset == 'upload'",
         fileInput("file", "Select a CSV file", accept = ".csv"),
         radioButtons("sep", "Column separator",
                      choices = c(";" = ";", "," = ","))
@@ -924,16 +915,14 @@ server &lt;- function(input, output, session) {
 
   # 1. LOAD THE DATASET
   dataInput &lt;- eventReactive(input$load, {
-    if (input$dataset == 1) {
-      rock
-    } else if (input$dataset == 2) {
-      pressure
-    } else if (input$dataset == 3) {
-      cars
-    } else {
-      req(input$file)                                   # NEW: wait for a file
-      read.csv(input$file$datapath, sep = input$sep)    # NEW
-    }
+    switch(input$dataset,
+           rock = rock,
+           pressure = pressure,
+           cars = cars,
+           upload = {                                           # NEW
+             req(input$file)                                    # NEW: wait for a file
+             read.csv(input$file$datapath, sep = input$sep)     # NEW
+           })
   })
 
   # 2. VARIABLE NAMES
@@ -995,7 +984,7 @@ Exercise 1 · Make it yours (if you have time)
 <div class="callout-body-container callout-body">
 <p>Pick one or more:</p>
 <ol type="1">
-<li>Add <code>"iris" = 5</code> to the datasets (remember to add the case in <code>dataInput()</code>)</li>
+<li>Add <code>iris</code> to the datasets (remember to add the case in <code>dataInput()</code>)</li>
 <li>Use the <strong>wrong separator</strong> on purpose with <code>example.csv</code>: what happens to the menus? Why?</li>
 <li>Add a <code>tableOutput()</code> that shows the first 6 rows of <code>newdata()</code></li>
 <li>Show the <strong>title</strong> of the plot with the names of the two variables (<code>main = paste(...)</code>)</li>
@@ -1015,7 +1004,7 @@ Hints 1
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <ol type="1">
-<li><code>selectInput()</code>: <code>choices = c(..., "Upload data" = 4, "iris" = 5)</code>; <code>dataInput()</code>: add <code>else if (input$dataset == 5) { iris }</code> <strong>before</strong> the final <code>else</code></li>
+<li><code>selectInput()</code>: <code>choices = c("rock", "pressure", "cars", "iris", "Upload data" = "upload")</code>; <code>dataInput()</code>: add <code>iris = iris</code> to the <code>switch()</code></li>
 <li>With the wrong separator <code>read.csv()</code> reads a single column with a long name: the menus offer only one variable</li>
 <li><code>ui.R</code>: <code>tableOutput("rows")</code>; <code>server.R</code>: <code>output$rows &lt;- renderTable({ head(newdata()) })</code></li>
 <li><code>plot(x, y, ..., main = paste(names(df)[2], "by", names(df)[1]))</code></li>
@@ -1459,7 +1448,7 @@ Hints 1
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p>Ottavia M. Epifania · stat-shiny</p>
+<p>Ottavia M. Epifania · Introduction to Shiny</p>
 </div>
     <div class="nav-footer-right">
       &nbsp;

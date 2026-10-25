@@ -31,12 +31,12 @@ RStudio opens the project and the example app that comes with it.
 - On Day 2 the very same folder becomes a GitHub repository and then goes online
 :::
 
-## Step 2 · Check that you have `ui.R` and `server.R`
+## Step 2 · Create `ui.R` and `server.R`
 
-Look at the *Files* pane. Depending on the version of RStudio, the example app is either split into **`ui.R`** and **`server.R`**, or written in a single file called **`app.R`**.
+The default Shiny Project creates an extremely basic app using the Old Faithful Geyser data. The code is stored in a single file named called **`app.R`**:
 
-- If you see `ui.R` and `server.R`: Go to Step 3 (@sec-step3)
 - If you see `app.R`: delete it, then create the two scripts yourself: *File* → *New File* → *R Script*, save it (*File* → *Save*) as **`ui.R`**; do the same for **`server.R`**
+- If for whatever unkwown reasons the project already contains `ui.R` and `server.R` files: Go to Step 3 (@sec-step3)
 
 The names must be **exactly** `ui.R` and `server.R` (lowercase, capital `R`), and both files must be in the same folder.
 
@@ -135,7 +135,7 @@ It is the same app. We use two files because they make the logic visible: **one 
 ::: {.callout-tip}
 ## Checkpoint
 
-✅ A project `my-shiny-app` with `ui.R` and `server.R`<br>
-✅ *Run App* opens the app<br>
-✅ You know how to stop it
+-  A project `my-shiny-app` with `ui.R` and `server.R`
+-  *Run App* opens the app
+-  You know how to stop it
 :::

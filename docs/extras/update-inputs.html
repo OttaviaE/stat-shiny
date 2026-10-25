@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Updating inputs – stat-shiny</title>
+<title>Updating inputs – Shine bright like an open-source app</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -78,9 +78,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-2fb89454c27d8ca789ae8361eb8aa237.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-0bb70f10e24a92f3de91d4809b8cbce9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../site_libs/bootstrap/bootstrap-dark-e490b402e2cc1392fcfe70f1c043d6e0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-2fb89454c27d8ca789ae8361eb8aa237.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-0bb70f10e24a92f3de91d4809b8cbce9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <meta name="shinylive:serviceworker_dir" content="..">
 <script src="../site_libs/quarto-contrib/shinylive-0.10.12/shinylive/load-shinylive-sw.js" type="module"></script>
 <script src="../site_libs/quarto-contrib/shinylive-0.10.12/shinylive/run-python-blocks.js" type="module"></script>
@@ -288,7 +288,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">stat-shiny</span>
+    <span class="navbar-title">Shine bright like an open-source app</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -569,7 +569,7 @@ ui &lt;- fluidPage(
   sidebarLayout(
     sidebarPanel(
       selectInput("dataset", "Choose a dataset:",
-                  choices = c("rock" = 1, "pressure" = 2, "cars" = 3)),
+                  choices = c("rock", "pressure", "cars")),
       actionButton("load", "Load dataset"),
       hr(),
       # the menus exist from the start, but they are empty
@@ -590,13 +590,10 @@ library(shiny)
 server &lt;- function(input, output, session) {   # session is needed by update*()
 
   dataInput &lt;- eventReactive(input$load, {
-    if (input$dataset == 1) {
-      rock
-    } else if (input$dataset == 2) {
-      pressure
-    } else {
-      cars
-    }
+    switch(input$dataset,
+           rock = rock,
+           pressure = pressure,
+           cars = cars)
   })
 
   # observeEvent: DO something (a side effect) when the data change.
@@ -1100,7 +1097,7 @@ server &lt;- function(input, output, session) {   # session is needed by update*
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p>Ottavia M. Epifania · stat-shiny</p>
+<p>Ottavia M. Epifania · Introduction to Shiny</p>
 </div>
     <div class="nav-footer-right">
       &nbsp;

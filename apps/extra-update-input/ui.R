@@ -4,7 +4,7 @@ ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
       selectInput("dataset", "Choose a dataset:",
-                  choices = c("rock" = 1, "pressure" = 2, "cars" = 3)),
+                  choices = c("rock", "pressure", "cars")),
       actionButton("load", "Load dataset"),
       hr(),
       # the menus exist from the start, but they are empty

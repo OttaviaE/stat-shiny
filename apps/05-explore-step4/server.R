@@ -4,16 +4,14 @@ server <- function(input, output, session) {
 
   # 1. LOAD THE DATASET
   dataInput <- eventReactive(input$load, {
-    if (input$dataset == 1) {
-      rock
-    } else if (input$dataset == 2) {
-      pressure
-    } else if (input$dataset == 3) {
-      cars
-    } else {
-      req(input$file)                                   # NEW: wait for a file
-      read.csv(input$file$datapath, sep = input$sep)    # NEW
-    }
+    switch(input$dataset,
+           rock = rock,
+           pressure = pressure,
+           cars = cars,
+           upload = {                                           # NEW
+             req(input$file)                                    # NEW: wait for a file
+             read.csv(input$file$datapath, sep = input$sep)     # NEW
+           })
   })
 
   # 2. VARIABLE NAMES

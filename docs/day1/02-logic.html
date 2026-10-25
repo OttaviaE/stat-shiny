@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>How Shiny thinks – stat-shiny</title>
+<title>How Shiny thinks – Shine bright like an open-source app</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -78,9 +78,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-2fb89454c27d8ca789ae8361eb8aa237.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-0bb70f10e24a92f3de91d4809b8cbce9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../site_libs/bootstrap/bootstrap-dark-e490b402e2cc1392fcfe70f1c043d6e0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-2fb89454c27d8ca789ae8361eb8aa237.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-0bb70f10e24a92f3de91d4809b8cbce9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <meta name="shinylive:serviceworker_dir" content="..">
 <script src="../site_libs/quarto-contrib/shinylive-0.10.12/shinylive/load-shinylive-sw.js" type="module"></script>
 <script src="../site_libs/quarto-contrib/shinylive-0.10.12/shinylive/run-python-blocks.js" type="module"></script>
@@ -291,7 +291,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">stat-shiny</span>
+    <span class="navbar-title">Shine bright like an open-source app</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -543,12 +543,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">option</span><span class="ot"> value</span><span class="op">=</span><span class="st">"2"</span><span class="dt">&gt;</span>Choice 2<span class="dt">&lt;/</span><span class="kw">option</span><span class="dt">&gt;</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&lt;/</span><span class="kw">select</span><span class="dt">&gt;</span></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>So the UI contains two kinds of elements:</p>
+<p>The UI contains two kinds of elements:</p>
 <ul>
 <li><strong>Inputs</strong> (<code>*Input()</code>, <code>actionButton()</code>…): the controls the user plays with</li>
 <li><strong>Outputs</strong> (<code>*Output()</code>): <strong>empty boxes</strong>, each with a name, waiting for the server to fill them</li>
 </ul>
-<p>Each element is identified by its <strong>ID</strong> (<code>id="mySelection"</code>). Remember this: the ID is the only thing the server knows about the UI.</p>
+<p>Each element is identified by its <strong>ID</strong> (<code>id="mySelection"</code>): This IS is <strong>the only thing</strong> the server knows about the UI.</p>
 </section>
 <section id="the-server-is-a-function" class="level2">
 <h2 class="anchored" data-anchor-id="the-server-is-a-function">The server is a function</h2>
@@ -690,7 +690,7 @@ Solution
 </section>
 <section id="reactivity-the-mental-model" class="level2">
 <h2 class="anchored" data-anchor-id="reactivity-the-mental-model">Reactivity: the mental model</h2>
-<p>Look at the server again: there is no loop, no “when the user clicks, do this”. How does the output know it has to change?</p>
+<p>The server contains no loop, no “when the user clicks, do this”. How does the output change when the input changes?</p>
 <p><strong>Think of a spreadsheet.</strong> If cell <code>B1</code> contains <code>=A1 * 2</code>, you never “run” <code>B1</code>: every time <code>A1</code> changes, <code>B1</code> updates by itself.</p>
 <p><code>render*()</code> functions work the same way:</p>
 <ul>
@@ -1188,7 +1188,7 @@ In a nutshell
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p>Ottavia M. Epifania · stat-shiny</p>
+<p>Ottavia M. Epifania · Introduction to Shiny</p>
 </div>
     <div class="nav-footer-right">
       &nbsp;

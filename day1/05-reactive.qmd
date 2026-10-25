@@ -1,6 +1,6 @@
 ---
 title: "Reactivity and reactive()"
-subtitle: "Don't repeat yourself"
+subtitle: "Become Paganini: Don't repeat yourself"
 ---
 
 ## The problem: the same code, twice

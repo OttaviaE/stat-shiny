@@ -124,23 +124,23 @@ Try it: load `cars`, choose the variables, click *Update analysis*. Now change t
 
 ## Step 4 · Upload your own data
 
-Last step: a fourth option, *Upload data*. When it is selected, a file input and the choice of the column separator appear.
+Last step: a fourth option, *Upload data*, with value `"upload"`: `choices = c("rock", "pressure", "cars", "Upload data" = "upload")`. When it is selected, a file input and the choice of the column separator appear.
 
 ```r
 conditionalPanel(                                      # <1>
-  condition = "input.dataset == '4'",                  # <2>
+  condition = "input.dataset == 'upload'",             # <2>
   fileInput("file", "Select a CSV file", accept = ".csv"),
   radioButtons("sep", "Column separator",
                choices = c(";" = ";", "," = ","))
 )
 ```
 1. Shows its content only when the condition is true
-2. The condition is written in **JavaScript**, not in R: `input.dataset` with a dot, and `'4'` in quotes (remember: the value of a `selectInput()` is text)
+2. The condition is written in **JavaScript**, not in R: `input.dataset` with a dot, and `'upload'` in quotes
 
-And in the server, a fourth case in `dataInput()`:
+And in the server, a fourth case in the `switch()` of `dataInput()`. The curly brackets hold more than one line of code:
 
 ```r
-} else {
+upload = {
   req(input$file)                                    # <1>
   read.csv(input$file$datapath, sep = input$sep)     # <2>
 }
@@ -174,7 +174,7 @@ Copy `ui.R` and `server.R` of [`apps/05-explore-step4`](https://github.com/ottav
 
 Pick one or more:
 
-1. Add `"iris" = 5` to the datasets (remember to add the case in `dataInput()`)
+1. Add `iris` to the datasets (remember to add the case in `dataInput()`)
 2. Use the **wrong separator** on purpose with `example.csv`: what happens to the menus? Why?
 3. Add a `tableOutput()` that shows the first 6 rows of `newdata()`
 4. Show the **title** of the plot with the names of the two variables (`main = paste(...)`)
@@ -183,7 +183,7 @@ Pick one or more:
 ::: {.callout-tip collapse="true"}
 ## Hints 1
 
-1. `selectInput()`: `choices = c(..., "Upload data" = 4, "iris" = 5)`; `dataInput()`: add `else if (input$dataset == 5) { iris }` **before** the final `else`
+1. `selectInput()`: `choices = c("rock", "pressure", "cars", "iris", "Upload data" = "upload")`; `dataInput()`: add `iris = iris` to the `switch()`
 2. With the wrong separator `read.csv()` reads a single column with a long name: the menus offer only one variable
 3. `ui.R`: `tableOutput("rows")`; `server.R`: `output$rows <- renderTable({ head(newdata()) })`
 4. `plot(x, y, ..., main = paste(names(df)[2], "by", names(df)[1]))`

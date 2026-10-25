@@ -1,12 +1,17 @@
 library(shiny)
 
 ui <- fluidPage(
-  selectInput(
-    inputId = "mySelection",            # name used by the server
-    label = h3("Select box"),           # what the user reads
-    choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3),
-    selected = 1
-  ),
-  verbatimTextOutput(outputId = "myOutput")  # empty box, filled by the server
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("dataset", "Choose a dataset:",
+                  choices = c("rock", "pressure", "cars")),
+      sliderInput("n", "Rows to show:", min = 1, max = 10, value = 3)
+    ),
+    mainPanel(
+      h4("Summary (uses only the dataset)"),
+      verbatimTextOutput("summary"),
+      h4("First rows (uses the dataset AND the slider)"),
+      verbatimTextOutput("rows")
+    )
+  )
 )
-

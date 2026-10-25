@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Wait for it: eventReactive() – stat-shiny</title>
+<title>Wait for it: eventReactive() – Shine bright like an open-source app</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -78,9 +78,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-2fb89454c27d8ca789ae8361eb8aa237.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-0bb70f10e24a92f3de91d4809b8cbce9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../site_libs/bootstrap/bootstrap-dark-e490b402e2cc1392fcfe70f1c043d6e0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-2fb89454c27d8ca789ae8361eb8aa237.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-0bb70f10e24a92f3de91d4809b8cbce9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <meta name="shinylive:serviceworker_dir" content="..">
 <script src="../site_libs/quarto-contrib/shinylive-0.10.12/shinylive/load-shinylive-sw.js" type="module"></script>
 <script src="../site_libs/quarto-contrib/shinylive-0.10.12/shinylive/run-python-blocks.js" type="module"></script>
@@ -291,7 +291,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">stat-shiny</span>
+    <span class="navbar-title">Shine bright like an open-source app</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -545,15 +545,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </dd>
 </dl>
 <div class="sourceCode" id="annotated-cell-2"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-2-1"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># server.R</span></span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-2-2" class="code-annotation-target"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a>dataInput <span class="ot">&lt;-</span> <span class="fu">eventReactive</span>(input<span class="sc">$</span>load, {</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-2-3" class="code-annotation-target"><a href="#annotated-cell-2-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (input<span class="sc">$</span>dataset <span class="sc">==</span> <span class="dv">1</span>) {</span>
-<span id="annotated-cell-2-4"><a href="#annotated-cell-2-4" aria-hidden="true" tabindex="-1"></a>    rock</span>
-<span id="annotated-cell-2-5"><a href="#annotated-cell-2-5" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (input<span class="sc">$</span>dataset <span class="sc">==</span> <span class="dv">2</span>) {</span>
-<span id="annotated-cell-2-6"><a href="#annotated-cell-2-6" aria-hidden="true" tabindex="-1"></a>    pressure</span>
-<span id="annotated-cell-2-7"><a href="#annotated-cell-2-7" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="annotated-cell-2-8"><a href="#annotated-cell-2-8" aria-hidden="true" tabindex="-1"></a>    cars</span>
-<span id="annotated-cell-2-9"><a href="#annotated-cell-2-9" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="annotated-cell-2-10"><a href="#annotated-cell-2-10" aria-hidden="true" tabindex="-1"></a>})</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-2-2" class="code-annotation-target"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a>dataInput <span class="ot">=</span> <span class="fu">eventReactive</span>(input<span class="sc">$</span>load, {</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-2-3" class="code-annotation-target"><a href="#annotated-cell-2-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">switch</span>(input<span class="sc">$</span>dataset,</span>
+<span id="annotated-cell-2-4"><a href="#annotated-cell-2-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">rock =</span> rock,</span>
+<span id="annotated-cell-2-5"><a href="#annotated-cell-2-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">pressure =</span> pressure,</span>
+<span id="annotated-cell-2-6"><a href="#annotated-cell-2-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">cars =</span> cars)</span>
+<span id="annotated-cell-2-7"><a href="#annotated-cell-2-7" aria-hidden="true" tabindex="-1"></a>})</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
 <dd>
@@ -564,7 +561,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span data-code-cell="annotated-cell-2" data-code-lines="3" data-code-annotation="2">The code to run. It reads <code>input$dataset</code>, but changing the dataset <strong>does not</strong> trigger it: its value is simply read at the moment of the click</span>
 </dd>
 </dl>
-<p><code>dataInput()</code> is then used exactly as a <code>reactive()</code>: <code>data &lt;- dataInput()</code> inside the <code>render*()</code> functions.</p>
+<p><code>dataInput()</code> is then used exactly as a <code>reactive()</code>: <code>data = dataInput()</code> inside the <code>render*()</code> functions.</p>
 </section>
 <section id="the-app" class="level2">
 <h2 class="anchored" data-anchor-id="the-app">The app</h2>
@@ -585,7 +582,7 @@ ui &lt;- fluidPage(
       selectInput(
         inputId = "dataset",
         label = "Choose a dataset:",
-        choices = list("rock" = 1, "pressure" = 2, "cars" = 3)
+        choices = c("rock", "pressure", "cars")
       ),
       actionButton("load", "Select dataset")
     ),
@@ -603,13 +600,10 @@ server &lt;- function(input, output, session) {
 
   # runs ONLY when the button is clicked
   dataInput &lt;- eventReactive(input$load, {
-    if (input$dataset == 1) {
-      rock
-    } else if (input$dataset == 2) {
-      pressure
-    } else {
-      cars
-    }
+    switch(input$dataset,
+           rock = rock,
+           pressure = pressure,
+           cars = cars)
   })
 
   output$graph &lt;- renderPlot({
@@ -737,7 +731,6 @@ Solution 1
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>dataInput <span class="ot">&lt;-</span> <span class="fu">eventReactive</span>(input<span class="sc">$</span>load, {</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  ...</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>(In that app the choices are named, <code>"rock" = 1</code>, so the server compares <code>input$dataset == 1</code>. With <code>choices = c("rock", "pressure", "cars")</code> you can keep your <code>switch()</code>.)</p>
 </div>
 </div>
 </div>
@@ -1218,7 +1211,7 @@ Solution 2
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p>Ottavia M. Epifania · stat-shiny</p>
+<p>Ottavia M. Epifania · Introduction to Shiny</p>
 </div>
     <div class="nav-footer-right">
       &nbsp;

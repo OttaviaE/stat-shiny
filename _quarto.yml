@@ -7,7 +7,7 @@ project:
     - apps.zip
 
 website:
-  title: "stat-shiny"
+  title: "Shine bright like an open-source app"
   description: "A short, hands-on course on Shiny: from the logic of the app to your own server"
   page-navigation: true
   reader-mode: true
@@ -53,7 +53,7 @@ website:
           - extras/download.qmd
           - extras/resources.qmd
   page-footer:
-    center: "Ottavia M. Epifania · stat-shiny"
+    center: "Ottavia M. Epifania · Introduction to Shiny"
 
 filters:
   - shinylive

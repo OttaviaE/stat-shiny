@@ -7,12 +7,12 @@ ui <- fluidPage(
       selectInput(
         "dataset",
         "Choose a dataset:",
-        choices = c("rock" = 1, "pressure" = 2, "cars" = 3,
-                    "Upload data" = 4)                     # NEW option
+        choices = c("rock", "pressure", "cars",
+                    "Upload data" = "upload")              # NEW option
       ),
       # NEW: shown only when "Upload data" is selected
       conditionalPanel(
-        condition = "input.dataset == '4'",
+        condition = "input.dataset == 'upload'",
         fileInput("file", "Select a CSV file", accept = ".csv"),
         radioButtons("sep", "Column separator",
                      choices = c(";" = ";", "," = ","))

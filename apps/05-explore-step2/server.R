@@ -4,13 +4,10 @@ server <- function(input, output, session) {
 
   # 1. LOAD THE DATASET
   dataInput <- eventReactive(input$load, {
-    if (input$dataset == 1) {
-      rock
-    } else if (input$dataset == 2) {
-      pressure
-    } else {
-      cars
-    }
+    switch(input$dataset,
+           rock = rock,
+           pressure = pressure,
+           cars = cars)
   })
 
   # 2. VARIABLE NAMES (NEW)

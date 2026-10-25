@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Shiny – stat-shiny</title>
+<title>Shiny – Shine bright like an open-source app</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -78,9 +78,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-2fb89454c27d8ca789ae8361eb8aa237.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-0bb70f10e24a92f3de91d4809b8cbce9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../site_libs/bootstrap/bootstrap-dark-e490b402e2cc1392fcfe70f1c043d6e0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-2fb89454c27d8ca789ae8361eb8aa237.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-0bb70f10e24a92f3de91d4809b8cbce9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <meta name="shinylive:serviceworker_dir" content="..">
 <script src="../site_libs/quarto-contrib/shinylive-0.10.12/shinylive/load-shinylive-sw.js" type="module"></script>
 <script src="../site_libs/quarto-contrib/shinylive-0.10.12/shinylive/run-python-blocks.js" type="module"></script>
@@ -291,7 +291,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">stat-shiny</span>
+    <span class="navbar-title">Shine bright like an open-source app</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -499,17 +499,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#logic" id="toc-logic" class="nav-link active" data-scroll-target="#logic">Logic</a></li>
   <li><a href="#basics" id="toc-basics" class="nav-link" data-scroll-target="#basics">Basics</a></li>
-  <li><a href="#ui" id="toc-ui" class="nav-link" data-scroll-target="#ui">UI</a>
+  <li><a href="#a-first-app" id="toc-a-first-app" class="nav-link" data-scroll-target="#a-first-app">A first app</a>
   <ul class="collapse">
-  <li><a href="#input" id="toc-input" class="nav-link" data-scroll-target="#input">Input</a></li>
-  <li><a href="#output" id="toc-output" class="nav-link" data-scroll-target="#output">Output</a></li>
-  </ul></li>
-  <li><a href="#server" id="toc-server" class="nav-link" data-scroll-target="#server">Server</a></li>
-  <li><a href="#complete-flow" id="toc-complete-flow" class="nav-link" data-scroll-target="#complete-flow">Complete flow</a>
-  <ul class="collapse">
-  <li><a href="#ui-1" id="toc-ui-1" class="nav-link" data-scroll-target="#ui-1">UI</a></li>
-  <li><a href="#server-1" id="toc-server-1" class="nav-link" data-scroll-target="#server-1">Server</a></li>
-  <li><a href="#all-together" id="toc-all-together" class="nav-link" data-scroll-target="#all-together">All together</a></li>
   <li><a href="#an-astonishing-result" id="toc-an-astonishing-result" class="nav-link" data-scroll-target="#an-astonishing-result">An astonishing result</a></li>
   </ul></li>
   </ul>
@@ -589,10 +580,6 @@ Figure&nbsp;1: Interaction between the user interface (UI) and the server.
 </figcaption>
 </figure>
 </div>
-<ul>
-<li><p>Define something in the <code>ui</code> and not using it in the server: nothing happens, it just doesn’t exist</p></li>
-<li><p>Calling something in the server that has not been defined in the <code>ui</code>: it doesn’t exist either, so you get errors everywhere or, even worse, nothing at all, without any warning (<a href="../day1/02-logic.html#spot-the-bug">Spot the bug</a>)</p></li>
-</ul>
 </section>
 <section id="basics" class="level1">
 <h1>Basics</h1>
@@ -619,166 +606,62 @@ Figure&nbsp;1: Interaction between the user interface (UI) and the server.
 <span data-code-cell="annotated-cell-2" data-code-lines="7" data-code-annotation="3">Shine</span>
 </dd>
 </dl>
+<p>The <code>ui</code> contains two kinds of elements:</p>
+<ul>
+<li><strong>inputs</strong>, the controls the user plays with (a menu, a slider, a box to type in, a button…)</li>
+<li><strong>outputs</strong>, empty boxes where the server will put the results (a text, a plot, a table…)</li>
+</ul>
+<p>There is a widget for (almost) everything: numbers, text, dates, files… We see the most useful ones in <a href="../day1/03-inputs.html">Input widgets</a> and <a href="../day1/04-outputs.html">Outputs and render functions</a>.</p>
 </section>
-<section id="ui" class="level1">
-<h1>UI</h1>
-<section id="input" class="level2">
-<h2 class="anchored" data-anchor-id="input">Input</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sliderInput</span>()     <span class="co"># Slider input widget</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">numericInput</span>()    <span class="co"># Numeric input control</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">selectInput</span>()     <span class="co"># Select list input control</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">checkboxInput</span>()   <span class="co"># Checkbox input control</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">checkboxGroupInput</span>()</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">dateInput</span>()       <span class="co"># Date input</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">fileInput</span>()       <span class="co"># File upload control</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">radioButtons</span>()    <span class="co"># Radio buttons</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">textInput</span>()       <span class="co"># Text input control</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">passwordInput</span>()   <span class="co"># Password input control</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">actionButton</span>()    <span class="co"># Action button</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">dateRangeInput</span>()  <span class="co"># Input a data range</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><a href="https://shiny.posit.co/r/components/">Complete list</a> (with code)</p>
-</section>
-<section id="output" class="level2">
-<h2 class="anchored" data-anchor-id="output">Output</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotOutput</span>()          <span class="co"># Plot output element</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">textOutput</span>()          <span class="co"># Text output element</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">verbatimTextOutput</span>()  <span class="co"># Verbatim text output element</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tableOutput</span>()         <span class="co"># Table output element</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">dataTableOutput</span>()     <span class="co"># Data table output element</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">htmlOutput</span>()          <span class="co"># HTML output element</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">uiOutput</span>()            <span class="co"># user interface element</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">downloadButton</span>()      <span class="co"># Download button</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">Progress</span>()            <span class="co"># Reporting progress (object oriented)</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fu">withProgress</span>()        <span class="co"># Reporting progress (functional)</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">outputOptions</span>()       <span class="co"># Set options for an output object</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-</section>
-<section id="server" class="level1">
-<h1>Server</h1>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">renderPlot</span>()        <span class="co"># Plot output</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">renderText</span>()        <span class="co"># Text output</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">renderPrint</span>()       <span class="co"># Printable output</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">renderTable</span>()       <span class="co"># Table output</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">renderDataTable</span>()   <span class="co"># Data table output</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">renderImage</span>()       <span class="co"># Image file output</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">renderUI</span>()          <span class="co"># UI output</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">downloadHandler</span>()   <span class="co"># File downloads</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="complete-flow" class="level1">
-<h1>Complete flow</h1>
-<section id="ui-1" class="level2">
-<h2 class="anchored" data-anchor-id="ui-1">UI</h2>
-<section id="input-definition" class="level3">
-<h3 class="anchored" data-anchor-id="input-definition">Input definition</h3>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">=</span> <span class="fu">fluidPage</span>(</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">selectInput</span>(<span class="at">inputId =</span> <span class="st">"mySelection"</span>,</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">label =</span> <span class="fu">h3</span>(<span class="st">"Select box"</span>),</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">choices =</span> <span class="fu">list</span>(<span class="st">"Choice 1"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Choice 2"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"Choice 3"</span> <span class="ot">=</span> <span class="dv">3</span>),</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">selected =</span> <span class="dv">1</span>)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="output-definition" class="level3">
-<h3 class="anchored" data-anchor-id="output-definition">Output definition</h3>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">=</span> <span class="fu">fluidPage</span>(</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">selectInput</span>(<span class="at">inputId =</span> <span class="st">"mySelection"</span>,</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">label =</span> <span class="fu">h3</span>(<span class="st">"Select box"</span>),</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">choices =</span> <span class="fu">list</span>(<span class="st">"Choice 1"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Choice 2"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"Choice 3"</span> <span class="ot">=</span> <span class="dv">3</span>),</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">selected =</span> <span class="dv">1</span>),</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">verbatimTextOutput</span>(</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">outputId =</span> <span class="st">"myOutput"</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-</section>
-<section id="server-1" class="level2">
-<h2 class="anchored" data-anchor-id="server-1">Server</h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">=</span> <span class="fu">fluidPage</span>(</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">selectInput</span>(<span class="at">inputId =</span> <span class="st">"mySelection"</span>,</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">label =</span> <span class="fu">h3</span>(<span class="st">"Select box"</span>),</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">choices =</span> <span class="fu">list</span>(<span class="st">"Choice 1"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Choice 2"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"Choice 3"</span> <span class="ot">=</span> <span class="dv">3</span>),</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">selected =</span> <span class="dv">1</span>),</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">verbatimTextOutput</span>(</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">outputId =</span> <span class="st">"myOutput"</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>server <span class="ot">=</span> <span class="cf">function</span>(input, output) {</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>myOutput <span class="ot">=</span> <span class="fu">renderText</span>({</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(<span class="fu">paste</span>(<span class="st">"This is my choice"</span>), input<span class="sc">$</span>mySelection)</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="all-together" class="level2">
-<h2 class="anchored" data-anchor-id="all-together">All together</h2>
-<div class="sourceCode" id="annotated-cell-9"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><a class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-9-1" class="code-annotation-target"><a href="#annotated-cell-9-1" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">=</span> <span class="fu">fluidPage</span>(<span class="fu">selectInput</span>(<span class="at">inputId =</span> <span class="st">"mySelection"</span>,</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-9-2" class="code-annotation-target"><a href="#annotated-cell-9-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">label =</span> <span class="fu">h3</span>(<span class="st">"Select box"</span>),</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-9-3" class="code-annotation-target"><a href="#annotated-cell-9-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">choices =</span> <span class="fu">list</span>(<span class="st">"Choice 1"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Choice 2"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"Choice 3"</span> <span class="ot">=</span> <span class="dv">3</span>),</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-9-4" class="code-annotation-target"><a href="#annotated-cell-9-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">selected =</span> <span class="dv">1</span>),</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="5" onclick="event.preventDefault();">5</a><span id="annotated-cell-9-5" class="code-annotation-target"><a href="#annotated-cell-9-5" aria-hidden="true" tabindex="-1"></a>         <span class="fu">verbatimTextOutput</span>( <span class="at">outputId =</span> <span class="st">"myOutput"</span>)</span>
-<span id="annotated-cell-9-6"><a href="#annotated-cell-9-6" aria-hidden="true" tabindex="-1"></a>         )</span>
-<span id="annotated-cell-9-7"><a href="#annotated-cell-9-7" aria-hidden="true" tabindex="-1"></a>server <span class="ot">=</span> <span class="cf">function</span>(input, output) {</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="6" onclick="event.preventDefault();">6</a><span id="annotated-cell-9-8" class="code-annotation-target"><a href="#annotated-cell-9-8" aria-hidden="true" tabindex="-1"></a>           output<span class="sc">$</span>myOutput <span class="ot">=</span> <span class="fu">renderPrint</span>({</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="7" onclick="event.preventDefault();">7</a><span id="annotated-cell-9-9" class="code-annotation-target"><a href="#annotated-cell-9-9" aria-hidden="true" tabindex="-1"></a>             <span class="fu">paste</span>(<span class="fu">paste</span>(<span class="st">"This is my choice"</span>),  input<span class="sc">$</span>mySelection)</span>
-<span id="annotated-cell-9-10"><a href="#annotated-cell-9-10" aria-hidden="true" tabindex="-1"></a>           })</span>
-<span id="annotated-cell-9-11"><a href="#annotated-cell-9-11" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="annotated-cell-9-12"><a href="#annotated-cell-9-12" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(ui, server)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<dl class="code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-9" data-target-annotation="1">1</dt>
-<dd>
-<span data-code-cell="annotated-cell-9" data-code-lines="1" data-code-annotation="1">Define the ID of the input in the UI (internal use)</span>
-</dd>
-<dt data-target-cell="annotated-cell-9" data-target-annotation="2">2</dt>
-<dd>
-<span data-code-cell="annotated-cell-9" data-code-lines="2" data-code-annotation="2">Define the label of the element (external use)</span>
-</dd>
-<dt data-target-cell="annotated-cell-9" data-target-annotation="3">3</dt>
-<dd>
-<span data-code-cell="annotated-cell-9" data-code-lines="3" data-code-annotation="3">Options (labels) and their internal labels</span>
-</dd>
-<dt data-target-cell="annotated-cell-9" data-target-annotation="4">4</dt>
-<dd>
-<span data-code-cell="annotated-cell-9" data-code-lines="4" data-code-annotation="4">Default selected option</span>
-</dd>
-<dt data-target-cell="annotated-cell-9" data-target-annotation="5">5</dt>
-<dd>
-<span data-code-cell="annotated-cell-9" data-code-lines="5" data-code-annotation="5">Define the label (internal use) of the output in the UI (where the results elaborated by the server will be stored)</span>
-</dd>
-<dt data-target-cell="annotated-cell-9" data-target-annotation="6">6</dt>
-<dd>
-<span data-code-cell="annotated-cell-9" data-code-lines="8" data-code-annotation="6">Function in the server to render the results (consistent with the UI definition)</span>
-</dd>
-<dt data-target-cell="annotated-cell-9" data-target-annotation="7">7</dt>
-<dd>
-<span data-code-cell="annotated-cell-9" data-code-lines="9" data-code-annotation="7">Call for the label of the input in the UI</span>
-</dd>
-</dl>
-</section>
+<section id="a-first-app" class="level1">
+<h1>A first app</h1>
+<p><span class="io-chip io-chip-in">Input</span> and <span class="io-chip io-chip-out">output</span>, in the <code>ui</code> and in the <code>server</code>:</p>
+<div class="io-first-app">
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">=</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">selectInput</span>(<span class="at">inputId =</span> <span class="st">"mySelection"</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">label =</span> <span class="fu">h3</span>(<span class="st">"Select box"</span>),</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">choices =</span> <span class="fu">list</span>(<span class="st">"Choice 1"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Choice 2"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"Choice 3"</span> <span class="ot">=</span> <span class="dv">3</span>),</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">selected =</span> <span class="dv">1</span>),</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">verbatimTextOutput</span>(<span class="at">outputId =</span> <span class="st">"myOutput"</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>server <span class="ot">=</span> <span class="cf">function</span>(input, output) {</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>myOutput <span class="ot">=</span> <span class="fu">renderPrint</span>({</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(<span class="st">"This is my choice:"</span>, input<span class="sc">$</span>mySelection)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>In the <code>ui</code>, <code>selectInput()</code> creates a menu called <code>mySelection</code>, and <code>verbatimTextOutput()</code> reserves an empty box called <code>myOutput</code></li>
+<li>In the <code>server</code>, <code>input$mySelection</code> reads the choice of the user, and <code>output$myOutput</code> fills the box with the result</li>
+</ul>
+<p>The names are what connects the two pieces: we look at them closely in <a href="../day1/02-logic.html">How Shiny thinks</a>.</p>
 <section id="an-astonishing-result" class="level2">
 <h2 class="anchored" data-anchor-id="an-astonishing-result">An astonishing result</h2>
 <pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
 #|   shinylive does not work in self-contained HTML documents.
 #|   Please set `embed-resources: false` in your metadata.
 #| standalone: true
-#| components: [editor, viewer]
-#| layout: vertical
+#| components: [viewer]
 #| viewerHeight: 220
 library(shiny)
 
-ui = fluidPage(selectInput(inputId = "mySelection",
-                          label = h3("Select box"),
-                          choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3),
-                          selected = 1),
-         verbatimTextOutput( outputId = "myOutput")
-         )
+ui = fluidPage(
+  selectInput(inputId = "mySelection",
+              label = h3("Select box"),
+              choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3),
+              selected = 1),
+  verbatimTextOutput(outputId = "myOutput")
+)
+
 server = function(input, output) {
-           output$myOutput = renderPrint({
-             paste(paste("This is my choice"),  input$mySelection)
-           })
+  output$myOutput = renderPrint({
+    paste("This is my choice:", input$mySelection)
+  })
 }
+
 shinyApp(ui, server)</code></pre>
 <p>In the next page we put this same app in an RStudio project, with the <code>ui</code> in a script called <code>ui.R</code> and the <code>server</code> in a script called <code>server.R</code>.</p>
 
@@ -1218,7 +1101,7 @@ shinyApp(ui, server)</code></pre>
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p>Ottavia M. Epifania · stat-shiny</p>
+<p>Ottavia M. Epifania · Introduction to Shiny</p>
 </div>
     <div class="nav-footer-right">
       &nbsp;

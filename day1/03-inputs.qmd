@@ -14,7 +14,7 @@ someInput(inputId = "id",       # <1>
 2. What the **user** reads
 3. Widget-specific options (choices, min, max, starting value…)
 
-What changes from widget to widget is **what arrives in `input$id`**: a number, a text, a vector, a date, a data frame… Knowing it is what saves you from most errors in the server.
+What changes from widget to widget is **what arrives in `input$id`**: a number, a text, a vector, a date, a data frame… 
 
 In all the apps on this page, the server prints the **class** and the **structure** (`str()`) of each input, so you can see exactly what it receives. Play with the widgets and watch the boxes on the right.
 

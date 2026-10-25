@@ -7,9 +7,9 @@ server <- function(input, output, session) {
 
   observeEvent(input$load, {
     values$data <- switch(input$dataset,
-                          "1" = rock,
-                          "2" = pressure,
-                          "3" = cars)
+                          rock = rock,
+                          pressure = pressure,
+                          cars = cars)
   })
 
   output$var1 <- renderUI({

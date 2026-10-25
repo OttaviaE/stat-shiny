@@ -4,7 +4,7 @@ ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
       selectInput("dataset", "Choose a dataset:",
-                  choices = list("rock" = 1, "pressure" = 2, "cars" = 3)),
+                  choices = c("rock", "pressure", "cars")),
       actionButton("load", "Load data"),
       conditionalPanel(
         condition = "input.load >= 1",       # shown after the first click
