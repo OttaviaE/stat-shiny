@@ -78,9 +78,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-0bb70f10e24a92f3de91d4809b8cbce9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-0af3df8ab3ed82183c134d799ac4a0b3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../site_libs/bootstrap/bootstrap-dark-e490b402e2cc1392fcfe70f1c043d6e0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-0bb70f10e24a92f3de91d4809b8cbce9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-0af3df8ab3ed82183c134d799ac4a0b3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <meta name="shinylive:serviceworker_dir" content="..">
 <script src="../site_libs/quarto-contrib/shinylive-0.10.12/shinylive/load-shinylive-sw.js" type="module"></script>
 <script src="../site_libs/quarto-contrib/shinylive-0.10.12/shinylive/run-python-blocks.js" type="module"></script>
@@ -435,7 +435,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../day2/09-deploy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Deploy on Connect Cloud</span></a>
+ <span class="menu-text">Spread the shine</span></a>
   </div>
 </li>
       </ul>
@@ -568,10 +568,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>This is the map of the final app: by the end of the page you will know every arrow.</p>
 <section id="step-1-load-a-dataset" class="level2">
 <h2 class="anchored" data-anchor-id="step-1-load-a-dataset">Step 1 · Load a dataset</h2>
-<p>Nothing new here: a menu, a button, an <code>eventReactive()</code>. We print the first rows to check that the data arrive.</p>
+<p>A dataset is loaded with an <code>eventReactive()</code>. The first rows are printed to check that the data are correct.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
 #|   shinylive does not work in self-contained HTML documents.
 #|   Please set `embed-resources: false` in your metadata.
@@ -621,7 +620,7 @@ server &lt;- function(input, output, session) {
 </section>
 <section id="step-2-menus-built-from-the-data" class="level2">
 <h2 class="anchored" data-anchor-id="step-2-menus-built-from-the-data">Step 2 · Menus built from the data</h2>
-<p>The X and Y menus cannot be written in <code>ui.R</code>: their choices are the <strong>column names</strong>, and we know them only after the data are loaded. So:</p>
+<p>The X and Y menus cannot be written in <code>ui.R</code> because their choices depend on the <strong>column names</strong> of the uploaded dataset:</p>
 <ul>
 <li>in <code>ui.R</code> we reserve <strong>an empty slot</strong> with <code>uiOutput()</code></li>
 <li>in <code>server.R</code>, <code>renderUI()</code> creates the <code>selectInput()</code> and puts it in that slot</li>
@@ -852,7 +851,7 @@ server &lt;- function(input, output, session) {
 <span data-code-cell="annotated-cell-7" data-code-lines="2" data-code-annotation="2">The condition is written in <strong>JavaScript</strong>, not in R: <code>input.dataset</code> with a dot, and <code>'upload'</code> in quotes</span>
 </dd>
 </dl>
-<p>And in the server, a fourth case in the <code>switch()</code> of <code>dataInput()</code>. The curly brackets hold more than one line of code:</p>
+<p>In the server, a fourth case in the <code>switch()</code> of <code>dataInput()</code> <strong>must</strong> be added. The curly brackets hold more than one line of code:</p>
 <div class="sourceCode" id="annotated-cell-8"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-8-1"><a href="#annotated-cell-8-1" aria-hidden="true" tabindex="-1"></a>upload <span class="ot">=</span> {</span>
 <a class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-8-2" class="code-annotation-target"><a href="#annotated-cell-8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">req</span>(input<span class="sc">$</span>file)</span>
 <a class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-8-3" class="code-annotation-target"><a href="#annotated-cell-8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read.csv</span>(input<span class="sc">$</span>file<span class="sc">$</span>datapath, <span class="at">sep =</span> input<span class="sc">$</span>sep)</span>
@@ -966,19 +965,18 @@ server &lt;- function(input, output, session) {
   })
 }
 </code></pre>
-<p>With <code>example.csv</code>, choose <code>condition</code> as X and <code>tr</code> as Y: you get a boxplot.</p>
 </section>
 <section id="put-it-in-your-project" class="level2">
 <h2 class="anchored" data-anchor-id="put-it-in-your-project">Put it in your project</h2>
 <p>Copy <code>ui.R</code> and <code>server.R</code> of <a href="https://github.com/ottaviae/stat-shiny/tree/main/apps/05-explore-step4"><code>apps/05-explore-step4</code></a> into your project <code>my-shiny-app</code>, replacing the old ones, and run it with <em>Run App</em>.</p>
-<p><strong>This is the app that goes online on Day 2.</strong> Keep the project folder safe.</p>
+<p><strong>This is the app that goes online on Day 2.</strong></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercise 1 · Make it yours (if you have time)
+Exercise 1 · Make it yours
 </div>
 </div>
 <div class="callout-body-container callout-body">

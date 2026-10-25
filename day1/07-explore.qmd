@@ -35,11 +35,10 @@ flowchart LR
     style S fill:#8fd36f,color:#fff
 ```
 
-This is the map of the final app: by the end of the page you will know every arrow.
 
 ## Step 1 · Load a dataset
 
-Nothing new here: a menu, a button, an `eventReactive()`. We print the first rows to check that the data arrive.
+A dataset is loaded with an `eventReactive()`. The first rows are printed to check that the data are correct.
 
 ```{shinylive-r}
 #| standalone: true
@@ -54,7 +53,7 @@ Nothing new here: a menu, a button, an `eventReactive()`. We print the first row
 
 ## Step 2 · Menus built from the data
 
-The X and Y menus cannot be written in `ui.R`: their choices are the **column names**, and we know them only after the data are loaded. So:
+The X and Y menus cannot be written in `ui.R` because their choices depend on the **column names** of the uploaded dataset:
 
 - in `ui.R` we reserve **an empty slot** with `uiOutput()`
 - in `server.R`, `renderUI()` creates the `selectInput()` and puts it in that slot
@@ -137,7 +136,7 @@ conditionalPanel(                                      # <1>
 1. Shows its content only when the condition is true
 2. The condition is written in **JavaScript**, not in R: `input.dataset` with a dot, and `'upload'` in quotes
 
-And in the server, a fourth case in the `switch()` of `dataInput()`. The curly brackets hold more than one line of code:
+In the server, a fourth case in the `switch()` of `dataInput()` **must** be added. The curly brackets hold more than one line of code:
 
 ```r
 upload = {
@@ -161,16 +160,14 @@ Test files: [example.csv](../data/example.csv) (separator `,`) and [example-semi
 {{< include ../apps/05-explore-step4/server.R >}}
 ```
 
-With `example.csv`, choose `condition` as X and `tr` as Y: you get a boxplot.
-
 ## Put it in your project
 
 Copy `ui.R` and `server.R` of [`apps/05-explore-step4`](https://github.com/ottaviae/stat-shiny/tree/main/apps/05-explore-step4) into your project `my-shiny-app`, replacing the old ones, and run it with *Run App*.
 
-**This is the app that goes online on Day 2.** Keep the project folder safe.
+**This is the app that goes online on Day 2.** 
 
 ::: {.callout-note}
-## Exercise 1 · Make it yours (if you have time)
+## Exercise 1 · Make it yours
 
 Pick one or more:
 

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Deploy on Connect Cloud – Shine bright like an open-source app</title>
+<title>Spread the shine – Shine bright like an open-source app</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -43,9 +78,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-0bb70f10e24a92f3de91d4809b8cbce9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-0af3df8ab3ed82183c134d799ac4a0b3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../site_libs/bootstrap/bootstrap-dark-e490b402e2cc1392fcfe70f1c043d6e0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-0bb70f10e24a92f3de91d4809b8cbce9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-0af3df8ab3ed82183c134d799ac4a0b3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -297,7 +332,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../day2/08-github.html">Day 2 · Spread the shine</a></li><li class="breadcrumb-item"><a href="../day2/09-deploy.html">Deploy on Connect Cloud</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../day2/08-github.html">Day 2 · Spread the shine</a></li><li class="breadcrumb-item"><a href="../day2/09-deploy.html">Spread the shine</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -392,7 +427,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../day2/09-deploy.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Deploy on Connect Cloud</span></a>
+ <span class="menu-text">Spread the shine</span></a>
   </div>
 </li>
       </ul>
@@ -454,11 +489,13 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul class="collapse">
-  <li><a href="#where-to-publish" id="toc-where-to-publish" class="nav-link active" data-scroll-target="#where-to-publish">Where to publish</a></li>
-  <li><a href="#step-1-the-account" id="toc-step-1-the-account" class="nav-link" data-scroll-target="#step-1-the-account">Step 1 · The account</a></li>
-  <li><a href="#step-2-publish" id="toc-step-2-publish" class="nav-link" data-scroll-target="#step-2-publish">Step 2 · Publish</a></li>
-  <li><a href="#step-3-update-the-app" id="toc-step-3-update-the-app" class="nav-link" data-scroll-target="#step-3-update-the-app">Step 3 · Update the app</a></li>
-  <li><a href="#when-something-goes-wrong" id="toc-when-something-goes-wrong" class="nav-link" data-scroll-target="#when-something-goes-wrong">When something goes wrong</a></li>
+  <li><a href="#what-is-needed" id="toc-what-is-needed" class="nav-link active" data-scroll-target="#what-is-needed">What is needed</a>
+  <ul class="collapse">
+  <li><a href="#sec-server" id="toc-sec-server" class="nav-link" data-scroll-target="#sec-server">Shiny server</a></li>
+  <li><a href="#sec-app" id="toc-sec-app" class="nav-link" data-scroll-target="#sec-app">Local app</a></li>
+  <li><a href="#sec-connect" id="toc-sec-connect" class="nav-link" data-scroll-target="#sec-connect"><code>rsconnect</code></a></li>
+  <li><a href="#sec-deploy" id="toc-sec-deploy" class="nav-link" data-scroll-target="#sec-deploy">Deploy</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -466,10 +503,10 @@ ul.task-list li input[type="checkbox"] {
 <main class="content" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../day2/08-github.html">Day 2 · Spread the shine</a></li><li class="breadcrumb-item"><a href="../day2/09-deploy.html">Deploy on Connect Cloud</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../day2/08-github.html">Day 2 · Spread the shine</a></li><li class="breadcrumb-item"><a href="../day2/09-deploy.html">Spread the shine</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Deploy on Connect Cloud</h1>
-<p class="subtitle lead">Spread the shine</p>
+<h1 class="title">Spread the shine</h1>
+<p class="subtitle lead">Deploy your app on a free server</p>
 </div>
 
 
@@ -486,94 +523,176 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="where-to-publish" class="level2">
-<h2 class="anchored" data-anchor-id="where-to-publish">Where to publish</h2>
-<p>Several servers can host a Shiny app (<a href="https://shiny.posit.co/r/articles/share/shiny-server/">overview by Posit</a>). You can also build your own server from scratch, for instance following <a href="https://deanattali.com/2015/05/09/setup-rstudio-shiny-server-digital-ocean/">Dean Attali’s guide</a>, but that requires some system administration.</p>
-<p>We use <strong><a href="https://connect.posit.cloud/">Posit Connect Cloud</a></strong>: it is free for public apps and publishes directly from GitHub. (You may also find <em>shinyapps.io</em>, the older Posit service: the logic is the same, but here we use Connect Cloud.)</p>
-</section>
-<section id="step-1-the-account" class="level2">
-<h2 class="anchored" data-anchor-id="step-1-the-account">Step 1 · The account</h2>
-<p>Sign up on <a href="https://connect.posit.cloud/">Connect Cloud</a> and choose <strong>to sign in with GitHub</strong>, so that Connect Cloud can see your repositories.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../img/connect0.png" class="img-fluid figure-img" style="width:85.0%"></p>
-<figcaption>Connect Cloud landing page and account creation</figcaption>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../img/connect1.png" class="img-fluid figure-img" style="width:85.0%"></p>
-<figcaption>Link Connect Cloud to your GitHub account</figcaption>
-</figure>
-</div>
-<p>Follow the instructions and choose an account name.</p>
-</section>
-<section id="step-2-publish" class="level2">
-<h2 class="anchored" data-anchor-id="step-2-publish">Step 2 · Publish</h2>
+<section id="what-is-needed" class="level1">
+<h1>What is needed</h1>
 <ol type="1">
-<li>From the <em>Home</em> of your profile, click <strong>Publish</strong></li>
-<li>Choose <strong>Shiny</strong></li>
-<li>Select the <strong>repository</strong> (<code>my-shiny-app</code>), the <strong>branch</strong> (<code>main</code>) and the <strong>primary file</strong>: <code>app.R</code></li>
-<li>Click <strong>Publish</strong> and wait: Connect Cloud installs R and the packages listed in <code>manifest.json</code>, then starts the app</li>
+<li>An online server hosting the application (<a href="#sec-server" class="quarto-xref">Section&nbsp;1.1</a>) (which is connected to GitHub)</li>
+<li>The local version on your computer (<a href="#sec-app" class="quarto-xref">Section&nbsp;1.2</a>)</li>
+<li>The connection between the app and the online server (<a href="#sec-connect" class="quarto-xref">Section&nbsp;1.3</a>)</li>
+<li>The deployment (<a href="#sec-deploy" class="quarto-xref">Section&nbsp;1.4</a>)</li>
 </ol>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="../img/publish-app.png" class="img-fluid figure-img" style="width:85.0%"></p>
-<figcaption>Deploy the app and publish it</figcaption>
-</figure>
-</div>
-<p>When it is done, you get a <strong>link</strong>: that is your app, online. Open it from your phone, send it to a friend.</p>
-</section>
-<section id="step-3-update-the-app" class="level2">
-<h2 class="anchored" data-anchor-id="step-3-update-the-app">Step 3 · Update the app</h2>
-<p>The online app is a copy of what is on GitHub. To change it:</p>
-<ol type="1">
-<li>edit the app in RStudio and check it with <em>Run App</em></li>
-<li>if you added packages: <code>rsconnect::writeManifest()</code></li>
-<li>commit + push with GitHub Desktop</li>
-<li>on Connect Cloud, <strong>republish</strong> the content</li>
-</ol>
-</section>
-<section id="when-something-goes-wrong" class="level2">
-<h2 class="anchored" data-anchor-id="when-something-goes-wrong">When something goes wrong</h2>
+<section id="sec-server" class="level2">
+<h2 class="anchored" data-anchor-id="sec-server">Shiny server</h2>
+<p>Many servers exist, <a href="https://shiny.posit.co/r/articles/share/shiny-server/">this article</a> provides an overview on the available ones, although a subscription is required for pro features.</p>
+<p>You can set a server from scratch (choose your own adventure). Here’s an option with <a href="https://deanattali.com/2015/05/09/setup-rstudio-shiny-server-digital-ocean/">Digital Ocean</a> provided by Dean Attali. This option requires quite advanced programming skills, although the guide provided by Dean Attali is very basic and easy-to-use.</p>
+<p><a href="https://www.shinyapps.io/">shinyapps.io</a> is the “official” server for shiny apps. The free licence version allows for hosting 5 apps at the time.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Troubleshooting
+Connect cloud
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<ul>
-<li><strong>The repository is not in the list</strong> → it is private, or Connect Cloud does not have access to it: check the GitHub permissions of Connect Cloud</li>
-<li><strong>“No manifest” / missing dependencies</strong> → <code>manifest.json</code> is not in the repository: write it and push it</li>
-<li><strong>The app works on your computer but not online</strong> → open the <strong>logs</strong> of the content on Connect Cloud: they show the R error. Common causes:
-<ul>
-<li>a package used in the app but not in the manifest (re-run <code>writeManifest()</code>)</li>
-<li>a file read with an absolute path (<code>C:/Users/...</code>): use paths relative to the project</li>
-<li>a file (data, images) that is on your computer but was not committed</li>
-</ul></li>
-<li><strong>The app starts but an output is empty</strong> → it is a Shiny problem, not a deploy problem: go back to <a href="../day1/02-logic.html#the-rules-of-the-contract">the rules of the contract</a></li>
-</ul>
+<p>At the end of 2026, shinyapps.io will be replaced by <a href="https://connect.posit.cloud/">Connect Cloud</a></p>
 </div>
 </div>
+<section id="connect-cloud-1" class="level3">
+<h3 class="anchored" data-anchor-id="connect-cloud-1">Connect Cloud</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../img/connect0.png" class="img-fluid figure-img"></p>
+<figcaption>Connect cloud landing page and account creation</figcaption>
+</figure>
+</div>
+<p>The account on Connect Cloud can be connected to an already existent account, such as a Google Account. The best option is to link Connect Cloud to your GitHub account:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../img/connect1.png" class="img-fluid figure-img"></p>
+<figcaption>Link Connect Cloud to your GitHub account</figcaption>
+</figure>
+</div>
+<p>Follow the instructions and then choose an account name for posit.</p>
+</section>
+</section>
+<section id="sec-app" class="level2">
+<h2 class="anchored" data-anchor-id="sec-app">Local app</h2>
+<p>The app must be stored in an R file with clearly defined <code>ui</code> and <code>server</code>.</p>
+<p>The R file must be named <code>app.R</code>.</p>
+<p>Once the app is ready for deployment, commit and push as usual.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Before the deploy: one file called <code>app.R</code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Connect Cloud wants the <code>ui</code> and the <code>server</code> <strong>in the same file</strong>, and the file <strong>must be called <code>app.R</code></strong>. Our project has two files, <code>ui.R</code> and <code>server.R</code>: there are two ways to get to <code>app.R</code>.</p>
+<p><strong>Option 1 · Keep <code>ui.R</code> and <code>server.R</code>, and add a small <code>app.R</code></strong></p>
+<p><em>File</em> → <em>New File</em> → <em>R Script</em>, paste this and save it as <code>app.R</code> in the project folder, next to <code>ui.R</code> and <code>server.R</code>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"ui.R"</span>)        <span class="co"># creates the object ui</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"server.R"</span>)    <span class="co"># creates the object server</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>source()</code> runs the two files, so the objects <code>ui</code> and <code>server</code> are ready for <code>shinyApp()</code>. When you change the app, you keep working on <code>ui.R</code> and <code>server.R</code> as before.</p>
+<p><strong>Option 2 · Put everything in <code>app.R</code></strong></p>
+<p>Create a new script <code>app.R</code> and copy into it the content of <code>ui.R</code> and <code>server.R</code>, one after the other, then add <code>shinyApp()</code> at the end:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># content of ui.R</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">=</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># content of server.R</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>server <span class="ot">=</span> <span class="cf">function</span>(input, output) {</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>library(shiny)</code> is needed only once, at the top. Then delete <code>ui.R</code> and <code>server.R</code>, so that there is only one version of the app.</p>
+<p>Either way, check that <code>app.R</code> works with <em>Run App</em> before going on.</p>
+</div>
+</div>
+<p>The file must be within an <a href="../day1/01-project.html">R project</a>, which is set to be a <a href="../day2/08-github.html">GitHub</a> repository.</p>
+</section>
+<section id="sec-connect" class="level2">
+<h2 class="anchored" data-anchor-id="sec-connect"><code>rsconnect</code></h2>
+<p>The <code>rsconnect</code> package is necessary to link the local app, the GitHub repository, and the Connect Cloud.</p>
+<p>Connect Cloud is not R – as such, it needs external files describing the packages/dependencies that are employed and needed for the app deployment.</p>
+<p>First, the package needs to be installed (<a href="#lst-install" class="quarto-xref">Listing&nbsp;1</a>).</p>
+<div id="lst-install" class="r listing quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-install-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Listing&nbsp;1: Install the package, run only once.
+</figcaption>
+<div aria-describedby="lst-install-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"rsconnect"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</figure>
+</div>
+<p>Then, within the R-project hosting the <code>app.R</code> file, run the code in <a href="#lst-manifest" class="quarto-xref">Listing&nbsp;2</a>.</p>
+<div id="lst-manifest" class="r listing quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-manifest-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Listing&nbsp;2: Write the manifest
+</figcaption>
+<div aria-describedby="lst-manifest-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>rsconnect<span class="sc">::</span><span class="fu">writeManifest</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</figure>
+</div>
+<p>The file <code>manifest.json</code> appears within the R project, making the app deployment possible.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-🎉 Done
+<code>manifest.json</code>
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Your app is online. From here, <a href="../extras/index.html">Going further</a> shows how to improve it: better layouts, interactive plots, downloads.</p>
+<p><code>manifest.json</code> is the “shopping list” of your app. It records which version of R the app uses, which packages it needs (with their exact versions) and which files belong to the app. Connect Cloud is not your computer and has none of your packages installed: it reads the manifest and installs exactly those packages before starting the app. If you add a package to the app, you have to run <code>rsconnect::writeManifest()</code> again.</p>
 </div>
+</div>
+<p>For the deployment, the folder of the project should have the following structure:</p>
+<pre class="text"><code>app-Examples/
+├── .gitattributes
+├── .gitignore
+├── app-Examples.Rproj
+├── app.R
+└── manifest.json</code></pre>
+</section>
+<section id="sec-deploy" class="level2">
+<h2 class="anchored" data-anchor-id="sec-deploy">Deploy</h2>
+<p>Everything is ready for the actual deployment of the app from Connect Cloud.</p>
+<p>From the <code>Home</code> of your profile, search for the <code>Publish</code> button:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-pubConnect" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pubConnect-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../img/publishConnect.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pubConnect-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Publish button on Connect Cloud.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Select the repository, the folder, and the specific file of the app (<a href="#fig-pubapp" class="quarto-xref">Figure&nbsp;2</a>)</p>
+<div id="fig-pubapp" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pubapp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../img/publish-app.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pubapp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Deploy app and publish it
+</figcaption>
+</figure>
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

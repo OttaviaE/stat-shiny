@@ -1,60 +1,150 @@
 ---
-title: "Deploy on Connect Cloud"
-subtitle: "Spread the shine"
+title: "Spread the shine"
+subtitle: "Deploy your app on a free server"
 ---
 
-## Where to publish
+# What is needed
 
-Several servers can host a Shiny app ([overview by Posit](https://shiny.posit.co/r/articles/share/shiny-server/)). You can also build your own server from scratch, for instance following [Dean Attali's guide](https://deanattali.com/2015/05/09/setup-rstudio-shiny-server-digital-ocean/), but that requires some system administration.
+1. An online server hosting the application (@sec-server) (which is connected to GitHub)
+2. The local version on your computer (@sec-app)
+3. The connection between the app and the online server (@sec-connect)
+4. The deployment (@sec-deploy)
 
-We use **[Posit Connect Cloud](https://connect.posit.cloud/)**: it is free for public apps and publishes directly from GitHub. (You may also find *shinyapps.io*, the older Posit service: the logic is the same, but here we use Connect Cloud.)
+## Shiny server {#sec-server}
 
-## Step 1 · The account
+Many servers exist, [this article](https://shiny.posit.co/r/articles/share/shiny-server/) provides an overview on the available ones, although a subscription is required for pro features.
 
-Sign up on [Connect Cloud](https://connect.posit.cloud/) and choose **to sign in with GitHub**, so that Connect Cloud can see your repositories.
+You can set a server from scratch (choose your own adventure). Here's an option with [Digital Ocean](https://deanattali.com/2015/05/09/setup-rstudio-shiny-server-digital-ocean/) provided by Dean Attali. This option requires quite advanced programming skills, although the guide provided by Dean Attali is very basic and easy-to-use.
 
-![Connect Cloud landing page and account creation](../img/connect0.png){fig-align="center" width="85%"}
+[shinyapps.io](https://www.shinyapps.io/) is the "official" server for shiny apps. The free licence version allows for hosting 5 apps at the time.
 
-![Link Connect Cloud to your GitHub account](../img/connect1.png){fig-align="center" width="85%"}
+:::{.callout-warning}
+## Connect cloud
 
-Follow the instructions and choose an account name.
+At the end of 2026, shinyapps.io will be replaced by [Connect Cloud](https://connect.posit.cloud/)
 
-## Step 2 · Publish
-
-1. From the *Home* of your profile, click **Publish**
-2. Choose **Shiny**
-3. Select the **repository** (`my-shiny-app`), the **branch** (`main`) and the **primary file**: `app.R`
-4. Click **Publish** and wait: Connect Cloud installs R and the packages listed in `manifest.json`, then starts the app
-
-![Deploy the app and publish it](../img/publish-app.png){fig-align="center" width="85%"}
-
-When it is done, you get a **link**: that is your app, online. Open it from your phone, send it to a friend.
-
-## Step 3 · Update the app
-
-The online app is a copy of what is on GitHub. To change it:
-
-1. edit the app in RStudio and check it with *Run App*
-2. if you added packages: `rsconnect::writeManifest()`
-3. commit + push with GitHub Desktop
-4. on Connect Cloud, **republish** the content
-
-## When something goes wrong
-
-::: {.callout-warning}
-## Troubleshooting
-
-- **The repository is not in the list** → it is private, or Connect Cloud does not have access to it: check the GitHub permissions of Connect Cloud
-- **"No manifest" / missing dependencies** → `manifest.json` is not in the repository: write it and push it
-- **The app works on your computer but not online** → open the **logs** of the content on Connect Cloud: they show the R error. Common causes:
-    - a package used in the app but not in the manifest (re-run `writeManifest()`)
-    - a file read with an absolute path (`C:/Users/...`): use paths relative to the project
-    - a file (data, images) that is on your computer but was not committed
-- **The app starts but an output is empty** → it is a Shiny problem, not a deploy problem: go back to [the rules of the contract](../day1/02-logic.qmd#the-rules-of-the-contract)
 :::
 
-::: {.callout-tip}
-## 🎉 Done
+### Connect Cloud
 
-Your app is online. From here, [Going further](../extras/index.qmd) shows how to improve it: better layouts, interactive plots, downloads.
+![Connect cloud landing page and account creation](../img/connect0.png){fig-align="center"}
+
+The account on Connect Cloud can be connected to an already existent account, such as a Google Account. The best option is to link Connect Cloud to your GitHub account:
+
+![Link Connect Cloud to your GitHub account](../img/connect1.png){fig-align="center"}
+
+Follow the instructions and then choose an account name for posit.
+
+## Local app {#sec-app}
+
+The app must be stored in an R file with clearly defined `ui` and `server`.
+
+The R file must be named `app.R`.
+
+Once the app is ready for deployment, commit and push as usual.
+
+::: {.callout-important}
+## Before the deploy: one file called `app.R`
+
+Connect Cloud wants the `ui` and the `server` **in the same file**, and the file **must be called `app.R`**. Our project has two files, `ui.R` and `server.R`: there are two ways to get to `app.R`.
+
+**Option 1 · Keep `ui.R` and `server.R`, and add a small `app.R`**
+
+*File* → *New File* → *R Script*, paste this and save it as `app.R` in the project folder, next to `ui.R` and `server.R`:
+
+```r
+library(shiny)
+
+source("ui.R")        # creates the object ui
+source("server.R")    # creates the object server
+
+shinyApp(ui, server)
+```
+
+`source()` runs the two files, so the objects `ui` and `server` are ready for `shinyApp()`. When you change the app, you keep working on `ui.R` and `server.R` as before.
+
+**Option 2 · Put everything in `app.R`**
+
+Create a new script `app.R` and copy into it the content of `ui.R` and `server.R`, one after the other, then add `shinyApp()` at the end:
+
+```r
+library(shiny)
+
+# content of ui.R
+ui = fluidPage(
+  ...
+)
+
+# content of server.R
+server = function(input, output) {
+  ...
+}
+
+shinyApp(ui, server)
+```
+
+`library(shiny)` is needed only once, at the top. Then delete `ui.R` and `server.R`, so that there is only one version of the app.
+
+Either way, check that `app.R` works with *Run App* before going on.
 :::
+
+The file must be within an [R project](../day1/01-project.qmd), which is set to be a [GitHub](08-github.qmd) repository.
+
+## `rsconnect` {#sec-connect}
+
+The `rsconnect` package is necessary to link the local app, the GitHub repository, and the Connect Cloud.
+
+Connect Cloud is not R -- as such, it needs external files describing the packages/dependencies that are employed and needed for the app deployment.
+
+First, the package needs to be installed (@lst-install).
+
+```{#lst-install .r lst-cap="Install the package, run only once."}
+install.packages("rsconnect")
+```
+
+Then, within the R-project hosting the `app.R` file, run the code in @lst-manifest.
+
+```{#lst-manifest .r lst-cap="Write the manifest"}
+rsconnect::writeManifest()
+```
+
+The file `manifest.json` appears within the R project, making the app deployment possible.
+
+:::{.callout-tip}
+## `manifest.json`
+
+`manifest.json` is the “shopping list” of your app. It records which version of R the app uses, which packages it needs (with their exact versions) and which files belong to the app. Connect Cloud is not your computer and has none of your packages installed: it reads the manifest and installs exactly those packages before starting the app. If you add a package to the app, you have to run `rsconnect::writeManifest()` again.
+
+:::
+
+For the deployment, the folder of the project should have the following structure:
+
+```text
+app-Examples/
+├── .gitattributes
+├── .gitignore
+├── app-Examples.Rproj
+├── app.R
+└── manifest.json
+```
+
+## Deploy {#sec-deploy}
+
+Everything is ready for the actual deployment of the app from Connect Cloud.
+
+From the `Home` of your profile, search for the `Publish` button: 
+
+```{r}
+#| fig-align: center
+#| out-width: 100%
+#| label: fig-pubConnect
+#| echo: false
+#| fig-cap: "Publish button on Connect Cloud."
+
+knitr::include_graphics("../img/publishConnect.png")
+```
+
+
+Select the repository, the folder, and the specific file of the app (@fig-pubapp)
+
+![Deploy app and publish it](../img/publish-app.png){#fig-pubapp}

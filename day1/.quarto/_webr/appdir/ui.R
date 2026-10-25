@@ -1,17 +1,32 @@
 library(shiny)
 
 ui <- fluidPage(
+  titlePanel("Explore a dataset"),
   sidebarLayout(
     sidebarPanel(
-      selectInput("dataset", "Choose a dataset:",
-                  choices = c("rock", "pressure", "cars")),
-      sliderInput("n", "Rows to show:", min = 1, max = 10, value = 3)
+      selectInput(
+        "dataset",
+        "Choose a dataset:",
+        choices = c("rock", "pressure", "cars",
+                    "Upload data" = "upload")              # NEW option
+      ),
+      # NEW: shown only when "Upload data" is selected
+      conditionalPanel(
+        condition = "input.dataset == 'upload'",
+        fileInput("file", "Select a CSV file", accept = ".csv"),
+        radioButtons("sep", "Column separator",
+                     choices = c(";" = ";", "," = ","))
+      ),
+      actionButton("load", "Load dataset"),
+      hr(),
+      uiOutput("x_ui"),
+      uiOutput("y_ui"),
+      actionButton("analyze", "Update analysis")
     ),
     mainPanel(
-      h4("Summary (uses only the dataset)"),
-      verbatimTextOutput("summary"),
-      h4("First rows (uses the dataset AND the slider)"),
-      verbatimTextOutput("rows")
+      plotOutput("graph"),
+      verbatimTextOutput("summary")
     )
   )
 )
+

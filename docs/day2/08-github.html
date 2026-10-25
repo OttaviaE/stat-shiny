@@ -20,41 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -78,9 +43,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-0bb70f10e24a92f3de91d4809b8cbce9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-0af3df8ab3ed82183c134d799ac4a0b3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../site_libs/bootstrap/bootstrap-dark-e490b402e2cc1392fcfe70f1c043d6e0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-0bb70f10e24a92f3de91d4809b8cbce9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-0af3df8ab3ed82183c134d799ac4a0b3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -108,9 +73,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
-<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
-<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -430,7 +392,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../day2/09-deploy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Deploy on Connect Cloud</span></a>
+ <span class="menu-text">Spread the shine</span></a>
   </div>
 </li>
       </ul>
@@ -493,10 +455,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul class="collapse">
   <li><a href="#recap-of-day-1" id="toc-recap-of-day-1" class="nav-link active" data-scroll-target="#recap-of-day-1">Recap of Day 1</a></li>
-  <li><a href="#what-the-online-server-needs" id="toc-what-the-online-server-needs" class="nav-link" data-scroll-target="#what-the-online-server-needs">What the online server needs</a></li>
-  <li><a href="#step-1-add-app.r" id="toc-step-1-add-app.r" class="nav-link" data-scroll-target="#step-1-add-app.r">Step 1 · Add <code>app.R</code></a></li>
-  <li><a href="#step-2-write-the-manifest" id="toc-step-2-write-the-manifest" class="nav-link" data-scroll-target="#step-2-write-the-manifest">Step 2 · Write the manifest</a></li>
-  <li><a href="#step-3-from-the-project-to-a-github-repository" id="toc-step-3-from-the-project-to-a-github-repository" class="nav-link" data-scroll-target="#step-3-from-the-project-to-a-github-repository">Step 3 · From the project to a GitHub repository</a></li>
+  <li><a href="#create-a-github-account" id="toc-create-a-github-account" class="nav-link" data-scroll-target="#create-a-github-account">Create a GitHub account</a></li>
+  <li><a href="#install-github-desktop" id="toc-install-github-desktop" class="nav-link" data-scroll-target="#install-github-desktop">Install GitHub Desktop</a></li>
+  <li><a href="#repositories-management" id="toc-repositories-management" class="nav-link" data-scroll-target="#repositories-management">Repositories management</a>
+  <ul class="collapse">
+  <li><a href="#create-new-repository" id="toc-create-new-repository" class="nav-link" data-scroll-target="#create-new-repository">Create new repository</a></li>
+  <li><a href="#add-existing-repository" id="toc-add-existing-repository" class="nav-link" data-scroll-target="#add-existing-repository">Add existing repository</a></li>
+  <li><a href="#publish-the-repositories" id="toc-publish-the-repositories" class="nav-link" data-scroll-target="#publish-the-repositories">Publish the repositories</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -524,15 +490,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="recap-of-day-1" class="level2">
-<h2 class="anchored" data-anchor-id="recap-of-day-1">Recap of Day 1</h2>
+<section id="recap-of-day-1" class="level1">
+<h1>Recap of Day 1</h1>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-The whole of Day 1 on one card
+Summary of Day 1
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -547,93 +513,183 @@ The whole of Day 1 on one card
 </div>
 </div>
 <p>Open your project <code>my-shiny-app</code>, run the app and check it works. If you did not finish yesterday, copy the files of <a href="https://github.com/ottaviae/stat-shiny/tree/main/apps/05-explore-step4"><code>apps/05-explore-step4</code></a> into the project.</p>
+<p>To publish the app, the online server (<a href="../day2/09-deploy.html">Connect Cloud</a>) takes it <strong>from a GitHub repository</strong>. Today we put the project <code>my-shiny-app</code> on GitHub.</p>
 </section>
-<section id="what-the-online-server-needs" class="level2">
-<h2 class="anchored" data-anchor-id="what-the-online-server-needs">What the online server needs</h2>
-<p>To publish the app, the online server (Posit Connect Cloud) takes it <strong>from a GitHub repository</strong>. So the plan for today is:</p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart LR
-    A["💻 Your project&lt;br/&gt;ui.R + server.R"] --&gt; B["+ app.R&lt;br/&gt;+ manifest.json"]
-    B --&gt;|"commit + push"| C["GitHub&lt;br/&gt;repository"]
-    C --&gt;|"publish"| D["☁️ Connect Cloud&lt;br/&gt;your app online"]
-    style C fill:#24292f,color:#fff
-    style D fill:#447099,color:#fff
-</pre>
+<section id="create-a-github-account" class="level1">
+<h1>Create a GitHub account</h1>
+<p>Go to the GitHub website, available at <a href="https://github.com/" class="uri">https://github.com/</a></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<figcaption>GitHub landing page</figcaption>
+<p><img src="../img/ghMail.png" class="img-fluid figure-img" style="width:90.0%"></p>
+</figure>
 </div>
-<p></p></figure><p></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<figcaption>Enter your email</figcaption>
+<p><img src="../img/ghMail1.png" class="img-fluid figure-img" style="width:90.0%"></p>
+</figure>
 </div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<figcaption>Set your username and password (Please choose something that you can remember)</figcaption>
+<p><img src="../img/ghMailpwd.png" class="img-fluid figure-img" style="width:90.0%"></p>
+</figure>
 </div>
-</div>
+<p>Solve the CAPTCHA and submit</p>
 </section>
-<section id="step-1-add-app.r" class="level2">
-<h2 class="anchored" data-anchor-id="step-1-add-app.r">Step 1 · Add <code>app.R</code></h2>
-<p>Connect Cloud looks for a <strong>primary file</strong>, and the standard name for it is <code>app.R</code>. We do not need to rewrite anything: a tiny <code>app.R</code> reads our two files and puts them together.</p>
-<p><em>File</em> → <em>New File</em> → <em>R Script</em>, paste this and save it as <strong><code>app.R</code></strong> in the project folder:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"ui.R"</span>)        <span class="co"># creates the object ui</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"server.R"</span>)    <span class="co"># creates the object server</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Run it (<em>Run App</em>): it is the same app as before. Now you can also see why we always wrote <code>ui &lt;- fluidPage(...)</code> and <code>server &lt;- function(...)</code>: <code>source()</code> runs the files and leaves those two objects ready for <code>shinyApp()</code>.</p>
+<section id="install-github-desktop" class="level1">
+<h1>Install GitHub Desktop</h1>
+<p><a href="https://desktop.github.com/" class="uri">https://desktop.github.com/</a></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<figcaption>GitHub desktop landing page</figcaption>
+<p><img src="../img/ghDesk.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<p>Once the installer is downloaded, follow the installation instruction. Sign in to your GitHub account</p>
 </section>
-<section id="step-2-write-the-manifest" class="level2">
-<h2 class="anchored" data-anchor-id="step-2-write-the-manifest">Step 2 · Write the manifest</h2>
-<p>Connect Cloud is not your computer: it does not know which R packages your app uses. The file <code>manifest.json</code> lists them, with their versions. It is written for you by the <code>rsconnect</code> package.</p>
-<p>In the <strong>console</strong>, with the project open:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("rsconnect")   # if you do not have it yet</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>rsconnect<span class="sc">::</span><span class="fu">writeManifest</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>A file <code>manifest.json</code> appears in the project. Your folder now looks like this:</p>
-<pre class="text"><code>my-shiny-app/
-├── .gitignore
-├── my-shiny-app.Rproj
-├── app.R
-├── ui.R
-├── server.R
-└── manifest.json</code></pre>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+<section id="repositories-management" class="level1">
+<h1>Repositories management</h1>
+<p>The GitHub repositories are the folders containing the R Project:</p>
+<section id="create-new-repository" class="level2">
+<h2 class="anchored" data-anchor-id="create-new-repository">Create new repository</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<figcaption>Create a new repository that does not exist – Step 1</figcaption>
+<p><img src="../img/createNew.png" class="img-fluid figure-img"></p>
+</figure>
 </div>
-<div class="callout-title-container flex-fill">
-Re-write the manifest when the packages change
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>If you later add a package to the app (e.g., <code>library(ggplot2)</code>), run <code>rsconnect::writeManifest()</code> again before pushing, otherwise the online app will not find it.</p>
-</div>
+<p>This initializes a new GitHub repository, where you can provide different information concerning its characteristics</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<figcaption>Create a new repository that does not exist – Step 2</figcaption>
+<p><img src="../img/repoDefinition.png" class="img-fluid figure-img"></p>
+</figure>
 </div>
 </section>
-<section id="step-3-from-the-project-to-a-github-repository" class="level2">
-<h2 class="anchored" data-anchor-id="step-3-from-the-project-to-a-github-repository">Step 3 · From the project to a GitHub repository</h2>
-<p>We use GitHub Desktop (detailed guide with screenshots: <a href="https://arca-dpss.github.io/shine-with-quarto/git-hub.html">Deploy on GitHub</a>).</p>
+<section id="add-existing-repository" class="level2">
+<h2 class="anchored" data-anchor-id="add-existing-repository">Add existing repository</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<figcaption>Add an existing repository that does exist</figcaption>
+<p><img src="../img/addRepository.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<p>This option opens a window where you can navigate to your repository (i.e., a folder on your computer). When you do that, GitHub realizes that the repository does not exist as a GitHub repo, warns you of this and asks you whether you want to create a GitHub repo in that directory – needles to say, say yes and do that.</p>
+</section>
+<section id="publish-the-repositories" class="level2">
+<h2 class="anchored" data-anchor-id="publish-the-repositories">Publish the repositories</h2>
+<p>Once a repository is added (either by adding an existing one or creating a new one), it can be published and made available online for other people:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<figcaption>Publish button</figcaption>
+<p><img src="../img/publish1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<p>If you want your repository to be found by other users, remove the flag from the “Keep this code private”:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<figcaption>Define the publication policies</figcaption>
+<p><img src="../img/publish2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<section id="commit-push" class="level3">
+<h3 class="anchored" data-anchor-id="commit-push"><code>commit + push</code></h3>
+<p>Everything is ready for the commitment.</p>
 <ol type="1">
-<li>GitHub Desktop → <em>File</em> → <em>Add local repository…</em> → choose the folder <code>my-shiny-app</code></li>
-<li>GitHub Desktop says that the folder is not a Git repository yet: click <strong>create a repository</strong> here, then <em>Create repository</em></li>
-<li>Click <strong>Publish repository</strong>. <strong>Untick</strong> <em>Keep this code private</em>: Connect Cloud (free plan) publishes from public repositories</li>
-<li>Check on github.com that the repository contains <code>app.R</code>, <code>ui.R</code>, <code>server.R</code> and <code>manifest.json</code></li>
+<li>Select specific files and commit them. The commit message is mandatory! It is useful for your future self, just to remember the changes you made, when and possibly why.</li>
 </ol>
-<p>From now on, every change follows the usual cycle: <strong>edit → commit (with a message) → push</strong>.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<figcaption>Select &amp; Commit</figcaption>
+<p><img src="../img/commit1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<ol start="2" type="1">
+<li>The changes must be pushed to GitHub:</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<figcaption>Select &amp; Commit</figcaption>
+<p><img src="../img/commit2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<ol start="3" type="1">
+<li>Check whether the changes are live on GitHub:</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<figcaption>Check Commit</figcaption>
+<p><img src="../img/commit3.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</section>
+<section id="licenses" class="level3">
+<h3 class="anchored" data-anchor-id="licenses">Licenses</h3>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Checkpoint
+MIT
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>✅ <code>app.R</code> runs the app<br> ✅ <code>manifest.json</code> is in the project<br> ✅ The repository is on GitHub, public, with all the files</p>
+<p>Anyone can use, modify, distribute, and commercialize the software, provided that the original copyright notice and license text are included</p>
 </div>
 </div>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+GNU
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Anyone can use, modify, and distribute the software. Any derivative work or redistributed version must be released under the same GPL license and with source code available.</p>
+</div>
+</div>
+</div>
+<p>Summarizing the differences between the types of licences:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 59%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>MIT</th>
+<th>GNU GPL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Can be used in proprietary software</td>
+<td>Derivative works must remain open source</td>
+</tr>
+<tr class="even">
+<td>Minimal restrictions</td>
+<td>Requires source code disclosure upon redistribution</td>
+</tr>
+<tr class="odd">
+<td>Maximizes flexibility and adoption</td>
+<td>Ensures openness is preserved</td>
+</tr>
+</tbody>
+</table>
 
 
+</section>
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -1056,8 +1112,8 @@ Checkpoint
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../day2/09-deploy.html" class="pagination-link" aria-label="Deploy on Connect Cloud">
-        <span class="nav-page-text">Deploy on Connect Cloud</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../day2/09-deploy.html" class="pagination-link" aria-label="Spread the shine">
+        <span class="nav-page-text">Spread the shine</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
