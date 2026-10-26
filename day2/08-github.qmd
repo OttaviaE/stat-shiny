@@ -58,7 +58,7 @@ This initializes a new GitHub repository, where you can provide different inform
 
 ![Add an existing repository that does exist](../img/addRepository.png){fig-align="center"}
 
-This option opens a window where you can navigate to your repository (i.e., a folder on your computer). When you do that, GitHub realizes that the repository does not exist as a GitHub repo, warns you of this and asks you whether you want to create a GitHub repo in that directory -- needles to say, say yes and do that.
+This option opens a window where you can navigate to your repository (i.e., a folder on your computer). When you do that, GitHub realizes that the repository does not exist as a GitHub repo, warns you of this and asks you whether you want to create a GitHub repo in that directory -- needless to say, say yes and do that.
 
 ## Publish the repositories
 
