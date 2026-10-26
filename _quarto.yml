@@ -61,7 +61,7 @@ filters:
 format:
   html:
     theme:
-      light: lux
+      light: yeti
       dark: slate
     css: styles.css
     toc: true
