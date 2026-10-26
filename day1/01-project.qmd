@@ -63,7 +63,19 @@ The folder is the same as above: what makes it a Shiny app are the two scripts, 
 
 ## Step 3 · Write the two scripts {#sec-step3}
 
-Replace whatever is in the two files with our first app. Copy this into **`ui.R`**:
+This is the app you are about to write (it is the one from the [Shiny](00-shiny.qmd) page):
+
+```{shinylive-r}
+#| standalone: true
+#| components: [viewer]
+#| viewerHeight: 220
+## file: ui.R
+{{< include ../apps/01-basic/ui.R >}}
+## file: server.R
+{{< include ../apps/01-basic/server.R >}}
+```
+
+Replace whatever is in the two files with the code of this app. Copy this into **`ui.R`**:
 
 ```r
 {{< include ../apps/01-basic/ui.R >}}

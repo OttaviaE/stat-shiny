@@ -5,6 +5,54 @@ subtitle: "Organising the page"
 
 `fluidPage()` is a page based on a **grid 12 units wide**. On top of it, Shiny offers a few ready-made structures.
 
+## See them
+
+A sidebar, three tabs, and two columns inside the last tab. Click on the tabs:
+
+```{shinylive-r}
+#| standalone: true
+#| components: [viewer]
+#| viewerHeight: 650
+## file: ui.R
+library(shiny)
+
+ui <- fluidPage(
+  titlePanel("Layouts"),
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("dataset", "Choose a dataset:",
+                  choices = c("rock", "pressure", "cars")),
+      width = 3                       # the sidebar takes 3 of 12 units
+    ),
+    mainPanel(
+      tabsetPanel(
+        tabPanel("Plot", plotOutput("plot")),
+        tabPanel("Summary", verbatimTextOutput("summary")),
+        tabPanel("Two columns",
+                 fluidRow(
+                   column(6, h4("First column"), tableOutput("head")),
+                   column(6, h4("Second column"), plotOutput("hist", height = "250px"))
+                 ))
+      ),
+      width = 9
+    )
+  )
+)
+## file: server.R
+library(shiny)
+
+server <- function(input, output, session) {
+  dataInput <- reactive(get(input$dataset))
+
+  output$plot    <- renderPlot(plot(dataInput()[, 1:2]))
+  output$summary <- renderPrint(summary(dataInput()))
+  output$head    <- renderTable(head(dataInput()))
+  output$hist    <- renderPlot(hist(dataInput()[, 1], main = names(dataInput())[1]))
+}
+```
+
+## How they are written
+
 ```r
 fluidPage(                       # <1>
 
@@ -29,7 +77,9 @@ fluidPage(                       # <1>
 3. Automatic layout with a sidebar (for the inputs) and a main area (for the outputs)
 4. Tabs: only one is visible at a time
 
-## Try them
+## The code
+
+The code of the app above. You can edit it and press ▶.
 
 ```{shinylive-r}
 #| standalone: true

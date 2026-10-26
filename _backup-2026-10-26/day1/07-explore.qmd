@@ -1,0 +1,187 @@
+---
+title: "Your app: explore a dataset"
+subtitle: "Putting it all together, step by step"
+---
+
+We build the app that will go online on Day 2. The user:
+
+1. chooses a dataset (or uploads their own) and loads it
+2. chooses the X and Y variables **among the columns of that dataset**
+3. clicks to update the plot and the summary
+
+We build it in four steps. Each step is a working app: run it, check it, then move on. The files of each step are in [`apps/`](https://github.com/ottaviae/stat-shiny/tree/main/apps) (`05-explore-step1` … `05-explore-step4`).
+
+```{mermaid}
+flowchart LR
+    DS["input$dataset"] -.-> D
+    L["input$load"] ==>|"trigger"| D["dataInput()<br/>eventReactive"]
+    D --> V["vars()<br/>reactive"]
+    V --> XU["output$x_ui / y_ui<br/>renderUI"]
+    XU --> X["input$x / input$y"]
+    X -.-> N
+    A["input$analyze"] ==>|"trigger"| N["newdata()<br/>eventReactive"]
+    D -.-> N
+    N --> G["output$graph"]
+    N --> S["output$summary"]
+    style L fill:#d9534f,color:#fff
+    style A fill:#d9534f,color:#fff
+    style DS fill:#2b6c8e,color:#fff
+    style X fill:#2b6c8e,color:#fff
+    style D fill:#f0ad4e,color:#fff
+    style V fill:#f0ad4e,color:#fff
+    style N fill:#f0ad4e,color:#fff
+    style XU fill:#8fd36f,color:#fff
+    style G fill:#8fd36f,color:#fff
+    style S fill:#8fd36f,color:#fff
+```
+
+
+## Step 1 · Load a dataset
+
+A dataset is loaded with an `eventReactive()`. The first rows are printed to check that the data are correct.
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+#| layout: vertical
+#| viewerHeight: 330
+## file: ui.R
+{{< include ../apps/05-explore-step1/ui.R >}}
+## file: server.R
+{{< include ../apps/05-explore-step1/server.R >}}
+```
+
+## Step 2 · Menus built from the data
+
+The X and Y menus cannot be written in `ui.R` because their choices depend on the **column names** of the uploaded dataset:
+
+- in `ui.R` we reserve **an empty slot** with `uiOutput()`
+- in `server.R`, `renderUI()` creates the `selectInput()` and puts it in that slot
+
+```r
+# ui.R
+uiOutput("x_ui")                               # <1>
+```
+1. An empty slot for a piece of UI that the server will create
+
+```r
+# server.R
+vars <- reactive({                             # <1>
+  names(dataInput())
+})
+
+output$x_ui <- renderUI({                      # <2>
+  selectInput("x", "X variable:",              # <3>
+              choices = vars(),
+              selected = vars()[1])
+})
+```
+1. The column names, as a reactive expression: they change when new data are loaded
+2. `renderUI()` is the partner of `uiOutput()`
+3. A normal `selectInput()`, with ID `x`: from now on the server can read `input$x`, like any other input
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+#| layout: vertical
+#| viewerHeight: 420
+## file: ui.R
+{{< include ../apps/05-explore-step2/ui.R >}}
+## file: server.R
+{{< include ../apps/05-explore-step2/server.R >}}
+```
+
+Load `rock`, then `cars`: the menus change with the data. Before the first click the slots are empty, because `vars()` needs `dataInput()`, which waits for the button.
+
+## Step 3 · The analysis, on demand
+
+A second button, `analyze`, and a second `eventReactive()` that **freezes** the selected columns when it is clicked. The plot and the summary use only these frozen data.
+
+```r
+newdata <- eventReactive(input$analyze, {      # <1>
+  df <- dataInput()
+  df[, c(input$x, input$y), drop = FALSE]      # <2>
+})
+```
+1. Runs only when *Update analysis* is clicked
+2. Keep only the two chosen columns. `input$x` and `input$y` are text (the column names), so we can use them to select columns
+
+The plot adapts to the type of X: a **boxplot** if X is categorical, a **scatterplot** if it is numeric.
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+#| layout: vertical
+#| viewerHeight: 720
+## file: ui.R
+{{< include ../apps/05-explore-step3/ui.R >}}
+## file: server.R
+{{< include ../apps/05-explore-step3/server.R >}}
+```
+
+Try it: load `cars`, choose the variables, click *Update analysis*. Now change the variables **without** clicking: the plot does not move until you click again.
+
+## Step 4 · Upload your own data
+
+Last step: a fourth option, *Upload data*, with value `"upload"`: `choices = c("rock", "pressure", "cars", "Upload data" = "upload")`. When it is selected, a file input and the choice of the column separator appear.
+
+```r
+conditionalPanel(                                      # <1>
+  condition = "input.dataset == 'upload'",             # <2>
+  fileInput("file", "Select a CSV file", accept = ".csv"),
+  radioButtons("sep", "Column separator",
+               choices = c(";" = ";", "," = ","))
+)
+```
+1. Shows its content only when the condition is true
+2. The condition is written in **JavaScript**, not in R: `input.dataset` with a dot, and `'upload'` in quotes
+
+In the server, a fourth case in the `switch()` of `dataInput()` **must** be added. The curly brackets hold more than one line of code:
+
+```r
+upload = {
+  req(input$file)                                    # <1>
+  read.csv(input$file$datapath, sep = input$sep)     # <2>
+}
+```
+1. `req()` = *required*: if no file has been uploaded yet, stop here **silently**, without an error
+2. Read the file from the place where Shiny saved it, with the separator chosen by the user
+
+Test files: [example.csv](../data/example.csv) (separator `,`) and [example-semicolon.csv](../data/example-semicolon.csv) (separator `;`).
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+#| layout: vertical
+#| viewerHeight: 800
+## file: ui.R
+{{< include ../apps/05-explore-step4/ui.R >}}
+## file: server.R
+{{< include ../apps/05-explore-step4/server.R >}}
+```
+
+## Put it in your project
+
+Copy `ui.R` and `server.R` of [`apps/05-explore-step4`](https://github.com/ottaviae/stat-shiny/tree/main/apps/05-explore-step4) into your project `my-shiny-app`, replacing the old ones, and run it with *Run App*.
+
+**This is the app that goes online on Day 2.** 
+
+::: {.callout-note}
+## Exercise 1 · Make it yours
+
+Pick one or more:
+
+1. Add `iris` to the datasets (remember to add the case in `dataInput()`)
+2. Use the **wrong separator** on purpose with `example.csv`: what happens to the menus? Why?
+3. Add a `tableOutput()` that shows the first 6 rows of `newdata()`
+4. Show the **title** of the plot with the names of the two variables (`main = paste(...)`)
+:::
+
+::: {.callout-tip collapse="true"}
+## Hints 1
+
+1. `selectInput()`: `choices = c("rock", "pressure", "cars", "iris", "Upload data" = "upload")`; `dataInput()`: add `iris = iris` to the `switch()`
+2. With the wrong separator `read.csv()` reads a single column with a long name: the menus offer only one variable
+3. `ui.R`: `tableOutput("rows")`; `server.R`: `output$rows <- renderTable({ head(newdata()) })`
+4. `plot(x, y, ..., main = paste(names(df)[2], "by", names(df)[1]))`
+:::

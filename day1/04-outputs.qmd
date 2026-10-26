@@ -3,6 +3,68 @@ title: "Outputs and render functions"
 subtitle: "Filling the empty boxes"
 ---
 
+## All of them in one app
+
+The same dataset, shown four ways. Change the dataset and the number of rows.
+
+```{shinylive-r}
+#| standalone: true
+#| components: [viewer]
+#| viewerHeight: 900
+## file: ui.R
+library(shiny)
+
+ui <- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("dataset", "Choose a dataset:",
+                  choices = c("rock", "pressure", "cars")),
+      sliderInput("n", "Rows in the table:", min = 1, max = 10, value = 5)
+    ),
+    mainPanel(
+      h4("textOutput()"),
+      textOutput("text"),
+      h4("verbatimTextOutput()"),
+      verbatimTextOutput("print"),
+      h4("tableOutput()"),
+      tableOutput("table"),
+      h4("plotOutput()"),
+      plotOutput("plot", height = "300px")
+    )
+  )
+)
+## file: server.R
+library(shiny)
+
+server <- function(input, output, session) {
+
+  output$text <- renderText({
+    data <- get(input$dataset)
+    paste("The dataset", input$dataset, "has", nrow(data), "rows and",
+          ncol(data), "columns.")
+  })
+
+  output$print <- renderPrint({
+    data <- get(input$dataset)
+    summary(data)
+  })
+
+  output$table <- renderTable({
+    data <- get(input$dataset)
+    head(data, input$n)
+  })
+
+  output$plot <- renderPlot({
+    data <- get(input$dataset)
+    plot(data[, 1:2])
+  })
+}
+```
+
+Each of the four boxes in the app (a sentence, a summary, a table, a plot) is an **output**. Let's see how they are made.
+
+## How an output is made
+
 An output always comes **in pairs**:
 
 - in `ui.R`, a `*Output()` function reserves an **empty box** and says *what kind* of content it will contain
@@ -32,9 +94,9 @@ output$graph <- renderPlot({         # <2>
 | `uiOutput()` | `renderUI()` | **new UI elements**, created by the server ([Your app: explore a dataset](07-explore.qmd)) |
 | `downloadButton()` | `downloadHandler()` | a file to download ([Going further](../extras/download.qmd)) |
 
-## All of them in one app
+## The code of the app {#the-code}
 
-The same dataset, shown four ways. Change the dataset and the number of rows.
+Here is the code of the app above. Find the four pairs `*Output()` / `render*()`. You can edit it and press ▶.
 
 ```{shinylive-r}
 #| standalone: true
@@ -118,7 +180,7 @@ In the app above, replace `renderPrint` with `renderText` for `summary(data)` (a
 ::: {.callout-note}
 ## Exercise 1 · From one output to two
 
-Open the [first datasets app](#all-of-them-in-one-app) in the editor and add a **second plot**: a histogram of the first column of the dataset (`hist(data[, 1])`).
+Open the [code of the datasets app](#the-code) in the editor and add a **second plot**: a histogram of the first column of the dataset (`hist(data[, 1])`).
 
 You need **two** changes: one in `ui.R` and one in `server.R`.
 :::

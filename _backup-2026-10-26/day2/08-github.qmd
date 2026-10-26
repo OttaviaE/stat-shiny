@@ -1,0 +1,109 @@
+---
+title: "Your app on GitHub"
+subtitle: "Getting the project ready to leave your computer"
+fig-cap-location: top
+---
+
+# Recap of Day 1
+
+::: {.callout-tip}
+## Summary of Day 1
+
+- A Shiny app is a **folder** with `ui.R` (what the user sees) and `server.R` (what R does)
+- UI and server talk **only through IDs**: `inputId` → `input$id`, `outputId` → `output$id`
+- Each `*Output()` in the UI has its `render*()` partner in the server
+- `render*()` and `reactive()` re-run **automatically** when the inputs they read change
+- `eventReactive(input$button, { ... })` re-runs **only** when the button is clicked
+- `uiOutput()` + `renderUI()` create inputs that depend on the data
+:::
+
+Open your project `my-shiny-app`, run the app and check it works. If you did not finish yesterday, copy the files of [`apps/05-explore-step4`](https://github.com/ottaviae/stat-shiny/tree/main/apps/05-explore-step4) into the project.
+
+To publish the app, the online server ([Connect Cloud](09-deploy.qmd)) takes it **from a GitHub repository**. Today we put the project `my-shiny-app` on GitHub.
+
+# Create a GitHub account
+
+Go to the GitHub website, available at <https://github.com/>
+
+![GitHub landing page](../img/ghMail.png){fig-align="center" width="90%"}
+
+![Enter your email](../img/ghMail1.png){fig-align="center" width="90%"}
+
+![Set your username and password (Please choose something that you can remember)](../img/ghMailpwd.png){fig-align="center" width="90%"}
+
+Solve the CAPTCHA and submit
+
+# Install GitHub Desktop
+
+<https://desktop.github.com/>
+
+![GitHub desktop landing page](../img/ghDesk.png){fig-align="center"}
+
+Once the installer is downloaded, follow the installation instruction.
+Sign in to your GitHub account
+
+# Repositories management
+
+The GitHub repositories are the folders containing the R Project:
+
+## Create new repository
+
+![Create a new repository that does not exist -- Step 1](../img/createNew.png){fig-align="center"}
+
+This initializes a new GitHub repository, where you can provide different information concerning its characteristics
+
+![Create a new repository that does not exist -- Step 2](../img/repoDefinition.png){fig-align="center"}
+
+## Add existing repository
+
+![Add an existing repository that does exist](../img/addRepository.png){fig-align="center"}
+
+This option opens a window where you can navigate to your repository (i.e., a folder on your computer). When you do that, GitHub realizes that the repository does not exist as a GitHub repo, warns you of this and asks you whether you want to create a GitHub repo in that directory -- needles to say, say yes and do that.
+
+## Publish the repositories
+
+Once a repository is added (either by adding an existing one or creating a new one), it can be published and made available online for other people:
+
+![Publish button](../img/publish1.png){fig-align="center"}
+
+If you want your repository to be found by other users, remove the flag from the "Keep this code private":
+
+![Define the publication policies](../img/publish2.png){fig-align="center"}
+
+### `commit + push`
+
+Everything is ready for the commitment.
+
+1. Select specific files and commit them. The commit message is mandatory! It is useful for your future self, just to remember the changes you made, when and possibly why.
+
+![Select & Commit](../img/commit1.png){fig-align="center"}
+
+2. The changes must be pushed to GitHub:
+
+![Select & Commit](../img/commit2.png){fig-align="center"}
+
+3. Check whether the changes are live on GitHub:
+
+![Check Commit](../img/commit3.png){fig-align="center"}
+
+### Licenses
+
+:::{.callout-tip icon=false collapse=true}
+## MIT
+
+Anyone can use, modify, distribute, and  commercialize the software, provided that the original copyright notice and license text are included
+:::
+
+:::{.callout-tip icon=false collapse=true}
+## GNU
+
+Anyone can use, modify, and distribute the software. Any derivative work or redistributed version must be released under the same GPL license and with source code available.
+:::
+
+Summarizing the differences between the types of licences:
+
+| MIT                                 | GNU GPL                                             |
+| ----------------------------------- | --------------------------------------------------- |
+| Can be used in proprietary software | Derivative works must remain open source            |
+| Minimal restrictions                | Requires source code disclosure upon redistribution |
+| Maximizes flexibility and adoption  | Ensures openness is preserved                       |

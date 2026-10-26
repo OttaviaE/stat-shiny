@@ -494,8 +494,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul class="collapse">
-  <li><a href="#the-pairs" id="toc-the-pairs" class="nav-link active" data-scroll-target="#the-pairs">The pairs</a></li>
-  <li><a href="#all-of-them-in-one-app" id="toc-all-of-them-in-one-app" class="nav-link" data-scroll-target="#all-of-them-in-one-app">All of them in one app</a></li>
+  <li><a href="#all-of-them-in-one-app" id="toc-all-of-them-in-one-app" class="nav-link active" data-scroll-target="#all-of-them-in-one-app">All of them in one app</a></li>
+  <li><a href="#how-an-output-is-made" id="toc-how-an-output-is-made" class="nav-link" data-scroll-target="#how-an-output-is-made">How an output is made</a></li>
+  <li><a href="#the-pairs" id="toc-the-pairs" class="nav-link" data-scroll-target="#the-pairs">The pairs</a></li>
+  <li><a href="#the-code" id="toc-the-code" class="nav-link" data-scroll-target="#the-code">The code of the app</a></li>
   <li><a href="#rendertext-or-renderprint" id="toc-rendertext-or-renderprint" class="nav-link" data-scroll-target="#rendertext-or-renderprint"><code>renderText()</code> or <code>renderPrint()</code>?</a></li>
   <li><a href="#common-mistakes" id="toc-common-mistakes" class="nav-link" data-scroll-target="#common-mistakes">Common mistakes</a></li>
   <li><a href="#your-turn" id="toc-your-turn" class="nav-link" data-scroll-target="#your-turn">Your turn</a></li>
@@ -526,32 +528,94 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<section id="all-of-them-in-one-app" class="level2">
+<h2 class="anchored" data-anchor-id="all-of-them-in-one-app">All of them in one app</h2>
+<p>The same dataset, shown four ways. Change the dataset and the number of rows.</p>
+<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
+#|   shinylive does not work in self-contained HTML documents.
+#|   Please set `embed-resources: false` in your metadata.
+#| standalone: true
+#| components: [viewer]
+#| viewerHeight: 900
+## file: ui.R
+library(shiny)
+
+ui &lt;- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("dataset", "Choose a dataset:",
+                  choices = c("rock", "pressure", "cars")),
+      sliderInput("n", "Rows in the table:", min = 1, max = 10, value = 5)
+    ),
+    mainPanel(
+      h4("textOutput()"),
+      textOutput("text"),
+      h4("verbatimTextOutput()"),
+      verbatimTextOutput("print"),
+      h4("tableOutput()"),
+      tableOutput("table"),
+      h4("plotOutput()"),
+      plotOutput("plot", height = "300px")
+    )
+  )
+)
+## file: server.R
+library(shiny)
+
+server &lt;- function(input, output, session) {
+
+  output$text &lt;- renderText({
+    data &lt;- get(input$dataset)
+    paste("The dataset", input$dataset, "has", nrow(data), "rows and",
+          ncol(data), "columns.")
+  })
+
+  output$print &lt;- renderPrint({
+    data &lt;- get(input$dataset)
+    summary(data)
+  })
+
+  output$table &lt;- renderTable({
+    data &lt;- get(input$dataset)
+    head(data, input$n)
+  })
+
+  output$plot &lt;- renderPlot({
+    data &lt;- get(input$dataset)
+    plot(data[, 1:2])
+  })
+}</code></pre>
+<p>Each of the four boxes in the app (a sentence, a summary, a table, a plot) is an <strong>output</strong>. Let’s see how they are made.</p>
+</section>
+<section id="how-an-output-is-made" class="level2">
+<h2 class="anchored" data-anchor-id="how-an-output-is-made">How an output is made</h2>
 <p>An output always comes <strong>in pairs</strong>:</p>
 <ul>
 <li>in <code>ui.R</code>, a <code>*Output()</code> function reserves an <strong>empty box</strong> and says <em>what kind</em> of content it will contain</li>
 <li>in <code>server.R</code>, the matching <code>render*()</code> function <strong>produces the content</strong> and puts it in the box with the same ID</li>
 </ul>
-<div class="sourceCode" id="annotated-cell-1"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ui.R</span></span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-1-2" class="code-annotation-target"><a href="#annotated-cell-1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotOutput</span>(<span class="st">"graph"</span>)</span>
-<span id="annotated-cell-1-3"><a href="#annotated-cell-1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-1-4"><a href="#annotated-cell-1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># server.R</span></span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-1-5" class="code-annotation-target"><a href="#annotated-cell-1-5" aria-hidden="true" tabindex="-1"></a>output<span class="sc">$</span>graph <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-1-6" class="code-annotation-target"><a href="#annotated-cell-1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(cars)</span>
-<span id="annotated-cell-1-7"><a href="#annotated-cell-1-7" aria-hidden="true" tabindex="-1"></a>})</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="annotated-cell-2"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-2-1"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ui.R</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-2-2" class="code-annotation-target"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotOutput</span>(<span class="st">"graph"</span>)</span>
+<span id="annotated-cell-2-3"><a href="#annotated-cell-2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-2-4"><a href="#annotated-cell-2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># server.R</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-2-5" class="code-annotation-target"><a href="#annotated-cell-2-5" aria-hidden="true" tabindex="-1"></a>output<span class="sc">$</span>graph <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-2-6" class="code-annotation-target"><a href="#annotated-cell-2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(cars)</span>
+<span id="annotated-cell-2-7"><a href="#annotated-cell-2-7" aria-hidden="true" tabindex="-1"></a>})</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <dl class="code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="2" data-code-annotation="1">“Here there will be a plot, called <code>graph</code>”</span>
+<span data-code-cell="annotated-cell-2" data-code-lines="2" data-code-annotation="1">“Here there will be a plot, called <code>graph</code>”</span>
 </dd>
-<dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="5" data-code-annotation="2">Fill the box <code>graph</code>, with a function that makes plots</span>
+<span data-code-cell="annotated-cell-2" data-code-lines="5" data-code-annotation="2">Fill the box <code>graph</code>, with a function that makes plots</span>
 </dd>
-<dt data-target-cell="annotated-cell-1" data-target-annotation="3">3</dt>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="6" data-code-annotation="3">Any R code that draws a plot</span>
+<span data-code-cell="annotated-cell-2" data-code-lines="6" data-code-annotation="3">Any R code that draws a plot</span>
 </dd>
 </dl>
+</section>
 <section id="the-pairs" class="level2">
 <h2 class="anchored" data-anchor-id="the-pairs">The pairs</h2>
 <table class="caption-top table">
@@ -596,9 +660,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
-<section id="all-of-them-in-one-app" class="level2">
-<h2 class="anchored" data-anchor-id="all-of-them-in-one-app">All of them in one app</h2>
-<p>The same dataset, shown four ways. Change the dataset and the number of rows.</p>
+<section id="the-code" class="level2">
+<h2 class="anchored" data-anchor-id="the-code">The code of the app</h2>
+<p>Here is the code of the app above. Find the four pairs <code>*Output()</code> / <code>render*()</code>. You can edit it and press ▶.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
 #|   shinylive does not work in self-contained HTML documents.
 #|   Please set `embed-resources: false` in your metadata.
@@ -698,7 +762,7 @@ Exercise 1 · From one output to two
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Open the <a href="#all-of-them-in-one-app">first datasets app</a> in the editor and add a <strong>second plot</strong>: a histogram of the first column of the dataset (<code>hist(data[, 1])</code>).</p>
+<p>Open the <a href="#the-code">code of the datasets app</a> in the editor and add a <strong>second plot</strong>: a histogram of the first column of the dataset (<code>hist(data[, 1])</code>).</p>
 <p>You need <strong>two</strong> changes: one in <code>ui.R</code> and one in <code>server.R</code>.</p>
 </div>
 </div>
@@ -714,13 +778,13 @@ Solution 1
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ui.R, inside mainPanel()</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotOutput</span>(<span class="st">"hist"</span>, <span class="at">height =</span> <span class="st">"300px"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># server.R, inside the server function</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>output<span class="sc">$</span>hist <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  data <span class="ot">&lt;-</span> <span class="fu">get</span>(input<span class="sc">$</span>dataset)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hist</span>(data[, <span class="dv">1</span>], <span class="at">main =</span> <span class="fu">names</span>(data)[<span class="dv">1</span>])</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ui.R, inside mainPanel()</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotOutput</span>(<span class="st">"hist"</span>, <span class="at">height =</span> <span class="st">"300px"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># server.R, inside the server function</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>output<span class="sc">$</span>hist <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  data <span class="ot">&lt;-</span> <span class="fu">get</span>(input<span class="sc">$</span>dataset)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hist</span>(data[, <span class="dv">1</span>], <span class="at">main =</span> <span class="fu">names</span>(data)[<span class="dv">1</span>])</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>

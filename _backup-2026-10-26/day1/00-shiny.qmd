@@ -1,0 +1,135 @@
+---
+title: "Shiny"
+subtitle: "What it is and the logic behind it"
+---
+
+# Logic
+
+::: {.grid}
+
+::: {.g-col-6}
+`ui` (**U**ser **I**nterface)
+
+The container, whatever sees the user
+
+Used for setting the desired configurations of options that will be elaborated in the server
+
+Used for displaying the results of the computations that took place in the server
+:::
+
+::: {.g-col-6}
+`server`
+
+It gets the work done, according to the configuration set in the UI
+
+Replaces the results into the allocated spaces
+:::
+
+:::
+
+UI and Server work in a flow, communicating to each other (@fig-uiServer).
+
+::: {#fig-uiServer layout-ncol=1}
+
+```{mermaid}
+flowchart LR
+
+    UI["**UI**<br/><br/>Set the options<br/>Displays the results"]
+    SERVER["**SERVER**<br/><br/>Elaborates the options<br/>Sends back the results"]
+
+    UI -->|"Input"| SERVER
+    SERVER -->|"Output"| UI
+
+    style UI fill:#2b6c8e,stroke:#1b4258,stroke-width:2px,color:#ffffff
+    style SERVER fill:#8fd36f,stroke:#4c8b3a,stroke-width:2px,color:#ffffff
+
+    linkStyle default stroke:#FFD700,stroke-width:5px
+```
+
+Interaction between the user interface (UI) and the server.
+
+:::
+
+# Basics
+
+```r
+install.packages("shiny") # install
+library(shiny) # use it
+```
+
+```r
+ui = fluidPage(          # <1>
+   [...]                 # <1>
+  )                      # <1>
+server = function(input, output){ # <2>
+  [...]                           # <2>
+}                                 # <2>
+shinyApp(ui, server)  # <3>
+```
+
+1. Define the ui
+2. Define the server
+3. Shine
+
+The `ui` contains two kinds of elements:
+
+- **inputs**, the controls the user plays with (a menu, a slider, a box to type in, a button…)
+- **outputs**, empty boxes where the server will put the results (a text, a plot, a table…)
+
+There is a widget for (almost) everything: numbers, text, dates, files… We see the most useful ones in [Input widgets](03-inputs.qmd) and [Outputs and render functions](04-outputs.qmd).
+
+# A first app
+
+[Input]{.io-chip .io-chip-in} and [output]{.io-chip .io-chip-out}, in the `ui` and in the `server`:
+
+::: {.io-first-app}
+```r
+ui = fluidPage(
+  selectInput(inputId = "mySelection",
+              label = h3("Select box"),
+              choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3),
+              selected = 1),
+  verbatimTextOutput(outputId = "myOutput")
+)
+
+server = function(input, output) {
+  output$myOutput = renderPrint({
+    paste("This is my choice:", input$mySelection)
+  })
+}
+
+shinyApp(ui, server)
+```
+:::
+
+- In the `ui`, `selectInput()` creates a menu called `mySelection`, and `verbatimTextOutput()` reserves an empty box called `myOutput`
+- In the `server`, `input$mySelection` reads the choice of the user, and `output$myOutput` fills the box with the result
+
+The names are what connects the two pieces: we look at them closely in [How Shiny thinks](02-logic.qmd).
+
+## An astonishing result
+
+```{shinylive-r}
+#| standalone: true
+#| components: [viewer]
+#| viewerHeight: 220
+library(shiny)
+
+ui = fluidPage(
+  selectInput(inputId = "mySelection",
+              label = h3("Select box"),
+              choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3),
+              selected = 1),
+  verbatimTextOutput(outputId = "myOutput")
+)
+
+server = function(input, output) {
+  output$myOutput = renderPrint({
+    paste("This is my choice:", input$mySelection)
+  })
+}
+
+shinyApp(ui, server)
+```
+
+In the next page we put this same app in an RStudio project, with the `ui` in a script called `ui.R` and the `server` in a script called `server.R`.

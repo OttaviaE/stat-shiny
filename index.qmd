@@ -51,7 +51,10 @@ In this course we start from an empty RStudio project and finish with **your own
 
 ## How to use these pages
 
-Most examples are **live apps that run in your browser**: on top you see the code (`ui.R` and `server.R` in two tabs), below the running app.
+Most examples are **live apps that run in your browser**. Each app is shown twice:
+
+1. **first the app alone**: play with it and see what it does
+2. **then its code** (`ui.R` and `server.R` in two tabs), with the explanation and the same app running below it
 
 - You can **edit the code** and re-run the app with the ▶ button (or {{< kbd Ctrl-Shift-Enter >}})
 - Nothing you do here can break anything: reload the page to start over

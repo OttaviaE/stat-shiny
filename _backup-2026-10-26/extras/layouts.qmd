@@ -1,0 +1,83 @@
+---
+title: "Layouts"
+subtitle: "Organising the page"
+---
+
+`fluidPage()` is a page based on a **grid 12 units wide**. On top of it, Shiny offers a few ready-made structures.
+
+```r
+fluidPage(                       # <1>
+
+  fluidRow(                      # <2>
+    column(6, ...),
+    column(6, ...)
+  ),
+
+  sidebarLayout(                 # <3>
+    sidebarPanel(...),
+    mainPanel(...)
+  ),
+
+  tabsetPanel(                   # <4>
+    tabPanel("Plot", ...),
+    tabPanel("Summary", ...)
+  )
+)
+```
+1. The page: rows with columns, within a grid 12 units wide
+2. A row with two columns, each 6 units wide (6 + 6 = 12)
+3. Automatic layout with a sidebar (for the inputs) and a main area (for the outputs)
+4. Tabs: only one is visible at a time
+
+## Try them
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+#| layout: vertical
+#| viewerHeight: 650
+## file: ui.R
+library(shiny)
+
+ui <- fluidPage(
+  titlePanel("Layouts"),
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("dataset", "Choose a dataset:",
+                  choices = c("rock", "pressure", "cars")),
+      width = 3                       # the sidebar takes 3 of 12 units
+    ),
+    mainPanel(
+      tabsetPanel(
+        tabPanel("Plot", plotOutput("plot")),
+        tabPanel("Summary", verbatimTextOutput("summary")),
+        tabPanel("Two columns",
+                 fluidRow(
+                   column(6, h4("First column"), tableOutput("head")),
+                   column(6, h4("Second column"), plotOutput("hist", height = "250px"))
+                 ))
+      ),
+      width = 9
+    )
+  )
+)
+## file: server.R
+library(shiny)
+
+server <- function(input, output, session) {
+  dataInput <- reactive(get(input$dataset))
+
+  output$plot    <- renderPlot(plot(dataInput()[, 1:2]))
+  output$summary <- renderPrint(summary(dataInput()))
+  output$head    <- renderTable(head(dataInput()))
+  output$hist    <- renderPlot(hist(dataInput()[, 1], main = names(dataInput())[1]))
+}
+```
+
+::: {.callout-note}
+## Exercise
+
+Move the dataset menu out of the sidebar and put it in a `fluidRow()` on top of the tabs. Change the widths of the two columns to 4 and 8.
+:::
+
+More layouts (navbar pages, cards, dashboards with `bslib`) in the [Shiny layout gallery](https://shiny.posit.co/r/layouts/).

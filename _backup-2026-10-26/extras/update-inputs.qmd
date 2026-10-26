@@ -1,0 +1,53 @@
+---
+title: "Updating inputs"
+subtitle: "observeEvent() and updateSelectInput()"
+---
+
+In [Your app: explore a dataset](../day1/07-explore.qmd) the X and Y menus were **created** by the server with `renderUI()`. There is another way: the menus exist in `ui.R` from the start, empty, and the server **updates** their choices when the data are loaded.
+
+```r
+# ui.R
+selectInput("x", "X variable:", choices = NULL)          # <1>
+```
+1. A normal menu, with no choices yet
+
+```r
+# server.R
+server <- function(input, output, session) {             # <1>
+
+  observeEvent(dataInput(), {                            # <2>
+    vars <- names(dataInput())
+    updateSelectInput(session, "x", choices = vars)      # <3>
+  })
+}
+```
+1. `session` is needed: it tells `update*()` *which* user's app to change
+2. When `dataInput()` changes, **do** something. `observeEvent()` returns nothing: it is used for its *side effects*
+3. Change the choices of the existing menu with ID `x`
+
+Every input has its `update*()` function: `updateSliderInput()`, `updateTextInput()`, `updateNumericInput()`…
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+#| layout: vertical
+#| viewerHeight: 700
+## file: ui.R
+{{< include ../apps/extra-update-input/ui.R >}}
+## file: server.R
+{{< include ../apps/extra-update-input/server.R >}}
+```
+
+## `req()`: wait for what you need
+
+In this app `analysisInput()` starts with `req(input$x, input$y)`. `req()` checks that its arguments are "available" (not `NULL`, not empty, not `FALSE`…). If they are not, it **stops the computation silently**: no red error, the output simply waits.
+
+Use it whenever an output needs something that may not be there yet: an uploaded file, a selection, a click.
+
+## `eventReactive()` vs `observeEvent()`
+
+| | `eventReactive()` | `observeEvent()` |
+|---|---|---|
+| Returns | a **value**, used as `x()` | nothing |
+| Used for | computing data for the outputs | doing things: updating inputs, showing messages, saving |
+| Runs | when an output needs it (lazy) | always, at every trigger (eager) |

@@ -563,51 +563,79 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="the-contract-ids" class="level2">
 <h2 class="anchored" data-anchor-id="the-contract-ids">The contract: IDs</h2>
-<p>Let’s go back to the first app and follow the IDs:</p>
-<div class="sourceCode" id="annotated-cell-4"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-4-1"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ui.R</span></span>
-<span id="annotated-cell-4-2"><a href="#annotated-cell-4-2" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-4-3" class="code-annotation-target"><a href="#annotated-cell-4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">selectInput</span>(<span class="at">inputId =</span> <span class="st">"mySelection"</span>,</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-4-4" class="code-annotation-target"><a href="#annotated-cell-4-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">label =</span> <span class="fu">h3</span>(<span class="st">"Select box"</span>),</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-4-5" class="code-annotation-target"><a href="#annotated-cell-4-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">choices =</span> <span class="fu">list</span>(<span class="st">"Choice 1"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Choice 2"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"Choice 3"</span> <span class="ot">=</span> <span class="dv">3</span>),</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-4-6" class="code-annotation-target"><a href="#annotated-cell-4-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">selected =</span> <span class="dv">1</span>),</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="5" onclick="event.preventDefault();">5</a><span id="annotated-cell-4-7" class="code-annotation-target"><a href="#annotated-cell-4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">verbatimTextOutput</span>(<span class="at">outputId =</span> <span class="st">"myOutput"</span>)</span>
-<span id="annotated-cell-4-8"><a href="#annotated-cell-4-8" aria-hidden="true" tabindex="-1"></a>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<dl class="code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-4" data-target-annotation="1">1</dt>
-<dd>
-<span data-code-cell="annotated-cell-4" data-code-lines="3" data-code-annotation="1">The ID of the input: for <strong>internal use</strong>, the server will call it <code>input$mySelection</code></span>
-</dd>
-<dt data-target-cell="annotated-cell-4" data-target-annotation="2">2</dt>
-<dd>
-<span data-code-cell="annotated-cell-4" data-code-lines="4" data-code-annotation="2">The label: for <strong>external use</strong>, it is what the user reads</span>
-</dd>
-<dt data-target-cell="annotated-cell-4" data-target-annotation="3">3</dt>
-<dd>
-<span data-code-cell="annotated-cell-4" data-code-lines="5" data-code-annotation="3">The options: the user sees <code>"Choice 1"</code>, the server receives <code>"1"</code> (as text!)</span>
-</dd>
-<dt data-target-cell="annotated-cell-4" data-target-annotation="4">4</dt>
-<dd>
-<span data-code-cell="annotated-cell-4" data-code-lines="6" data-code-annotation="4">The option selected when the app starts</span>
-</dd>
-<dt data-target-cell="annotated-cell-4" data-target-annotation="5">5</dt>
-<dd>
-<span data-code-cell="annotated-cell-4" data-code-lines="7" data-code-annotation="5">The ID of an empty output box: the server will fill <code>output$myOutput</code></span>
-</dd>
-</dl>
-<div class="sourceCode" id="annotated-cell-5"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-5-1"><a href="#annotated-cell-5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># server.R</span></span>
-<span id="annotated-cell-5-2"><a href="#annotated-cell-5-2" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-5-3" class="code-annotation-target"><a href="#annotated-cell-5-3" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>myOutput <span class="ot">&lt;-</span> <span class="fu">renderPrint</span>({</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-5-4" class="code-annotation-target"><a href="#annotated-cell-5-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(<span class="st">"This is my choice:"</span>, input<span class="sc">$</span>mySelection)</span>
-<span id="annotated-cell-5-5"><a href="#annotated-cell-5-5" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="annotated-cell-5-6"><a href="#annotated-cell-5-6" aria-hidden="true" tabindex="-1"></a>}</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Let’s go back to the first app. Use it once more, then we follow the IDs in the code:</p>
+<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
+#|   shinylive does not work in self-contained HTML documents.
+#|   Please set `embed-resources: false` in your metadata.
+#| standalone: true
+#| components: [viewer]
+#| viewerHeight: 220
+## file: ui.R
+library(shiny)
+
+ui &lt;- fluidPage(
+  selectInput(
+    inputId = "mySelection",            # name used by the server
+    label = h3("Select box"),           # what the user reads
+    choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3),
+    selected = 1
+  ),
+  verbatimTextOutput(outputId = "myOutput")  # empty box, filled by the server
+)
+
+## file: server.R
+library(shiny)
+
+server &lt;- function(input, output, session) {
+  output$myOutput &lt;- renderPrint({
+    paste("This is my choice:", input$mySelection)
+  })
+}
+</code></pre>
+<div class="sourceCode" id="annotated-cell-5"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-5-1"><a href="#annotated-cell-5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ui.R</span></span>
+<span id="annotated-cell-5-2"><a href="#annotated-cell-5-2" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-5-3" class="code-annotation-target"><a href="#annotated-cell-5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">selectInput</span>(<span class="at">inputId =</span> <span class="st">"mySelection"</span>,</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-5-4" class="code-annotation-target"><a href="#annotated-cell-5-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">label =</span> <span class="fu">h3</span>(<span class="st">"Select box"</span>),</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-5-5" class="code-annotation-target"><a href="#annotated-cell-5-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">choices =</span> <span class="fu">list</span>(<span class="st">"Choice 1"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Choice 2"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"Choice 3"</span> <span class="ot">=</span> <span class="dv">3</span>),</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="4" onclick="event.preventDefault();">4</a><span id="annotated-cell-5-6" class="code-annotation-target"><a href="#annotated-cell-5-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">selected =</span> <span class="dv">1</span>),</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="5" onclick="event.preventDefault();">5</a><span id="annotated-cell-5-7" class="code-annotation-target"><a href="#annotated-cell-5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">verbatimTextOutput</span>(<span class="at">outputId =</span> <span class="st">"myOutput"</span>)</span>
+<span id="annotated-cell-5-8"><a href="#annotated-cell-5-8" aria-hidden="true" tabindex="-1"></a>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-5" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-5" data-code-lines="3" data-code-annotation="1">Fill the box <code>myOutput</code>. <code>renderPrint()</code> is the partner of <code>verbatimTextOutput()</code></span>
+<span data-code-cell="annotated-cell-5" data-code-lines="3" data-code-annotation="1">The ID of the input: for <strong>internal use</strong>, the server will call it <code>input$mySelection</code></span>
 </dd>
 <dt data-target-cell="annotated-cell-5" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-5" data-code-lines="4" data-code-annotation="2">Read the current value of the input <code>mySelection</code></span>
+<span data-code-cell="annotated-cell-5" data-code-lines="4" data-code-annotation="2">The label: for <strong>external use</strong>, it is what the user reads</span>
+</dd>
+<dt data-target-cell="annotated-cell-5" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-5" data-code-lines="5" data-code-annotation="3">The options: the user sees <code>"Choice 1"</code>, the server receives <code>"1"</code> (as text!)</span>
+</dd>
+<dt data-target-cell="annotated-cell-5" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-cell="annotated-cell-5" data-code-lines="6" data-code-annotation="4">The option selected when the app starts</span>
+</dd>
+<dt data-target-cell="annotated-cell-5" data-target-annotation="5">5</dt>
+<dd>
+<span data-code-cell="annotated-cell-5" data-code-lines="7" data-code-annotation="5">The ID of an empty output box: the server will fill <code>output$myOutput</code></span>
+</dd>
+</dl>
+<div class="sourceCode" id="annotated-cell-6"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-6-1"><a href="#annotated-cell-6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># server.R</span></span>
+<span id="annotated-cell-6-2"><a href="#annotated-cell-6-2" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-6-3" class="code-annotation-target"><a href="#annotated-cell-6-3" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>myOutput <span class="ot">&lt;-</span> <span class="fu">renderPrint</span>({</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-6-4" class="code-annotation-target"><a href="#annotated-cell-6-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(<span class="st">"This is my choice:"</span>, input<span class="sc">$</span>mySelection)</span>
+<span id="annotated-cell-6-5"><a href="#annotated-cell-6-5" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="annotated-cell-6-6"><a href="#annotated-cell-6-6" aria-hidden="true" tabindex="-1"></a>}</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-6" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-6" data-code-lines="3" data-code-annotation="1">Fill the box <code>myOutput</code>. <code>renderPrint()</code> is the partner of <code>verbatimTextOutput()</code></span>
+</dd>
+<dt data-target-cell="annotated-cell-6" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-6" data-code-lines="4" data-code-annotation="2">Read the current value of the input <code>mySelection</code></span>
 </dd>
 </dl>
 <div class="cell" data-layout-align="default">
@@ -642,7 +670,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="spot-the-bug" class="level3">
 <h3 class="anchored" data-anchor-id="spot-the-bug">Spot the bug</h3>
-<p>This app has a bug: the output never shows the choice. Find it and fix it in the editor, then press ▶.</p>
+<p>This app has a bug. Try it first: change the choice in the menu and look at the output.</p>
+<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
+#|   shinylive does not work in self-contained HTML documents.
+#|   Please set `embed-resources: false` in your metadata.
+#| standalone: true
+#| components: [viewer]
+#| viewerHeight: 220
+## file: ui.R
+library(shiny)
+
+ui &lt;- fluidPage(
+  selectInput(
+    inputId = "mySelection",
+    label = h3("Select box"),
+    choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3),
+    selected = 1
+  ),
+  verbatimTextOutput(outputId = "myOutput")
+)
+## file: server.R
+library(shiny)
+
+server &lt;- function(input, output, session) {
+  output$myOutput &lt;- renderPrint({
+    paste("This is my choice:", input$myselection)
+  })
+}</code></pre>
+<p>The output never shows the choice. Here is the code: find the bug and fix it in the editor, then press ▶.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
 #|   shinylive does not work in self-contained HTML documents.
 #|   Please set `embed-resources: false` in your metadata.
@@ -726,10 +781,10 @@ Inputs live only inside reactive code
 </div>
 <div class="callout-body-container callout-body">
 <p>Reading an input outside a recipe does not work:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  choice <span class="ot">&lt;-</span> input<span class="sc">$</span>mySelection        <span class="co"># ❌ outside render*()</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>myOutput <span class="ot">&lt;-</span> <span class="fu">renderPrint</span>({ choice })</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  choice <span class="ot">&lt;-</span> input<span class="sc">$</span>mySelection        <span class="co"># ❌ outside render*()</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>myOutput <span class="ot">&lt;-</span> <span class="fu">renderPrint</span>({ choice })</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <pre><code>Error: Can't access reactive value 'mySelection' outside of reactive consumer.</code></pre>
 <p>The server function runs once, at the start: at that moment nobody has chosen anything yet. Inputs must be read <strong>inside</strong> <code>render*()</code> (or the other reactive functions we will meet: <code>reactive()</code>, <code>eventReactive()</code>).</p>
 </div>

@@ -1,0 +1,66 @@
+---
+title: "Introduction to Shiny"
+subtitle: "From the logic of Shiny to your app online"
+author: "Ottavia M. Epifania"
+toc: true
+---
+
+Shiny lets you turn R code into an **interactive web application**: the user clicks, chooses and uploads, and R does the computations behind the scenes.
+
+In this course we start from an empty RStudio project and finish with **your own app online**, with a link you can send to anyone.
+
+## The plan
+
+### Day 1 · The logic of Shiny
+
+| Topic | What you take home |
+|---|---|
+| [Shiny](day1/00-shiny.qmd) | What Shiny is and the logic behind it: UI, server and their communication |
+| [A Shiny project](day1/01-project.qmd) | An RStudio project with `ui.R` and `server.R` that runs |
+| [How Shiny thinks](day1/02-logic.qmd) | Inside the UI and the server: IDs and reactivity |
+| [Input widgets](day1/03-inputs.qmd) | What each widget sends to the server |
+| [Outputs and render functions](day1/04-outputs.qmd) | How results go back to the UI |
+| [Reactivity and `reactive()`](day1/05-reactive.qmd) | When the server re-runs your code |
+| [Wait for it: `eventReactive()`](day1/06-eventreactive.qmd) | Deciding *when* the app reacts |
+| [Your app: explore a dataset](day1/07-explore.qmd) | A complete app, built step by step |
+
+### Day 2 · Spread the shine
+
+| Topic | What you take home |
+|---|---|
+| [Your app on GitHub](day2/08-github.qmd) | The project in a GitHub repository |
+| [Deploy on Connect Cloud](day2/09-deploy.qmd) | Your app online |
+
+[Going further](extras/index.qmd) collects the topics we will not cover in class (layouts, updating inputs, interactive plots, downloads), with working apps you can study on your own.
+
+## Before the course
+
+::: {.callout-important}
+## Please do this **before** Day 1
+
+1. Install [R](https://cran.r-project.org/) and [RStudio Desktop](https://posit.co/download/rstudio-desktop/) (recent versions)
+2. Install the packages we need:
+
+    ```r
+    install.packages(c("shiny", "rsconnect"))
+    ```
+
+3. Create a free [GitHub](https://github.com/) account and install [GitHub Desktop](https://desktop.github.com/)
+4. Create a free account on [Posit Connect Cloud](https://connect.posit.cloud/), signing in **with your GitHub account**
+:::
+
+## How to use these pages
+
+Most examples are **live apps that run in your browser**: on top you see the code (`ui.R` and `server.R` in two tabs), below the running app.
+
+- You can **edit the code** and re-run the app with the ▶ button (or {{< kbd Ctrl-Shift-Enter >}})
+- Nothing you do here can break anything: reload the page to start over
+- The first app on a page takes a few seconds to start (R is being loaded in your browser)
+
+::: {.callout-tip}
+## All the apps, ready to run
+
+All the apps of the course are in the [`apps`](https://github.com/ottaviae/stat-shiny/tree/main/apps) folder of the repository. Each app is a folder with a `ui.R` and a `server.R` file.
+
+[Download all the apps (.zip)](apps.zip){.btn .btn-primary}
+:::

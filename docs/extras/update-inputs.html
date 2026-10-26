@@ -494,7 +494,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul class="collapse">
-  <li><a href="#req-wait-for-what-you-need" id="toc-req-wait-for-what-you-need" class="nav-link active" data-scroll-target="#req-wait-for-what-you-need"><code>req()</code>: wait for what you need</a></li>
+  <li><a href="#how-it-works" id="toc-how-it-works" class="nav-link active" data-scroll-target="#how-it-works">How it works</a></li>
+  <li><a href="#the-code" id="toc-the-code" class="nav-link" data-scroll-target="#the-code">The code</a></li>
+  <li><a href="#req-wait-for-what-you-need" id="toc-req-wait-for-what-you-need" class="nav-link" data-scroll-target="#req-wait-for-what-you-need"><code>req()</code>: wait for what you need</a></li>
   <li><a href="#eventreactive-vs-observeevent" id="toc-eventreactive-vs-observeevent" class="nav-link" data-scroll-target="#eventreactive-vs-observeevent"><code>eventReactive()</code> vs <code>observeEvent()</code></a></li>
   </ul>
 </nav>
@@ -524,37 +526,110 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>In <a href="../day1/07-explore.html">Your app: explore a dataset</a> the X and Y menus were <strong>created</strong> by the server with <code>renderUI()</code>. There is another way: the menus exist in <code>ui.R</code> from the start, empty, and the server <strong>updates</strong> their choices when the data are loaded.</p>
-<div class="sourceCode" id="annotated-cell-1"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ui.R</span></span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-1-2" class="code-annotation-target"><a href="#annotated-cell-1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">selectInput</span>(<span class="st">"x"</span>, <span class="st">"X variable:"</span>, <span class="at">choices =</span> <span class="cn">NULL</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<dl class="code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
-<dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="2" data-code-annotation="1">A normal menu, with no choices yet</span>
-</dd>
-</dl>
-<div class="sourceCode" id="annotated-cell-2"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-2-1"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># server.R</span></span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-2-2" class="code-annotation-target"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
-<span id="annotated-cell-2-3"><a href="#annotated-cell-2-3" aria-hidden="true" tabindex="-1"></a></span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-2-4" class="code-annotation-target"><a href="#annotated-cell-2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">observeEvent</span>(<span class="fu">dataInput</span>(), {</span>
-<span id="annotated-cell-2-5"><a href="#annotated-cell-2-5" aria-hidden="true" tabindex="-1"></a>    vars <span class="ot">&lt;-</span> <span class="fu">names</span>(<span class="fu">dataInput</span>())</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-2-6" class="code-annotation-target"><a href="#annotated-cell-2-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">updateSelectInput</span>(session, <span class="st">"x"</span>, <span class="at">choices =</span> vars)</span>
-<span id="annotated-cell-2-7"><a href="#annotated-cell-2-7" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="annotated-cell-2-8"><a href="#annotated-cell-2-8" aria-hidden="true" tabindex="-1"></a>}</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Try it: load a dataset and look at how the X and Y menus change.</p>
+<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
+#|   shinylive does not work in self-contained HTML documents.
+#|   Please set `embed-resources: false` in your metadata.
+#| standalone: true
+#| components: [viewer]
+#| viewerHeight: 700
+## file: ui.R
+library(shiny)
+
+ui &lt;- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("dataset", "Choose a dataset:",
+                  choices = c("rock", "pressure", "cars")),
+      actionButton("load", "Load dataset"),
+      hr(),
+      # the menus exist from the start, but they are empty
+      selectInput("x", "X variable:", choices = NULL),
+      selectInput("y", "Y variable:", choices = NULL),
+      actionButton("analyze", "Update analysis")
+    ),
+    mainPanel(
+      plotOutput("graph"),
+      verbatimTextOutput("summary")
+    )
+  )
+)
+
+## file: server.R
+library(shiny)
+
+server &lt;- function(input, output, session) {   # session is needed by update*()
+
+  dataInput &lt;- eventReactive(input$load, {
+    switch(input$dataset,
+           rock = rock,
+           pressure = pressure,
+           cars = cars)
+  })
+
+  # observeEvent: DO something (a side effect) when the data change.
+  # It returns nothing: it updates the menus that already exist in the UI
+  observeEvent(dataInput(), {
+    vars &lt;- names(dataInput())
+    updateSelectInput(session, "x", choices = vars, selected = vars[1])
+    updateSelectInput(session, "y", choices = vars,
+                      selected = vars[min(2, length(vars))])
+  })
+
+  # freeze data + chosen variables when "Update analysis" is clicked
+  analysisInput &lt;- eventReactive(input$analyze, {
+    req(input$x, input$y)
+    list(data = dataInput(), x = input$x, y = input$y)
+  })
+
+  output$graph &lt;- renderPlot({
+    obj &lt;- analysisInput()
+    plot(obj$data[[obj$x]], obj$data[[obj$y]],
+         xlab = obj$x, ylab = obj$y, pch = 19)
+  })
+
+  output$summary &lt;- renderPrint({
+    obj &lt;- analysisInput()
+    summary(obj$data[, c(obj$x, obj$y)])
+  })
+}
+</code></pre>
+<section id="how-it-works" class="level2">
+<h2 class="anchored" data-anchor-id="how-it-works">How it works</h2>
+<div class="sourceCode" id="annotated-cell-2"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-2-1"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ui.R</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-2-2" class="code-annotation-target"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">selectInput</span>(<span class="st">"x"</span>, <span class="st">"X variable:"</span>, <span class="at">choices =</span> <span class="cn">NULL</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="2" data-code-annotation="1"><code>session</code> is needed: it tells <code>update*()</code> <em>which</em> user’s app to change</span>
+<span data-code-cell="annotated-cell-2" data-code-lines="2" data-code-annotation="1">A normal menu, with no choices yet</span>
 </dd>
-<dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
+</dl>
+<div class="sourceCode" id="annotated-cell-3"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-3-1"><a href="#annotated-cell-3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># server.R</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-3-2" class="code-annotation-target"><a href="#annotated-cell-3-2" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="annotated-cell-3-3"><a href="#annotated-cell-3-3" aria-hidden="true" tabindex="-1"></a></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-3-4" class="code-annotation-target"><a href="#annotated-cell-3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">observeEvent</span>(<span class="fu">dataInput</span>(), {</span>
+<span id="annotated-cell-3-5"><a href="#annotated-cell-3-5" aria-hidden="true" tabindex="-1"></a>    vars <span class="ot">&lt;-</span> <span class="fu">names</span>(<span class="fu">dataInput</span>())</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-3-6" class="code-annotation-target"><a href="#annotated-cell-3-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">updateSelectInput</span>(session, <span class="st">"x"</span>, <span class="at">choices =</span> vars)</span>
+<span id="annotated-cell-3-7"><a href="#annotated-cell-3-7" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="annotated-cell-3-8"><a href="#annotated-cell-3-8" aria-hidden="true" tabindex="-1"></a>}</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="4" data-code-annotation="2">When <code>dataInput()</code> changes, <strong>do</strong> something. <code>observeEvent()</code> returns nothing: it is used for its <em>side effects</em></span>
+<span data-code-cell="annotated-cell-3" data-code-lines="2" data-code-annotation="1"><code>session</code> is needed: it tells <code>update*()</code> <em>which</em> user’s app to change</span>
 </dd>
-<dt data-target-cell="annotated-cell-2" data-target-annotation="3">3</dt>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="6" data-code-annotation="3">Change the choices of the existing menu with ID <code>x</code></span>
+<span data-code-cell="annotated-cell-3" data-code-lines="4" data-code-annotation="2">When <code>dataInput()</code> changes, <strong>do</strong> something. <code>observeEvent()</code> returns nothing: it is used for its <em>side effects</em></span>
+</dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="6" data-code-annotation="3">Change the choices of the existing menu with ID <code>x</code></span>
 </dd>
 </dl>
 <p>Every input has its <code>update*()</code> function: <code>updateSliderInput()</code>, <code>updateTextInput()</code>, <code>updateNumericInput()</code>…</p>
+</section>
+<section id="the-code" class="level2">
+<h2 class="anchored" data-anchor-id="the-code">The code</h2>
 <pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
 #|   shinylive does not work in self-contained HTML documents.
 #|   Please set `embed-resources: false` in your metadata.
@@ -623,6 +698,7 @@ server &lt;- function(input, output, session) {   # session is needed by update*
   })
 }
 </code></pre>
+</section>
 <section id="req-wait-for-what-you-need" class="level2">
 <h2 class="anchored" data-anchor-id="req-wait-for-what-you-need"><code>req()</code>: wait for what you need</h2>
 <p>In this app <code>analysisInput()</code> starts with <code>req(input$x, input$y)</code>. <code>req()</code> checks that its arguments are “available” (not <code>NULL</code>, not empty, not <code>FALSE</code>…). If they are not, it <strong>stops the computation silently</strong>: no red error, the output simply waits.</p>

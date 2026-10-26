@@ -80,34 +80,9 @@ There is a widget for (almost) everything: numbers, text, dates, files… We see
 
 # A first app
 
-[Input]{.io-chip .io-chip-in} and [output]{.io-chip .io-chip-out}, in the `ui` and in the `server`:
-
-::: {.io-first-app}
-```r
-ui = fluidPage(
-  selectInput(inputId = "mySelection",
-              label = h3("Select box"),
-              choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3),
-              selected = 1),
-  verbatimTextOutput(outputId = "myOutput")
-)
-
-server = function(input, output) {
-  output$myOutput = renderPrint({
-    paste("This is my choice:", input$mySelection)
-  })
-}
-
-shinyApp(ui, server)
-```
-:::
-
-- In the `ui`, `selectInput()` creates a menu called `mySelection`, and `verbatimTextOutput()` reserves an empty box called `myOutput`
-- In the `server`, `input$mySelection` reads the choice of the user, and `output$myOutput` fills the box with the result
-
-The names are what connects the two pieces: we look at them closely in [How Shiny thinks](02-logic.qmd).
-
 ## An astonishing result
+
+First, play with it: choose an option in the menu and look at the text below.
 
 ```{shinylive-r}
 #| standalone: true
@@ -131,5 +106,34 @@ server = function(input, output) {
 
 shinyApp(ui, server)
 ```
+
+## The code behind it
+
+[Input]{.io-chip .io-chip-in} and [output]{.io-chip .io-chip-out}, in the `ui` and in the `server`:
+
+::: {.io-first-app}
+```r
+ui = fluidPage(
+  selectInput(inputId = "mySelection",
+              label = h3("Select box"),
+              choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3),
+              selected = 1),
+  verbatimTextOutput(outputId = "myOutput")
+)
+
+server = function(input, output) {
+  output$myOutput = renderPrint({
+    paste("This is my choice:", input$mySelection)
+  })
+}
+
+shinyApp(ui, server)
+```
+:::
+
+- In the `ui`, `selectInput()` creates the menu you just used, called `mySelection`, and `verbatimTextOutput()` reserves the empty box below it, called `myOutput`
+- In the `server`, `input$mySelection` reads the choice of the user, and `output$myOutput` fills the box with the result
+
+The names are what connects the two pieces: we look at them closely in [How Shiny thinks](02-logic.qmd).
 
 In the next page we put this same app in an RStudio project, with the `ui` in a script called `ui.R` and the `server` in a script called `server.R`.

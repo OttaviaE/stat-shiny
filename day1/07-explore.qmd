@@ -9,6 +9,18 @@ We build the app that will go online on Day 2. The user:
 2. chooses the X and Y variables **among the columns of that dataset**
 3. clicks to update the plot and the summary
 
+This is the app we are going to build. Try it: load a dataset, choose the variables and click *Update analysis*.
+
+```{shinylive-r}
+#| standalone: true
+#| components: [viewer]
+#| viewerHeight: 800
+## file: ui.R
+{{< include ../apps/05-explore-step4/ui.R >}}
+## file: server.R
+{{< include ../apps/05-explore-step4/server.R >}}
+```
+
 We build it in four steps. Each step is a working app: run it, check it, then move on. The files of each step are in [`apps/`](https://github.com/ottaviae/stat-shiny/tree/main/apps) (`05-explore-step1` … `05-explore-step4`).
 
 ```{mermaid}
@@ -38,7 +50,19 @@ flowchart LR
 
 ## Step 1 · Load a dataset
 
-A dataset is loaded with an `eventReactive()`. The first rows are printed to check that the data are correct.
+A dataset is loaded with an `eventReactive()`. The first rows are printed to check that the data are correct. Choose a dataset and click the button:
+
+```{shinylive-r}
+#| standalone: true
+#| components: [viewer]
+#| viewerHeight: 330
+## file: ui.R
+{{< include ../apps/05-explore-step1/ui.R >}}
+## file: server.R
+{{< include ../apps/05-explore-step1/server.R >}}
+```
+
+The code:
 
 ```{shinylive-r}
 #| standalone: true
@@ -53,7 +77,19 @@ A dataset is loaded with an `eventReactive()`. The first rows are printed to che
 
 ## Step 2 · Menus built from the data
 
-The X and Y menus cannot be written in `ui.R` because their choices depend on the **column names** of the uploaded dataset:
+Now the app offers two menus, X and Y, whose choices are the columns of the loaded dataset. Load `rock`, then `cars`: the menus change with the data. Before the first click the slots are empty, because `vars()` needs `dataInput()`, which waits for the button.
+
+```{shinylive-r}
+#| standalone: true
+#| components: [viewer]
+#| viewerHeight: 420
+## file: ui.R
+{{< include ../apps/05-explore-step2/ui.R >}}
+## file: server.R
+{{< include ../apps/05-explore-step2/server.R >}}
+```
+
+How does it work? The X and Y menus cannot be written in `ui.R` because their choices depend on the **column names** of the uploaded dataset:
 
 - in `ui.R` we reserve **an empty slot** with `uiOutput()`
 - in `server.R`, `renderUI()` creates the `selectInput()` and puts it in that slot
@@ -80,6 +116,8 @@ output$x_ui <- renderUI({                      # <2>
 2. `renderUI()` is the partner of `uiOutput()`
 3. A normal `selectInput()`, with ID `x`: from now on the server can read `input$x`, like any other input
 
+The complete code:
+
 ```{shinylive-r}
 #| standalone: true
 #| components: [editor, viewer]
@@ -91,11 +129,23 @@ output$x_ui <- renderUI({                      # <2>
 {{< include ../apps/05-explore-step2/server.R >}}
 ```
 
-Load `rock`, then `cars`: the menus change with the data. Before the first click the slots are empty, because `vars()` needs `dataInput()`, which waits for the button.
-
 ## Step 3 · The analysis, on demand
 
 A second button, `analyze`, and a second `eventReactive()` that **freezes** the selected columns when it is clicked. The plot and the summary use only these frozen data.
+
+Try it: load `cars`, choose the variables, click *Update analysis*. Now change the variables **without** clicking: the plot does not move until you click again.
+
+```{shinylive-r}
+#| standalone: true
+#| components: [viewer]
+#| viewerHeight: 720
+## file: ui.R
+{{< include ../apps/05-explore-step3/ui.R >}}
+## file: server.R
+{{< include ../apps/05-explore-step3/server.R >}}
+```
+
+How does it work? In the server:
 
 ```r
 newdata <- eventReactive(input$analyze, {      # <1>
@@ -108,6 +158,8 @@ newdata <- eventReactive(input$analyze, {      # <1>
 
 The plot adapts to the type of X: a **boxplot** if X is categorical, a **scatterplot** if it is numeric.
 
+The complete code:
+
 ```{shinylive-r}
 #| standalone: true
 #| components: [editor, viewer]
@@ -119,11 +171,23 @@ The plot adapts to the type of X: a **boxplot** if X is categorical, a **scatter
 {{< include ../apps/05-explore-step3/server.R >}}
 ```
 
-Try it: load `cars`, choose the variables, click *Update analysis*. Now change the variables **without** clicking: the plot does not move until you click again.
-
 ## Step 4 · Upload your own data
 
 Last step: a fourth option, *Upload data*, with value `"upload"`: `choices = c("rock", "pressure", "cars", "Upload data" = "upload")`. When it is selected, a file input and the choice of the column separator appear.
+
+Test files: [example.csv](../data/example.csv) (separator `,`) and [example-semicolon.csv](../data/example-semicolon.csv) (separator `;`).
+
+```{shinylive-r}
+#| standalone: true
+#| components: [viewer]
+#| viewerHeight: 800
+## file: ui.R
+{{< include ../apps/05-explore-step4/ui.R >}}
+## file: server.R
+{{< include ../apps/05-explore-step4/server.R >}}
+```
+
+How does it work? In `ui.R`, the file input and the separator are wrapped in a `conditionalPanel()`:
 
 ```r
 conditionalPanel(                                      # <1>
@@ -147,7 +211,7 @@ upload = {
 1. `req()` = *required*: if no file has been uploaded yet, stop here **silently**, without an error
 2. Read the file from the place where Shiny saved it, with the separator chosen by the user
 
-Test files: [example.csv](../data/example.csv) (separator `,`) and [example-semicolon.csv](../data/example-semicolon.csv) (separator `;`).
+The complete code:
 
 ```{shinylive-r}
 #| standalone: true

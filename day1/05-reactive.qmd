@@ -5,7 +5,19 @@ subtitle: "Become Paganini: Don't repeat yourself"
 
 ## The problem: the same code, twice
 
-This is the app of [`apps/02-datasets`](https://github.com/ottaviae/stat-shiny/tree/main/apps/02-datasets): one input, two outputs.
+This is the app of [`apps/02-datasets`](https://github.com/ottaviae/stat-shiny/tree/main/apps/02-datasets): one input, two outputs. Try it:
+
+```{shinylive-r}
+#| standalone: true
+#| components: [viewer]
+#| viewerHeight: 650
+## file: ui.R
+{{< include ../apps/02-datasets/ui.R >}}
+## file: server.R
+{{< include ../apps/02-datasets/server.R >}}
+```
+
+Now look at its code:
 
 ```{shinylive-r}
 #| standalone: true
@@ -25,7 +37,19 @@ It works, but look at the server: the `switch()` that picks the dataset is writt
 
 ## The solution: `reactive()`
 
-`reactive()` creates a **reactive expression**: a recipe that *returns a value* and that the outputs can share.
+`reactive()` creates a **reactive expression**: a recipe that *returns a value* and that the outputs can share. This is the same app, rewritten with `reactive()`. From the outside nothing changes:
+
+```{shinylive-r}
+#| standalone: true
+#| components: [viewer]
+#| viewerHeight: 650
+## file: ui.R
+{{< include ../apps/03-reactive/ui.R >}}
+## file: server.R
+{{< include ../apps/03-reactive/server.R >}}
+```
+
+This is how its server changes:
 
 ```r
 server <- function(input, output, session) {
@@ -50,6 +74,8 @@ server <- function(input, output, session) {
 ```
 1. Write the recipe **once**. It reads `input$dataset`, so it reacts to it
 2. **Call** it, like a function: `dataInput()`, with the parentheses
+
+The complete code, live:
 
 ```{shinylive-r}
 #| standalone: true
@@ -88,6 +114,53 @@ When `input$dataset` changes, `dataInput()` is recomputed **once**, and both out
 ## Only what depends on a change re-runs
 
 Shiny knows exactly who reads what. In this app each output prints the time it was last computed. Move the slider: which outputs are recomputed? And when you change the dataset?
+
+```{shinylive-r}
+#| standalone: true
+#| components: [viewer]
+#| viewerHeight: 560
+## file: ui.R
+library(shiny)
+
+ui <- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("dataset", "Choose a dataset:",
+                  choices = c("rock", "pressure", "cars")),
+      sliderInput("n", "Rows to show:", min = 1, max = 10, value = 3)
+    ),
+    mainPanel(
+      h4("Summary (uses only the dataset)"),
+      verbatimTextOutput("summary"),
+      h4("First rows (uses the dataset AND the slider)"),
+      verbatimTextOutput("rows")
+    )
+  )
+)
+## file: server.R
+library(shiny)
+
+now <- function() format(Sys.time(), "%H:%M:%OS2")
+
+server <- function(input, output, session) {
+
+  dataInput <- reactive({
+    get(input$dataset)
+  })
+
+  output$summary <- renderPrint({
+    cat("computed at", now(), "\n\n")
+    summary(dataInput())
+  })
+
+  output$rows <- renderPrint({
+    cat("computed at", now(), "\n\n")
+    head(dataInput(), input$n)
+  })
+}
+```
+
+The code: `now()` prints the current time, so you can see when each `render*()` runs.
 
 ```{shinylive-r}
 #| standalone: true

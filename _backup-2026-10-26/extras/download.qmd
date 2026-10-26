@@ -1,0 +1,49 @@
+---
+title: "Downloads"
+subtitle: "downloadButton() and downloadHandler()"
+---
+
+Downloads follow the usual pair:
+
+- in `ui.R`, `downloadButton("id", "Label")`
+- in `server.R`, `output$id <- downloadHandler(...)`
+
+```r
+output$downloadSummary <- downloadHandler(
+  filename = function() {                                  # <1>
+    paste0("descriptive-", input$dataset, ".csv")
+  },
+  content = function(file) {                               # <2>
+    write.csv(ddata(), file, row.names = FALSE)
+  }
+)
+```
+1. A **function** that returns the name of the file the user will get
+2. A **function** that writes the content into `file` (a temporary path chosen by Shiny)
+
+For a plot, `content` opens a graphic device, draws the plot and closes the device:
+
+```r
+content = function(file) {
+  png(file, width = 800, height = 600)
+  plot(dataInput()[, 1:2])
+  dev.off()
+}
+```
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+#| layout: vertical
+#| viewerHeight: 750
+## file: ui.R
+{{< include ../apps/extra-download/ui.R >}}
+## file: server.R
+{{< include ../apps/extra-download/server.R >}}
+```
+
+::: {.callout-note}
+## Exercise
+
+Add a download button to your explore-a-dataset app that saves `newdata()` as a CSV file.
+:::

@@ -5,6 +5,20 @@ subtitle: "observeEvent() and updateSelectInput()"
 
 In [Your app: explore a dataset](../day1/07-explore.qmd) the X and Y menus were **created** by the server with `renderUI()`. There is another way: the menus exist in `ui.R` from the start, empty, and the server **updates** their choices when the data are loaded.
 
+Try it: load a dataset and look at how the X and Y menus change.
+
+```{shinylive-r}
+#| standalone: true
+#| components: [viewer]
+#| viewerHeight: 700
+## file: ui.R
+{{< include ../apps/extra-update-input/ui.R >}}
+## file: server.R
+{{< include ../apps/extra-update-input/server.R >}}
+```
+
+## How it works
+
 ```r
 # ui.R
 selectInput("x", "X variable:", choices = NULL)          # <1>
@@ -26,6 +40,8 @@ server <- function(input, output, session) {             # <1>
 3. Change the choices of the existing menu with ID `x`
 
 Every input has its `update*()` function: `updateSliderInput()`, `updateTextInput()`, `updateNumericInput()`…
+
+## The code
 
 ```{shinylive-r}
 #| standalone: true

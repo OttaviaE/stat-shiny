@@ -3,6 +3,20 @@ title: "Downloads"
 subtitle: "downloadButton() and downloadHandler()"
 ---
 
+Try it first: choose a dataset, click *Select dataset*, then use the two download buttons.
+
+```{shinylive-r}
+#| standalone: true
+#| components: [viewer]
+#| viewerHeight: 750
+## file: ui.R
+{{< include ../apps/extra-download/ui.R >}}
+## file: server.R
+{{< include ../apps/extra-download/server.R >}}
+```
+
+## How it works
+
 Downloads follow the usual pair:
 
 - in `ui.R`, `downloadButton("id", "Label")`
@@ -30,6 +44,8 @@ content = function(file) {
   dev.off()
 }
 ```
+
+## The code
 
 ```{shinylive-r}
 #| standalone: true

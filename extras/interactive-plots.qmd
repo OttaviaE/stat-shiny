@@ -3,6 +3,20 @@ title: "Interactive plots"
 subtitle: "Click, brush, and reactiveValues()"
 ---
 
+A plot can also be used as an **input**. Try it: choose a dataset, click *Load data*, then *Select & Display*, and finally click on a point or draw a rectangle on the plot.
+
+```{shinylive-r}
+#| standalone: true
+#| components: [viewer]
+#| viewerHeight: 750
+## file: ui.R
+{{< include ../apps/extra-interactive-plots/ui.R >}}
+## file: server.R
+{{< include ../apps/extra-interactive-plots/server.R >}}
+```
+
+## How it works
+
 A `plotOutput()` can also be an **input**: if you give it the `click` and `brush` arguments, the coordinates of a click, or of the rectangle drawn with the mouse, arrive in the server as `input$plot_click` and `input$plot_brush`.
 
 ```r
@@ -20,7 +34,7 @@ nearPoints(df, input$plot_click, xvar = "speed", yvar = "dist")      # rows clos
 brushedPoints(df, input$plot_brush, xvar = "speed", yvar = "dist")   # rows inside the rectangle
 ```
 
-Load a dataset, click *Select & Display*, then click on a point or draw a rectangle on the plot.
+## The code
 
 ```{shinylive-r}
 #| standalone: true

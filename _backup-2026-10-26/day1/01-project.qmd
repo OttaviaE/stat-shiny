@@ -1,0 +1,141 @@
+---
+title: "A Shiny project"
+subtitle: "Every app starts as an RStudio project with two scripts"
+---
+
+A Shiny app is **a folder**. In the folder there are (at least) two R scripts:
+
+- `ui.R`: what the user **sees** (the *User Interface*)
+- `server.R`: what R **does** (the computations)
+
+The best way to keep that folder tidy is an **RStudio project**.
+RStudio has a specific type of project for Shiny apps, which comes with a ready-made (and pretty basic) app.
+
+This project will also become the GitHub repository that, on Day 2, is uploaded to the server to make the app shareable and online.
+
+## Step 1 · Create a Shiny project
+
+In RStudio:
+
+1. *File* → *New Project…* → *New Directory* → **Shiny Application**
+2. **Directory name**: `my-shiny-app` (no spaces, no accents)
+3. Choose where to save it (e.g., `Documents/GitHub`) and click *Create Project*
+
+RStudio opens the project and the example app that comes with it.
+
+::: {.callout-note}
+## Why a project?
+
+- The project folder **is** the app: everything the app needs lives there
+- File paths are relative to the project, so the app works on any computer
+- On Day 2 the very same folder becomes a GitHub repository and then goes online
+:::
+
+## Step 2 · Create `ui.R` and `server.R`
+
+The default Shiny Project creates an extremely basic app using the Old Faithful Geyser data. The code is stored in a single file named called **`app.R`**:
+
+- If you see `app.R`: delete it, then create the two scripts yourself: *File* → *New File* → *R Script*, save it (*File* → *Save*) as **`ui.R`**; do the same for **`server.R`**
+- If for whatever unkwown reasons the project already contains `ui.R` and `server.R` files: Go to Step 3 (@sec-step3)
+
+The names must be **exactly** `ui.R` and `server.R` (lowercase, capital `R`), and both files must be in the same folder.
+
+Your project now looks like this:
+
+```text
+my-shiny-app/
+├── my-shiny-app.Rproj
+├── ui.R
+└── server.R
+```
+
+::: {.callout-tip collapse="true"}
+## Alternative: start from a regular project
+
+You can obtain exactly the same result from a regular RStudio project:
+
+1. *File* → *New Project…* → *New Directory* → *New Project*, call it `my-shiny-app` and click *Create Project*
+2. *File* → *New File* → *R Script*, then save it as **`ui.R`**
+3. *File* → *New File* → *R Script*, then save it as **`server.R`**
+
+The folder is the same as above: what makes it a Shiny app are the two scripts, not the type of project.
+:::
+
+## Step 3 · Write the two scripts {#sec-step3}
+
+Replace whatever is in the two files with our first app. Copy this into **`ui.R`**:
+
+```r
+{{< include ../apps/01-basic/ui.R >}}
+```
+
+and this into **`server.R`**:
+
+```r
+{{< include ../apps/01-basic/server.R >}}
+```
+
+We dissect every line in the next page. For now, notice two things:
+
+- `ui.R` creates **one object**, `ui`: the page
+- `server.R` creates **one object**, `server`: a function of `input` and `output`
+
+## Step 4 · Run the app
+
+As soon as a file called `ui.R` or `server.R` is open, RStudio replaces the usual *Run* button with **▶ Run App**. Click it.
+
+What happens:
+
+1. In the console you read something like `Listening on http://127.0.0.1:4321`: R has started a small **web server** on your computer
+2. A window (or a browser tab) opens with the app: that is the UI, turned into a web page
+3. The console shows a red **stop** sign: **R is busy** serving the app, so you cannot use the console until you stop it
+
+Choose another option in the menu: the text changes. Every time you change the input, the browser tells R, R runs the code in the server and sends back the new result.
+
+To **stop** the app, click the red stop sign in the console (or press {{< kbd Esc >}} in the console). If you change the code while the app is running, click *Reload app* in the app window.
+
+::: {.callout-warning}
+## The most common problems at this stage
+
+- **No *Run App* button** → the file is not saved, or it is not called exactly `ui.R`/`server.R`
+- **`could not find function "fluidPage"`** → `library(shiny)` is missing, or shiny is not installed
+- **The console does not respond** → the app is still running: stop it first
+:::
+
+## The same app, live
+
+This is the same project, running in your browser. The two tabs on top are your two files, the app is below. Try to change the text `"This is my choice:"` and press ▶.
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+#| layout: vertical
+#| viewerHeight: 220
+## file: ui.R
+{{< include ../apps/01-basic/ui.R >}}
+## file: server.R
+{{< include ../apps/01-basic/server.R >}}
+```
+
+## Two files or one file?
+
+Shiny also accepts a single file called `app.R` that contains both pieces and ends with `shinyApp()`:
+
+```r
+library(shiny)
+
+ui <- fluidPage(...)                              # what was in ui.R
+server <- function(input, output, session) {...}  # what was in server.R
+
+shinyApp(ui, server)                              # put them together
+```
+
+It is the same app. We use two files because they make the logic visible: **one script for what the user sees, one for what R does**. On Day 2 we will add a tiny `app.R` that simply reads the two files, because that is what the online server looks for.
+
+::: {.callout-tip}
+## Checkpoint
+
+-  A project `my-shiny-app` with `ui.R` and `server.R`
+-  *Run App* opens the app
+-  You know how to stop it
+:::

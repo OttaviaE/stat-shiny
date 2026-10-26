@@ -49,7 +49,17 @@ Shiny calls this function **once for each user** that opens the app (each user h
 
 ## The contract: IDs
 
-Let's go back to the first app and follow the IDs:
+Let's go back to the first app. Use it once more, then we follow the IDs in the code:
+
+```{shinylive-r}
+#| standalone: true
+#| components: [viewer]
+#| viewerHeight: 220
+## file: ui.R
+{{< include ../apps/01-basic/ui.R >}}
+## file: server.R
+{{< include ../apps/01-basic/server.R >}}
+```
 
 ```r
 # ui.R
@@ -98,7 +108,35 @@ flowchart LR
 
 ### Spot the bug
 
-This app has a bug: the output never shows the choice. Find it and fix it in the editor, then press ▶.
+This app has a bug. Try it first: change the choice in the menu and look at the output.
+
+```{shinylive-r}
+#| standalone: true
+#| components: [viewer]
+#| viewerHeight: 220
+## file: ui.R
+library(shiny)
+
+ui <- fluidPage(
+  selectInput(
+    inputId = "mySelection",
+    label = h3("Select box"),
+    choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3),
+    selected = 1
+  ),
+  verbatimTextOutput(outputId = "myOutput")
+)
+## file: server.R
+library(shiny)
+
+server <- function(input, output, session) {
+  output$myOutput <- renderPrint({
+    paste("This is my choice:", input$myselection)
+  })
+}
+```
+
+The output never shows the choice. Here is the code: find the bug and fix it in the editor, then press ▶.
 
 ```{shinylive-r}
 #| standalone: true

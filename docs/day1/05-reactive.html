@@ -530,7 +530,55 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="the-problem-the-same-code-twice" class="level2">
 <h2 class="anchored" data-anchor-id="the-problem-the-same-code-twice">The problem: the same code, twice</h2>
-<p>This is the app of <a href="https://github.com/ottaviae/stat-shiny/tree/main/apps/02-datasets"><code>apps/02-datasets</code></a>: one input, two outputs.</p>
+<p>This is the app of <a href="https://github.com/ottaviae/stat-shiny/tree/main/apps/02-datasets"><code>apps/02-datasets</code></a>: one input, two outputs. Try it:</p>
+<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
+#|   shinylive does not work in self-contained HTML documents.
+#|   Please set `embed-resources: false` in your metadata.
+#| standalone: true
+#| components: [viewer]
+#| viewerHeight: 650
+## file: ui.R
+library(shiny)
+
+ui &lt;- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      selectInput(
+        inputId = "dataset",
+        label = "Choose a dataset:",
+        choices = c("rock", "pressure", "cars")
+      )
+    ),
+    mainPanel(
+      plotOutput("graph"),
+      verbatimTextOutput("summary")
+    )
+  )
+)
+
+## file: server.R
+library(shiny)
+
+server &lt;- function(input, output, session) {
+
+  output$graph &lt;- renderPlot({
+    data &lt;- switch(input$dataset,       # the same code...
+                   rock = rock,
+                   pressure = pressure,
+                   cars = cars)
+    plot(data[, 1:2])
+  })
+
+  output$summary &lt;- renderPrint({
+    data &lt;- switch(input$dataset,       # ...written twice
+                   rock = rock,
+                   pressure = pressure,
+                   cars = cars)
+    summary(data[, 1:2])
+  })
+}
+</code></pre>
+<p>Now look at its code:</p>
 <pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
 #|   shinylive does not work in self-contained HTML documents.
 #|   Please set `embed-resources: false` in your metadata.
@@ -587,36 +635,87 @@ server &lt;- function(input, output, session) {
 </section>
 <section id="the-solution-reactive" class="level2">
 <h2 class="anchored" data-anchor-id="the-solution-reactive">The solution: <code>reactive()</code></h2>
-<p><code>reactive()</code> creates a <strong>reactive expression</strong>: a recipe that <em>returns a value</em> and that the outputs can share.</p>
-<div class="sourceCode" id="annotated-cell-2"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-2-1"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
-<span id="annotated-cell-2-2"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a></span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-2-3" class="code-annotation-target"><a href="#annotated-cell-2-3" aria-hidden="true" tabindex="-1"></a>  dataInput <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
-<span id="annotated-cell-2-4"><a href="#annotated-cell-2-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">switch</span>(input<span class="sc">$</span>dataset,</span>
-<span id="annotated-cell-2-5"><a href="#annotated-cell-2-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">rock =</span> rock,</span>
-<span id="annotated-cell-2-6"><a href="#annotated-cell-2-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">pressure =</span> pressure,</span>
-<span id="annotated-cell-2-7"><a href="#annotated-cell-2-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">cars =</span> cars)</span>
-<span id="annotated-cell-2-8"><a href="#annotated-cell-2-8" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="annotated-cell-2-9"><a href="#annotated-cell-2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-2-10"><a href="#annotated-cell-2-10" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>graph <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-2-11" class="code-annotation-target"><a href="#annotated-cell-2-11" aria-hidden="true" tabindex="-1"></a>    data <span class="ot">&lt;-</span> <span class="fu">dataInput</span>()</span>
-<span id="annotated-cell-2-12"><a href="#annotated-cell-2-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plot</span>(data[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span>
-<span id="annotated-cell-2-13"><a href="#annotated-cell-2-13" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="annotated-cell-2-14"><a href="#annotated-cell-2-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-2-15"><a href="#annotated-cell-2-15" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>summary <span class="ot">&lt;-</span> <span class="fu">renderPrint</span>({</span>
-<span id="annotated-cell-2-16"><a href="#annotated-cell-2-16" aria-hidden="true" tabindex="-1"></a>    data <span class="ot">&lt;-</span> <span class="fu">dataInput</span>()</span>
-<span id="annotated-cell-2-17"><a href="#annotated-cell-2-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summary</span>(data[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span>
-<span id="annotated-cell-2-18"><a href="#annotated-cell-2-18" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="annotated-cell-2-19"><a href="#annotated-cell-2-19" aria-hidden="true" tabindex="-1"></a>}</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>reactive()</code> creates a <strong>reactive expression</strong>: a recipe that <em>returns a value</em> and that the outputs can share. This is the same app, rewritten with <code>reactive()</code>. From the outside nothing changes:</p>
+<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
+#|   shinylive does not work in self-contained HTML documents.
+#|   Please set `embed-resources: false` in your metadata.
+#| standalone: true
+#| components: [viewer]
+#| viewerHeight: 650
+## file: ui.R
+library(shiny)
+
+ui &lt;- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      selectInput(
+        inputId = "dataset",
+        label = "Choose a dataset:",
+        choices = c("rock", "pressure", "cars")
+      )
+    ),
+    mainPanel(
+      plotOutput("graph"),
+      verbatimTextOutput("summary")
+    )
+  )
+)
+
+## file: server.R
+library(shiny)
+
+server &lt;- function(input, output, session) {
+
+  # written once, used everywhere
+  dataInput &lt;- reactive({
+    switch(input$dataset,
+           rock = rock,
+           pressure = pressure,
+           cars = cars)
+  })
+
+  output$graph &lt;- renderPlot({
+    data &lt;- dataInput()                 # note the ()
+    plot(data[, 1:2])
+  })
+
+  output$summary &lt;- renderPrint({
+    data &lt;- dataInput()
+    summary(data[, 1:2])
+  })
+}
+</code></pre>
+<p>This is how its server changes:</p>
+<div class="sourceCode" id="annotated-cell-4"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-4-1"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="annotated-cell-4-2"><a href="#annotated-cell-4-2" aria-hidden="true" tabindex="-1"></a></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-4-3" class="code-annotation-target"><a href="#annotated-cell-4-3" aria-hidden="true" tabindex="-1"></a>  dataInput <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
+<span id="annotated-cell-4-4"><a href="#annotated-cell-4-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">switch</span>(input<span class="sc">$</span>dataset,</span>
+<span id="annotated-cell-4-5"><a href="#annotated-cell-4-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">rock =</span> rock,</span>
+<span id="annotated-cell-4-6"><a href="#annotated-cell-4-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">pressure =</span> pressure,</span>
+<span id="annotated-cell-4-7"><a href="#annotated-cell-4-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">cars =</span> cars)</span>
+<span id="annotated-cell-4-8"><a href="#annotated-cell-4-8" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="annotated-cell-4-9"><a href="#annotated-cell-4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-4-10"><a href="#annotated-cell-4-10" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>graph <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-4-11" class="code-annotation-target"><a href="#annotated-cell-4-11" aria-hidden="true" tabindex="-1"></a>    data <span class="ot">&lt;-</span> <span class="fu">dataInput</span>()</span>
+<span id="annotated-cell-4-12"><a href="#annotated-cell-4-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plot</span>(data[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span>
+<span id="annotated-cell-4-13"><a href="#annotated-cell-4-13" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="annotated-cell-4-14"><a href="#annotated-cell-4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-4-15"><a href="#annotated-cell-4-15" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>summary <span class="ot">&lt;-</span> <span class="fu">renderPrint</span>({</span>
+<span id="annotated-cell-4-16"><a href="#annotated-cell-4-16" aria-hidden="true" tabindex="-1"></a>    data <span class="ot">&lt;-</span> <span class="fu">dataInput</span>()</span>
+<span id="annotated-cell-4-17"><a href="#annotated-cell-4-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summary</span>(data[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span>
+<span id="annotated-cell-4-18"><a href="#annotated-cell-4-18" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="annotated-cell-4-19"><a href="#annotated-cell-4-19" aria-hidden="true" tabindex="-1"></a>}</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <dl class="code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-4" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="3" data-code-annotation="1">Write the recipe <strong>once</strong>. It reads <code>input$dataset</code>, so it reacts to it</span>
+<span data-code-cell="annotated-cell-4" data-code-lines="3" data-code-annotation="1">Write the recipe <strong>once</strong>. It reads <code>input$dataset</code>, so it reacts to it</span>
 </dd>
-<dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-4" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="11,16" data-code-annotation="2"><strong>Call</strong> it, like a function: <code>dataInput()</code>, with the parentheses</span>
+<span data-code-cell="annotated-cell-4" data-code-lines="11,16" data-code-annotation="2"><strong>Call</strong> it, like a function: <code>dataInput()</code>, with the parentheses</span>
 </dd>
 </dl>
+<p>The complete code, live:</p>
 <pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
 #|   shinylive does not work in self-contained HTML documents.
 #|   Please set `embed-resources: false` in your metadata.
@@ -709,6 +808,52 @@ Three things to remember about <code>reactive()</code>
 <section id="only-what-depends-on-a-change-re-runs" class="level2">
 <h2 class="anchored" data-anchor-id="only-what-depends-on-a-change-re-runs">Only what depends on a change re-runs</h2>
 <p>Shiny knows exactly who reads what. In this app each output prints the time it was last computed. Move the slider: which outputs are recomputed? And when you change the dataset?</p>
+<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
+#|   shinylive does not work in self-contained HTML documents.
+#|   Please set `embed-resources: false` in your metadata.
+#| standalone: true
+#| components: [viewer]
+#| viewerHeight: 560
+## file: ui.R
+library(shiny)
+
+ui &lt;- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("dataset", "Choose a dataset:",
+                  choices = c("rock", "pressure", "cars")),
+      sliderInput("n", "Rows to show:", min = 1, max = 10, value = 3)
+    ),
+    mainPanel(
+      h4("Summary (uses only the dataset)"),
+      verbatimTextOutput("summary"),
+      h4("First rows (uses the dataset AND the slider)"),
+      verbatimTextOutput("rows")
+    )
+  )
+)
+## file: server.R
+library(shiny)
+
+now &lt;- function() format(Sys.time(), "%H:%M:%OS2")
+
+server &lt;- function(input, output, session) {
+
+  dataInput &lt;- reactive({
+    get(input$dataset)
+  })
+
+  output$summary &lt;- renderPrint({
+    cat("computed at", now(), "\n\n")
+    summary(dataInput())
+  })
+
+  output$rows &lt;- renderPrint({
+    cat("computed at", now(), "\n\n")
+    head(dataInput(), input$n)
+  })
+}</code></pre>
+<p>The code: <code>now()</code> prints the current time, so you can see when each <code>render*()</code> runs.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
 #|   shinylive does not work in self-contained HTML documents.
 #|   Please set `embed-resources: false` in your metadata.
@@ -807,9 +952,9 @@ Solution 1
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The server is the one of <a href="https://github.com/ottaviae/stat-shiny/tree/main/apps/03-reactive"><code>apps/03-reactive</code></a>, plus:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>output<span class="sc">$</span>head <span class="ot">&lt;-</span> <span class="fu">renderTable</span>({</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="fu">dataInput</span>())</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>output<span class="sc">$</span>head <span class="ot">&lt;-</span> <span class="fu">renderTable</span>({</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="fu">dataInput</span>())</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>and in <code>ui.R</code>, inside <code>mainPanel()</code>: <code>tableOutput("head")</code> (remember the comma before it!).</p>
 </div>
 </div>

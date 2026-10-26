@@ -502,6 +502,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#a-first-app" id="toc-a-first-app" class="nav-link" data-scroll-target="#a-first-app">A first app</a>
   <ul class="collapse">
   <li><a href="#an-astonishing-result" id="toc-an-astonishing-result" class="nav-link" data-scroll-target="#an-astonishing-result">An astonishing result</a></li>
+  <li><a href="#the-code-behind-it" id="toc-the-code-behind-it" class="nav-link" data-scroll-target="#the-code-behind-it">The code behind it</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -615,31 +616,9 @@ Figure&nbsp;1: Interaction between the user interface (UI) and the server.
 </section>
 <section id="a-first-app" class="level1">
 <h1>A first app</h1>
-<p><span class="io-chip io-chip-in">Input</span> and <span class="io-chip io-chip-out">output</span>, in the <code>ui</code> and in the <code>server</code>:</p>
-<div class="io-first-app">
-<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">=</span> <span class="fu">fluidPage</span>(</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">selectInput</span>(<span class="at">inputId =</span> <span class="st">"mySelection"</span>,</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">label =</span> <span class="fu">h3</span>(<span class="st">"Select box"</span>),</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">choices =</span> <span class="fu">list</span>(<span class="st">"Choice 1"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Choice 2"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"Choice 3"</span> <span class="ot">=</span> <span class="dv">3</span>),</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">selected =</span> <span class="dv">1</span>),</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">verbatimTextOutput</span>(<span class="at">outputId =</span> <span class="st">"myOutput"</span>)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>server <span class="ot">=</span> <span class="cf">function</span>(input, output) {</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>myOutput <span class="ot">=</span> <span class="fu">renderPrint</span>({</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(<span class="st">"This is my choice:"</span>, input<span class="sc">$</span>mySelection)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ul>
-<li>In the <code>ui</code>, <code>selectInput()</code> creates a menu called <code>mySelection</code>, and <code>verbatimTextOutput()</code> reserves an empty box called <code>myOutput</code></li>
-<li>In the <code>server</code>, <code>input$mySelection</code> reads the choice of the user, and <code>output$myOutput</code> fills the box with the result</li>
-</ul>
-<p>The names are what connects the two pieces: we look at them closely in <a href="../day1/02-logic.html">How Shiny thinks</a>.</p>
 <section id="an-astonishing-result" class="level2">
 <h2 class="anchored" data-anchor-id="an-astonishing-result">An astonishing result</h2>
+<p>First, play with it: choose an option in the menu and look at the text below.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
 #|   shinylive does not work in self-contained HTML documents.
 #|   Please set `embed-resources: false` in your metadata.
@@ -663,6 +642,32 @@ server = function(input, output) {
 }
 
 shinyApp(ui, server)</code></pre>
+</section>
+<section id="the-code-behind-it" class="level2">
+<h2 class="anchored" data-anchor-id="the-code-behind-it">The code behind it</h2>
+<p><span class="io-chip io-chip-in">Input</span> and <span class="io-chip io-chip-out">output</span>, in the <code>ui</code> and in the <code>server</code>:</p>
+<div class="io-first-app">
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">=</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">selectInput</span>(<span class="at">inputId =</span> <span class="st">"mySelection"</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">label =</span> <span class="fu">h3</span>(<span class="st">"Select box"</span>),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">choices =</span> <span class="fu">list</span>(<span class="st">"Choice 1"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Choice 2"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"Choice 3"</span> <span class="ot">=</span> <span class="dv">3</span>),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">selected =</span> <span class="dv">1</span>),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">verbatimTextOutput</span>(<span class="at">outputId =</span> <span class="st">"myOutput"</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>server <span class="ot">=</span> <span class="cf">function</span>(input, output) {</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>myOutput <span class="ot">=</span> <span class="fu">renderPrint</span>({</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(<span class="st">"This is my choice:"</span>, input<span class="sc">$</span>mySelection)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(ui, server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>In the <code>ui</code>, <code>selectInput()</code> creates the menu you just used, called <code>mySelection</code>, and <code>verbatimTextOutput()</code> reserves the empty box below it, called <code>myOutput</code></li>
+<li>In the <code>server</code>, <code>input$mySelection</code> reads the choice of the user, and <code>output$myOutput</code> fills the box with the result</li>
+</ul>
+<p>The names are what connects the two pieces: we look at them closely in <a href="../day1/02-logic.html">How Shiny thinks</a>.</p>
 <p>In the next page we put this same app in an RStudio project, with the <code>ui</code> in a script called <code>ui.R</code> and the <code>server</code> in a script called <code>server.R</code>.</p>
 
 

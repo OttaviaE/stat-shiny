@@ -1,0 +1,315 @@
+---
+title: "Input widgets"
+subtitle: "What does the server receive?"
+---
+
+Every input widget has the same first two arguments:
+
+```r
+someInput(inputId = "id",       # <1>
+          label   = "Label",    # <2>
+          ...)                  # <3>
+```
+1. How the **server** calls it: `input$id`
+2. What the **user** reads
+3. Widget-specific options (choices, min, max, starting value…)
+
+What changes from widget to widget is **what arrives in `input$id`**: a number, a text, a vector, a date, a data frame… 
+
+In all the apps on this page, the server prints the **class** and the **structure** (`str()`) of each input, so you can see exactly what it receives. Play with the widgets and watch the boxes on the right.
+
+## Choosing from a list
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+#| layout: vertical
+#| viewerHeight: 560
+## file: ui.R
+library(shiny)
+
+ui <- fluidPage(
+  fluidRow(
+    column(6, selectInput("sel", "selectInput()",
+                          choices = c("rock", "pressure", "cars"))),
+    column(6, verbatimTextOutput("sel_out"))
+  ),
+  fluidRow(
+    column(6, selectInput("sel_named", "selectInput() with named choices",
+                          choices = c("rock" = 1, "pressure" = 2, "cars" = 3))),
+    column(6, verbatimTextOutput("sel_named_out"))
+  ),
+  fluidRow(
+    column(6, selectInput("sel_multi", "selectInput(multiple = TRUE)",
+                          choices = c("A", "B", "C"), multiple = TRUE)),
+    column(6, verbatimTextOutput("sel_multi_out"))
+  ),
+  fluidRow(
+    column(6, radioButtons("radio", "radioButtons()",
+                           choices = c("Low" = "low", "High" = "high"))),
+    column(6, verbatimTextOutput("radio_out"))
+  ),
+  fluidRow(
+    column(6, checkboxGroupInput("group", "checkboxGroupInput()",
+                                 choices = c("A", "B", "C"))),
+    column(6, verbatimTextOutput("group_out"))
+  )
+)
+## file: server.R
+library(shiny)
+
+# helper: print the class and the structure of an object
+inspect <- function(x) {
+  cat("class:", class(x), "\n")
+  str(x)
+}
+
+server <- function(input, output, session) {
+  output$sel_out       <- renderPrint(inspect(input$sel))
+  output$sel_named_out <- renderPrint(inspect(input$sel_named))
+  output$sel_multi_out <- renderPrint(inspect(input$sel_multi))
+  output$radio_out     <- renderPrint(inspect(input$radio))
+  output$group_out     <- renderPrint(inspect(input$group))
+}
+```
+
+::: {.callout-warning}
+## Things to notice
+
+- With named choices (`"rock" = 1`) the user sees the **name**, the server receives the **value**, and the value is always **text**: `"1"`, not `1`
+- `multiple = TRUE` and `checkboxGroupInput()` return a **vector**, and `NULL` when nothing is selected
+:::
+
+## Numbers and text
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+#| layout: vertical
+#| viewerHeight: 480
+## file: ui.R
+library(shiny)
+
+ui <- fluidPage(
+  fluidRow(
+    column(6, sliderInput("slider", "sliderInput()",
+                          min = 0, max = 100, value = 50)),
+    column(6, verbatimTextOutput("slider_out"))
+  ),
+  fluidRow(
+    column(6, sliderInput("range", "sliderInput() with a range",
+                          min = 0, max = 100, value = c(20, 80))),
+    column(6, verbatimTextOutput("range_out"))
+  ),
+  fluidRow(
+    column(6, numericInput("num", "numericInput()",
+                           value = 10, min = 0, max = 100, step = 0.5)),
+    column(6, verbatimTextOutput("num_out"))
+  ),
+  fluidRow(
+    column(6, textInput("text", "textInput()", value = "hello")),
+    column(6, verbatimTextOutput("text_out"))
+  )
+)
+## file: server.R
+library(shiny)
+
+inspect <- function(x) {
+  cat("class:", class(x), "\n")
+  str(x)
+}
+
+server <- function(input, output, session) {
+  output$slider_out <- renderPrint(inspect(input$slider))
+  output$range_out  <- renderPrint(inspect(input$range))
+  output$num_out    <- renderPrint(inspect(input$num))
+  output$text_out   <- renderPrint(inspect(input$text))
+}
+```
+
+::: {.callout-warning}
+## Things to notice
+
+- If you give `sliderInput()` two starting values, you get a **range**: a vector of length 2
+- Delete the number in `numericInput()`: the server receives `NA`
+- `textInput()` always returns text, also when the user types `42`
+:::
+
+## Yes/no and dates
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+#| layout: vertical
+#| viewerHeight: 380
+## file: ui.R
+library(shiny)
+
+ui <- fluidPage(
+  fluidRow(
+    column(6, checkboxInput("check", "checkboxInput()", value = FALSE)),
+    column(6, verbatimTextOutput("check_out"))
+  ),
+  fluidRow(
+    column(6, dateInput("date", "dateInput()")),
+    column(6, verbatimTextOutput("date_out"))
+  ),
+  fluidRow(
+    column(6, dateRangeInput("dates", "dateRangeInput()")),
+    column(6, verbatimTextOutput("dates_out"))
+  )
+)
+## file: server.R
+library(shiny)
+
+inspect <- function(x) {
+  cat("class:", class(x), "\n")
+  str(x)
+}
+
+server <- function(input, output, session) {
+  output$check_out <- renderPrint(inspect(input$check))
+  output$date_out  <- renderPrint(inspect(input$date))
+  output$dates_out <- renderPrint(inspect(input$dates))
+}
+```
+
+## Buttons
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+#| layout: vertical
+#| viewerHeight: 200
+## file: ui.R
+library(shiny)
+
+ui <- fluidPage(
+  fluidRow(
+    column(6, actionButton("go", "actionButton(): click me!")),
+    column(6, verbatimTextOutput("go_out"))
+  )
+)
+## file: server.R
+library(shiny)
+
+inspect <- function(x) {
+  cat("class:", class(x), "\n")
+  str(x)
+}
+
+server <- function(input, output, session) {
+  output$go_out <- renderPrint(inspect(input$go))
+}
+```
+
+An `actionButton()` is a **counter**: it starts at 0 and increases by 1 at every click. The value itself is rarely useful: what matters is that it **changes**. In [Wait for it: `eventReactive()`](06-eventreactive.qmd) we will use this to decide *when* the app does something.
+
+## Files
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+#| layout: vertical
+#| viewerHeight: 330
+## file: ui.R
+library(shiny)
+
+ui <- fluidPage(
+  fileInput("file", "fileInput(): upload any CSV file", accept = ".csv"),
+  verbatimTextOutput("file_out")
+)
+## file: server.R
+library(shiny)
+
+inspect <- function(x) {
+  cat("class:", class(x), "\n")
+  str(x)
+}
+
+server <- function(input, output, session) {
+  output$file_out <- renderPrint(inspect(input$file))
+}
+```
+
+No CSV at hand? Use [example.csv](../data/example.csv).
+
+`input$file` is **not** the data: it is a small data frame describing the file (`name`, `size`, `type`) and, most importantly, **`datapath`**, the place where Shiny saved a copy of it. To read the data you use it like any path:
+
+```r
+read.csv(input$file$datapath)
+```
+
+Before the upload, `input$file` is `NULL`.
+
+## Cheat sheet
+
+| Widget | `input$id` contains | Class |
+|---|---|---|
+| `selectInput()`, `radioButtons()` | the value of the selected choice | `character` (always) |
+| `selectInput(multiple = TRUE)`, `checkboxGroupInput()` | the selected values, `NULL` if none | `character` vector |
+| `sliderInput()` | a number (two numbers for a range) | `numeric`/`integer` |
+| `numericInput()` | a number, `NA` if empty | `numeric`/`integer` |
+| `textInput()` | the text, `""` if empty | `character` |
+| `checkboxInput()` | `TRUE`/`FALSE` | `logical` |
+| `dateInput()`, `dateRangeInput()` | one / two dates | `Date` |
+| `actionButton()` | how many times it was clicked | counter (integer) |
+| `fileInput()` | `NULL`, then name, size and `datapath` of the file | `data.frame` |
+
+The complete list, with code, is in the [Shiny widget gallery](https://shiny.posit.co/r/components/).
+
+## Your turn
+
+::: {.callout-note}
+## Exercise 1 · Predict, then check
+
+Without running anything, what does the server receive in these cases?
+
+1. `selectInput("n", "Rows", choices = c("five" = 5, "ten" = 10))`, the user picks *ten*
+2. `checkboxGroupInput("v", "Variables", choices = c("x", "y"))`, the user picks nothing
+3. `sliderInput("s", "Range", min = 1, max = 10, value = c(2, 5))`
+
+Check your answers by pasting the widgets in one of the apps above.
+:::
+
+::: {.callout-tip collapse="true"}
+## Solution 1
+
+1. `"10"`: a text, not a number. To use it as a number: `as.numeric(input$n)`
+2. `NULL`
+3. `c(2, 5)`: `input$s[1]` is the minimum, `input$s[2]` the maximum
+:::
+
+::: {.callout-note}
+## Exercise 2 · In your project
+
+In `my-shiny-app`, add a `sliderInput()` with ID `"n"` (from 1 to 10) to `ui.R`, and a second `verbatimTextOutput()` with ID `"n_out"`. In `server.R`, print `input$n * 2` in it. Run the app.
+:::
+
+::: {.callout-tip collapse="true"}
+## Solution 2
+
+```r
+# ui.R
+ui <- fluidPage(
+  selectInput(inputId = "mySelection", label = h3("Select box"),
+              choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3),
+              selected = 1),
+  verbatimTextOutput(outputId = "myOutput"),
+  sliderInput(inputId = "n", label = "Pick a number", min = 1, max = 10, value = 5),
+  verbatimTextOutput(outputId = "n_out")
+)
+```
+
+```r
+# server.R
+server <- function(input, output, session) {
+  output$myOutput <- renderPrint({
+    paste("This is my choice:", input$mySelection)
+  })
+  output$n_out <- renderPrint({
+    input$n * 2
+  })
+}
+```
+:::

@@ -1,0 +1,34 @@
+---
+title: "Resources"
+---
+
+## Slides of the course
+
+1. [Basics](https://ottaviae.github.io/slides-shiny/00-shiny.html)
+2. [Reactive events](https://ottaviae.github.io/slides-shiny/01-eventReactive.html)
+3. [Data upload](https://ottaviae.github.io/slides-shiny/02-uploadData.html)
+4. [Download](https://ottaviae.github.io/slides-shiny/03-download.html)
+
+## The apps
+
+All the apps used in these pages, each as a folder with `ui.R` and `server.R`:
+
+[Download all the apps (.zip)](../apps.zip){.btn .btn-primary}
+
+| Folder | App |
+|---|---|
+| `01-basic` | The very first app |
+| `02-datasets` | Two outputs, duplicated code |
+| `03-reactive` | The same, with `reactive()` |
+| `04-eventreactive` | The same, with a button and `eventReactive()` |
+| `05-explore-step1` … `step4` | The explore-a-dataset app, step by step |
+| `extra-update-input` | `observeEvent()` + `updateSelectInput()` |
+| `extra-interactive-plots` | Click and brush on a plot |
+| `extra-download` | Download plots and results |
+
+## Learn more
+
+- [Shiny for R](https://shiny.posit.co/r/getstarted/): the official tutorials
+- [Shiny components gallery](https://shiny.posit.co/r/components/): all the inputs and outputs, with code
+- [Mastering Shiny](https://mastering-shiny.org/), by Hadley Wickham: the reference book, free online
+- [Shine with quarto](https://arca-dpss.github.io/shine-with-quarto/): R projects, GitHub and Quarto
