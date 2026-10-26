@@ -547,62 +547,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </dd>
 </dl>
 <p>What changes from widget to widget is <strong>what arrives in <code>input$id</code></strong>: a number, a text, a vector, a date, a data frame…</p>
-<p>In all the apps on this page, the server prints the <strong>class</strong> and the <strong>structure</strong> (<code>str()</code>) of each input, so you can see exactly what it receives. Each section shows the app first: play with the widgets and watch the boxes on the right. Then comes the code of the same app.</p>
+<p>In all the apps on this page, the server prints the <strong>class</strong> and the <strong>structure</strong> (<code>str()</code>) of each input, so you can see exactly what it receives. Play with the widgets and watch the boxes on the right.</p>
 <section id="choosing-from-a-list" class="level2">
 <h2 class="anchored" data-anchor-id="choosing-from-a-list">Choosing from a list</h2>
-<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
-#|   shinylive does not work in self-contained HTML documents.
-#|   Please set `embed-resources: false` in your metadata.
-#| standalone: true
-#| components: [viewer]
-#| viewerHeight: 560
-## file: ui.R
-library(shiny)
-
-ui &lt;- fluidPage(
-  fluidRow(
-    column(6, selectInput("sel", "selectInput()",
-                          choices = c("rock", "pressure", "cars"))),
-    column(6, verbatimTextOutput("sel_out"))
-  ),
-  fluidRow(
-    column(6, selectInput("sel_named", "selectInput() with named choices",
-                          choices = c("rock" = 1, "pressure" = 2, "cars" = 3))),
-    column(6, verbatimTextOutput("sel_named_out"))
-  ),
-  fluidRow(
-    column(6, selectInput("sel_multi", "selectInput(multiple = TRUE)",
-                          choices = c("A", "B", "C"), multiple = TRUE)),
-    column(6, verbatimTextOutput("sel_multi_out"))
-  ),
-  fluidRow(
-    column(6, radioButtons("radio", "radioButtons()",
-                           choices = c("Low" = "low", "High" = "high"))),
-    column(6, verbatimTextOutput("radio_out"))
-  ),
-  fluidRow(
-    column(6, checkboxGroupInput("group", "checkboxGroupInput()",
-                                 choices = c("A", "B", "C"))),
-    column(6, verbatimTextOutput("group_out"))
-  )
-)
-## file: server.R
-library(shiny)
-
-# helper: print the class and the structure of an object
-inspect &lt;- function(x) {
-  cat("class:", class(x), "\n")
-  str(x)
-}
-
-server &lt;- function(input, output, session) {
-  output$sel_out       &lt;- renderPrint(inspect(input$sel))
-  output$sel_named_out &lt;- renderPrint(inspect(input$sel_named))
-  output$sel_multi_out &lt;- renderPrint(inspect(input$sel_multi))
-  output$radio_out     &lt;- renderPrint(inspect(input$radio))
-  output$group_out     &lt;- renderPrint(inspect(input$group))
-}</code></pre>
-<p>The code: the server prints what it receives for each widget. You can edit it and press ▶.</p>
 <pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
 #|   shinylive does not work in self-contained HTML documents.
 #|   Please set `embed-resources: false` in your metadata.
@@ -679,51 +626,6 @@ Things to notice
 #|   shinylive does not work in self-contained HTML documents.
 #|   Please set `embed-resources: false` in your metadata.
 #| standalone: true
-#| components: [viewer]
-#| viewerHeight: 480
-## file: ui.R
-library(shiny)
-
-ui &lt;- fluidPage(
-  fluidRow(
-    column(6, sliderInput("slider", "sliderInput()",
-                          min = 0, max = 100, value = 50)),
-    column(6, verbatimTextOutput("slider_out"))
-  ),
-  fluidRow(
-    column(6, sliderInput("range", "sliderInput() with a range",
-                          min = 0, max = 100, value = c(20, 80))),
-    column(6, verbatimTextOutput("range_out"))
-  ),
-  fluidRow(
-    column(6, numericInput("num", "numericInput()",
-                           value = 10, min = 0, max = 100, step = 0.5)),
-    column(6, verbatimTextOutput("num_out"))
-  ),
-  fluidRow(
-    column(6, textInput("text", "textInput()", value = "hello")),
-    column(6, verbatimTextOutput("text_out"))
-  )
-)
-## file: server.R
-library(shiny)
-
-inspect &lt;- function(x) {
-  cat("class:", class(x), "\n")
-  str(x)
-}
-
-server &lt;- function(input, output, session) {
-  output$slider_out &lt;- renderPrint(inspect(input$slider))
-  output$range_out  &lt;- renderPrint(inspect(input$range))
-  output$num_out    &lt;- renderPrint(inspect(input$num))
-  output$text_out   &lt;- renderPrint(inspect(input$text))
-}</code></pre>
-<p>The code: the server prints what it receives for each widget. You can edit it and press ▶.</p>
-<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
-#|   shinylive does not work in self-contained HTML documents.
-#|   Please set `embed-resources: false` in your metadata.
-#| standalone: true
 #| components: [editor, viewer]
 #| layout: vertical
 #| viewerHeight: 480
@@ -789,43 +691,6 @@ Things to notice
 #|   shinylive does not work in self-contained HTML documents.
 #|   Please set `embed-resources: false` in your metadata.
 #| standalone: true
-#| components: [viewer]
-#| viewerHeight: 380
-## file: ui.R
-library(shiny)
-
-ui &lt;- fluidPage(
-  fluidRow(
-    column(6, checkboxInput("check", "checkboxInput()", value = FALSE)),
-    column(6, verbatimTextOutput("check_out"))
-  ),
-  fluidRow(
-    column(6, dateInput("date", "dateInput()")),
-    column(6, verbatimTextOutput("date_out"))
-  ),
-  fluidRow(
-    column(6, dateRangeInput("dates", "dateRangeInput()")),
-    column(6, verbatimTextOutput("dates_out"))
-  )
-)
-## file: server.R
-library(shiny)
-
-inspect &lt;- function(x) {
-  cat("class:", class(x), "\n")
-  str(x)
-}
-
-server &lt;- function(input, output, session) {
-  output$check_out &lt;- renderPrint(inspect(input$check))
-  output$date_out  &lt;- renderPrint(inspect(input$date))
-  output$dates_out &lt;- renderPrint(inspect(input$dates))
-}</code></pre>
-<p>The code: the server prints what it receives for each widget. You can edit it and press ▶.</p>
-<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
-#|   shinylive does not work in self-contained HTML documents.
-#|   Please set `embed-resources: false` in your metadata.
-#| standalone: true
 #| components: [editor, viewer]
 #| layout: vertical
 #| viewerHeight: 380
@@ -866,33 +731,6 @@ server &lt;- function(input, output, session) {
 #|   shinylive does not work in self-contained HTML documents.
 #|   Please set `embed-resources: false` in your metadata.
 #| standalone: true
-#| components: [viewer]
-#| viewerHeight: 200
-## file: ui.R
-library(shiny)
-
-ui &lt;- fluidPage(
-  fluidRow(
-    column(6, actionButton("go", "actionButton(): click me!")),
-    column(6, verbatimTextOutput("go_out"))
-  )
-)
-## file: server.R
-library(shiny)
-
-inspect &lt;- function(x) {
-  cat("class:", class(x), "\n")
-  str(x)
-}
-
-server &lt;- function(input, output, session) {
-  output$go_out &lt;- renderPrint(inspect(input$go))
-}</code></pre>
-<p>The code: the server prints what it receives for each widget. You can edit it and press ▶.</p>
-<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
-#|   shinylive does not work in self-contained HTML documents.
-#|   Please set `embed-resources: false` in your metadata.
-#| standalone: true
 #| components: [editor, viewer]
 #| layout: vertical
 #| viewerHeight: 200
@@ -924,31 +762,6 @@ server &lt;- function(input, output, session) {
 #|   shinylive does not work in self-contained HTML documents.
 #|   Please set `embed-resources: false` in your metadata.
 #| standalone: true
-#| components: [viewer]
-#| viewerHeight: 330
-## file: ui.R
-library(shiny)
-
-ui &lt;- fluidPage(
-  fileInput("file", "fileInput(): upload any CSV file", accept = ".csv"),
-  verbatimTextOutput("file_out")
-)
-## file: server.R
-library(shiny)
-
-inspect &lt;- function(x) {
-  cat("class:", class(x), "\n")
-  str(x)
-}
-
-server &lt;- function(input, output, session) {
-  output$file_out &lt;- renderPrint(inspect(input$file))
-}</code></pre>
-<p>The code: the server prints what it receives for each widget. You can edit it and press ▶.</p>
-<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
-#|   shinylive does not work in self-contained HTML documents.
-#|   Please set `embed-resources: false` in your metadata.
-#| standalone: true
 #| components: [editor, viewer]
 #| layout: vertical
 #| viewerHeight: 330
@@ -972,7 +785,7 @@ server &lt;- function(input, output, session) {
 }</code></pre>
 <p>No CSV at hand? Use <a href="../data/example.csv">example.csv</a>.</p>
 <p><code>input$file</code> is <strong>not</strong> the data: it is a small data frame describing the file (<code>name</code>, <code>size</code>, <code>type</code>) and, most importantly, <strong><code>datapath</code></strong>, the place where Shiny saved a copy of it. To read the data you use it like any path:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read.csv</span>(input<span class="sc">$</span>file<span class="sc">$</span>datapath)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read.csv</span>(input<span class="sc">$</span>file<span class="sc">$</span>datapath)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Before the upload, <code>input$file</code> is <code>NULL</code>.</p>
 </section>
 <section id="cheat-sheet" class="level2">
@@ -1106,24 +919,24 @@ Solution 2
 </div>
 <div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ui.R</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">selectInput</span>(<span class="at">inputId =</span> <span class="st">"mySelection"</span>, <span class="at">label =</span> <span class="fu">h3</span>(<span class="st">"Select box"</span>),</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">choices =</span> <span class="fu">list</span>(<span class="st">"Choice 1"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Choice 2"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"Choice 3"</span> <span class="ot">=</span> <span class="dv">3</span>),</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">selected =</span> <span class="dv">1</span>),</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">verbatimTextOutput</span>(<span class="at">outputId =</span> <span class="st">"myOutput"</span>),</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sliderInput</span>(<span class="at">inputId =</span> <span class="st">"n"</span>, <span class="at">label =</span> <span class="st">"Pick a number"</span>, <span class="at">min =</span> <span class="dv">1</span>, <span class="at">max =</span> <span class="dv">10</span>, <span class="at">value =</span> <span class="dv">5</span>),</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">verbatimTextOutput</span>(<span class="at">outputId =</span> <span class="st">"n_out"</span>)</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># server.R</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>myOutput <span class="ot">&lt;-</span> <span class="fu">renderPrint</span>({</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(<span class="st">"This is my choice:"</span>, input<span class="sc">$</span>mySelection)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>n_out <span class="ot">&lt;-</span> <span class="fu">renderPrint</span>({</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    input<span class="sc">$</span>n <span class="sc">*</span> <span class="dv">2</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ui.R</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">selectInput</span>(<span class="at">inputId =</span> <span class="st">"mySelection"</span>, <span class="at">label =</span> <span class="fu">h3</span>(<span class="st">"Select box"</span>),</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">choices =</span> <span class="fu">list</span>(<span class="st">"Choice 1"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Choice 2"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"Choice 3"</span> <span class="ot">=</span> <span class="dv">3</span>),</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">selected =</span> <span class="dv">1</span>),</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">verbatimTextOutput</span>(<span class="at">outputId =</span> <span class="st">"myOutput"</span>),</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sliderInput</span>(<span class="at">inputId =</span> <span class="st">"n"</span>, <span class="at">label =</span> <span class="st">"Pick a number"</span>, <span class="at">min =</span> <span class="dv">1</span>, <span class="at">max =</span> <span class="dv">10</span>, <span class="at">value =</span> <span class="dv">5</span>),</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">verbatimTextOutput</span>(<span class="at">outputId =</span> <span class="st">"n_out"</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># server.R</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>myOutput <span class="ot">&lt;-</span> <span class="fu">renderPrint</span>({</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste</span>(<span class="st">"This is my choice:"</span>, input<span class="sc">$</span>mySelection)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">$</span>n_out <span class="ot">&lt;-</span> <span class="fu">renderPrint</span>({</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    input<span class="sc">$</span>n <span class="sc">*</span> <span class="dv">2</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
